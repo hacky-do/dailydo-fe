@@ -1,0 +1,33 @@
+language: 'ko-KR'
+
+reviews:
+  profile: 'chill'
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: 'src/**/*.{ts,tsx}'
+      instructions: |
+        - Next.js App Router 기준으로 리뷰
+        - 파일명은 kebab-case인지 확인
+        - 컴포넌트는 const 화살표 함수 + named export 방식인지 확인
+        - export default는 page.tsx, layout.tsx 파일에서만 허용
+        - 내부 이벤트 핸들러는 handle 접두사, props로 받는 핸들러는 on 접두사인지 확인
+        - app/에는 비즈니스 로직 없이 라우팅만 있어야 함
+        - 의존성 방향 준수: app → widgets → features → entities → shared
+        - features끼리 직접 import 금지 (features/A에서 features/B import 불가)
+        - 여러 feature에서 공유되는 타입은 features가 아닌 entities에 있어야 함
+        - shared/ 수정이 포함된 PR은 영향 범위를 꼼꼼히 리뷰
+
+chat:
+  auto_reply: true
