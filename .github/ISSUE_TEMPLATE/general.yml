@@ -1,0 +1,39 @@
+name: '일반 이슈 등록'
+description: 'chore/docs/refactor/design/test 관련 이슈를 생성'
+labels: []
+title: '[chore/docs/refactor/design/test] 이슈 제목'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        이슈 제목의 Prefix는 [chore], [docs], [refactor], [design], [test] 중 하나를 선택하여 작성해주세요.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: '이슈 내용(Description)'
+      description: '이슈에 대해서 설명해주세요'
+      placeholder: 어떤 이슈인가요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: '체크리스트(Tasks)'
+      description: '해당 이슈에 대해 필요한 세부 작업목록을 작성해주세요'
+      placeholder: |
+        - [ ] 작업 1
+        - [ ] 작업 2
+        - [ ] 작업 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 추가 정보
+      description: 스크린샷, 참고 자료, 관련 링크 등을 첨부해주세요.
+      placeholder: 추가적인 정보가 있다면 여기에 작성해주세요.
+    validations:
+      required: false
