@@ -12,3 +12,87 @@ body {
     cursor: default;
   }
 }
+
+@theme {
+  /* 타이포 */
+  --font-sans: var(--font-pretendard), sans-serif;
+  --font-size-xl: 1.25rem;
+  --line-height-xl: 1.875rem;
+  --font-size-display-md: 2.5rem;
+  --line-height-display-md: 3.5rem;
+  --font-size-display-lg: 3rem;
+  --line-height-display-lg: 3.75rem;
+  --font-size-display-xl: 3.5rem;
+  --line-height-display-xl: 4.25rem;
+
+  /* 색상 */
+  --color-gray-50: #f6f7f9;
+  --color-gray-100: #edeff1;
+  --color-gray-200: #dddddd;
+  --color-gray-300: #cccccc;
+  --color-gray-400: #bbbbbb;
+  --color-gray-500: #a4a4a4;
+  --color-gray-600: #737373;
+  --color-gray-700: #4a4a4a;
+  --color-gray-800: #333333;
+  --color-gray-900: #191919;
+
+  --color-green-100: #edfff5;
+  --color-green-200: #dffaeb;
+  --color-green-300: #c5f1d9;
+  --color-green-400: #afefd1;
+  --color-green-500: #00bb86;
+  --color-green-600: #009973;
+  --color-green-700: #0c7665;
+
+  --color-blue-100: #d6f9ff;
+  --color-blue-500: #2099fd;
+  --color-blue-600: #337aff;
+
+  --color-gradient-100-start: #e9fbf1;
+  --color-gradient-100-end: #e9fcfc;
+  --color-gradient-200-start: #def8ea;
+  --color-gradient-200-end: #d9f6f4;
+  --color-gradient-500-start: #17da71;
+  --color-gradient-500-end: #08ddf0;
+  --color-gradient-600-start: #00d361;
+  --color-gradient-600-end: #00b9de;
+
+  --color-error: #e91616;
+
+  /* 그림자 */
+  --shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 0 50px 0 rgba(0, 0, 0, 0.08);
+}
+
+@utility bg-gradient-100 {
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-100-start),
+    var(--color-gradient-100-end)
+  );
+}
+
+@utility bg-gradient-200 {
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-200-start),
+    var(--color-gradient-200-end)
+  );
+}
+
+@utility bg-gradient-500 {
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
+}
+
+@utility bg-gradient-600 {
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-600-start),
+    var(--color-gradient-600-end)
+  );
+}
