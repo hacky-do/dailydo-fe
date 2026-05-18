@@ -24,36 +24,8 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
-  args: { variant: 'primary', children: 'Primary' },
-};
-
-export const Secondary: Story = {
-  args: { variant: 'secondary', children: 'Secondary' },
-};
-
-export const Outlined: Story = {
-  args: { variant: 'outlined', children: 'Outlined' },
-};
-
-export const Disabled: Story = {
-  args: { disabled: true, children: 'Disabled' },
-};
-
-export const PrimaryLoading: Story = {
-  args: { variant: 'primary', isLoading: true },
-};
-
-export const SecondaryLoading: Story = {
-  args: { variant: 'secondary', isLoading: true },
-};
-
-export const OutlinedLoading: Story = {
-  args: { variant: 'outlined', isLoading: true },
-};
-
-export const WithLoadingInteraction: Story = {
-  args: { variant: 'primary', children: 'Submit', size: 'sm' },
+const withLoading = (story: Story): Story => ({
+  ...story,
   render: (args) => {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -64,4 +36,20 @@ export const WithLoadingInteraction: Story = {
 
     return <Button {...args} isLoading={isLoading} onClick={handleClick} />;
   },
+});
+
+export const Primary: Story = withLoading({
+  args: { variant: 'primary', children: 'Primary', size: 'lg' },
+});
+
+export const Secondary: Story = withLoading({
+  args: { variant: 'secondary', children: 'Secondary', size: 'sm' },
+});
+
+export const Outlined: Story = withLoading({
+  args: { variant: 'outlined', children: 'Outlined', size: 'sm' },
+});
+
+export const Disabled: Story = {
+  args: { disabled: true, children: 'Disabled', size: 'lg' },
 };
