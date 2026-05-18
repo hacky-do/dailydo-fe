@@ -12,12 +12,13 @@ const colorMap: Record<LoaderVariant, string> = {
 
 interface LoaderProps {
   variant?: LoaderVariant;
+  size?: 'sm' | 'lg';
 }
 
-export const Loader = ({ variant = 'primary' }: LoaderProps) => {
+export const Loader = ({ variant = 'primary', size = 'lg' }: LoaderProps) => {
   return (
     <SyncLoader
-      size={10}
+      size={size === 'lg' ? 10 : 8}
       margin={2}
       speedMultiplier={0.8}
       color={colorMap[variant]}

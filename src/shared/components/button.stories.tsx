@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { useState } from 'react';
 
 import { Button } from './button';
 
@@ -14,6 +15,7 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['primary', 'secondary', 'outlined', 'ghost'],
     },
+    size: { options: ['sm', 'lg'] },
     isLoading: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
@@ -48,4 +50,18 @@ export const SecondaryLoading: Story = {
 
 export const OutlinedLoading: Story = {
   args: { variant: 'outlined', isLoading: true },
+};
+
+export const WithLoadingInteraction: Story = {
+  args: { variant: 'primary', children: 'Submit', size: 'sm' },
+  render: (args) => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleClick = () => {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 1000);
+    };
+
+    return <Button {...args} isLoading={isLoading} onClick={handleClick} />;
+  },
 };

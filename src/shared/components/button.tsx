@@ -15,6 +15,7 @@ const loaderVariantMap = {
 interface ButtonProps extends ComponentProps<'button'> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outlined' | 'ghost';
+  size?: 'sm' | 'lg';
   isLoading?: boolean;
   className?: string;
 }
@@ -22,6 +23,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 export const Button = ({
   children,
   variant = 'primary',
+  size = 'lg',
   isLoading = false,
   disabled,
   className,
@@ -30,7 +32,11 @@ export const Button = ({
   return (
     <button
       className={cn(
-        'h-12 w-full rounded-xl text-base font-semibold',
+        'relative rounded-xl font-semibold',
+        {
+          'h-12 w-full text-base': size === 'lg',
+          'h-10 w-fit px-4 text-sm': size === 'sm',
+        },
         !disabled && {
           'bg-green-500 text-white': variant === 'primary',
           'border border-green-500 bg-white text-green-600':
@@ -46,13 +52,11 @@ export const Button = ({
       aria-busy={isLoading}
       {...props}
     >
-      {isLoading ? (
-        <>
-          <span className="sr-only">{children}</span>
-          <Loader variant={loaderVariantMap[variant]} />
-        </>
-      ) : (
-        children
+      <span className={cn(isLoading && 'invisible')}>{children}</span>
+      {isLoading && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          <Loader variant={loaderVariantMap[variant]} size={size} />
+        </span>
       )}
     </button>
   );
