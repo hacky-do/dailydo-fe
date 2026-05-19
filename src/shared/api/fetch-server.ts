@@ -24,7 +24,7 @@ export const fetchServer = async <T = unknown>(
     throw new ApiError(API_ERRORS.UNAUTHORIZED);
   }
 
-  if (res.status === 204) {
+  if (res.status === 204 || res.status === 205) {
     return null;
   }
 
@@ -37,5 +37,7 @@ export const fetchServer = async <T = unknown>(
     });
   }
 
-  return res.json() as Promise<T>;
+  const raw = await res.text();
+  if (!raw) return null;
+  return JSON.parse(raw) as T;
 };
