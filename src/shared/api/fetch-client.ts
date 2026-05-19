@@ -19,7 +19,6 @@ export const fetchClient = async <T = unknown>(
     credentials: 'include',
     headers,
   });
-  });
 
   if (res.status === 401) {
     if (typeof window !== 'undefined') {
