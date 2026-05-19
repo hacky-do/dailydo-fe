@@ -9,6 +9,7 @@ const meta: Meta<typeof Loader> = {
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'ghost'],
+      size: { options: ['sm', 'lg'] },
     },
   },
 };
@@ -17,13 +18,13 @@ export default meta;
 type Story = StoryObj<typeof Loader>;
 
 export const Primary: Story = {
-  args: { variant: 'primary' },
+  args: { variant: 'primary', size: 'sm' },
 };
 
 export const Secondary: Story = {
-  args: { variant: 'secondary' },
+  args: { variant: 'secondary', size: 'lg' },
 };
 
 export const Ghost: Story = {
-  args: { variant: 'ghost' },
+  args: { variant: 'ghost', size: 'lg' },
 };
