@@ -5,6 +5,7 @@ export const fetchClient = async <T = unknown>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T | null> => {
+  const url = BASE_URL + endpoint;
   const headers = new Headers(options?.headers);
   const method = (options?.method ?? 'GET').toUpperCase();
   const hasBody =
@@ -16,7 +17,7 @@ export const fetchClient = async <T = unknown>(
   ) {
     headers.set('Content-Type', 'application/json');
   }
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
+  const res = await fetch(url, {
     ...options,
     credentials: 'include',
     headers,

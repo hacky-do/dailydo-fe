@@ -7,6 +7,7 @@ export const fetchServer = async <T = unknown>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T | null> => {
+  const url = BASE_URL + endpoint;
   const cookieStore = await cookies();
   const headers = new Headers(options?.headers);
   if (!(options?.body instanceof FormData) && !headers.has('Content-Type')) {
@@ -14,7 +15,7 @@ export const fetchServer = async <T = unknown>(
   }
   headers.set('Cookie', cookieStore.toString());
 
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
+  const res = await fetch(url, {
     ...options,
     headers,
   });
