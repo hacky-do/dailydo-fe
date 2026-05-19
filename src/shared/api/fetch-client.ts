@@ -15,9 +15,10 @@ export const fetchClient = async <T = unknown>(
     headers.set('Content-Type', 'application/json');
   }
   const res = await fetch(`${BASE_URL}${endpoint}`, {
-    credentials: 'include',
     ...options,
+    credentials: 'include',
     headers,
+  });
   });
 
   if (res.status === 401) {
