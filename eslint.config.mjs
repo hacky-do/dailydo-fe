@@ -12,11 +12,6 @@ const eslintConfig = defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     ignores: ['.storybook/**'],
-    languageOptions: {
-      parserOptions: {
-        project: true,
-      },
-    },
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
