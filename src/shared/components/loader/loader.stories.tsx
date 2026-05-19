@@ -9,7 +9,9 @@ const meta: Meta<typeof Loader> = {
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'ghost'],
-      size: { options: ['sm', 'lg'] },
+    },
+    size: {
+      options: ['sm', 'lg'],
     },
   },
 };
