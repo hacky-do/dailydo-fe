@@ -8,14 +8,15 @@ export const fetchServer = async <T = unknown>(
   options?: RequestInit,
 ): Promise<T | undefined> => {
   const cookieStore = await cookies();
+  const headers = new Headers(options?.headers);
+  if (!(options?.body instanceof FormData) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
+  headers.set('Cookie', cookieStore.toString());
 
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      Cookie: cookieStore.toString(),
-      ...options?.headers,
-    },
+    headers,
   });
 
   if (res.status === 401) {

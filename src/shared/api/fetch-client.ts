@@ -8,13 +8,14 @@ export const fetchClient = async <T = unknown>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T | undefined> => {
+  const headers = new Headers(options?.headers);
+  if (!(options?.body instanceof FormData) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     credentials: 'include',
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    headers,
   });
 
   if (res.status === 401) {
