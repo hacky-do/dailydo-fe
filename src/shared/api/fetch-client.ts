@@ -1,11 +1,10 @@
-import { ROUTES } from '@/shared/config/routes';
-
+import { API_ERRORS, ApiError } from './api-error';
 import { BASE_URL } from './base-url';
 
 export const fetchClient = async <T = unknown>(
   endpoint: string,
   options?: RequestInit,
-): Promise<T | undefined> => {
+): Promise<T | null> => {
   const headers = new Headers(options?.headers);
   const method = (options?.method ?? 'GET').toUpperCase();
   const hasBody =
@@ -24,19 +23,20 @@ export const fetchClient = async <T = unknown>(
   });
 
   if (res.status === 401) {
-    if (typeof window !== 'undefined') {
-      window.location.href = ROUTES.LOGIN;
-    }
-    throw new Error('Unauthorized');
+    throw new ApiError(API_ERRORS.UNAUTHORIZED);
   }
 
   if (res.status === 204) {
-    return undefined;
+    return null;
   }
 
   if (!res.ok) {
-    const error = await res.json().catch(() => ({}));
-    throw new Error(error?.message ?? 'API ERROR가 발생했습니다.');
+    const data = await res.json().catch(() => ({}));
+    throw new ApiError({
+      code: res.status,
+      error: data?.error ?? 'API_ERROR',
+      message: data?.message ?? 'API ERROR가 발생했습니다.',
+    });
   }
 
   return res.json() as Promise<T>;
