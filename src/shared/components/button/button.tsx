@@ -5,17 +5,40 @@ import { ComponentProps, ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { Loader } from '../loader/loader';
 
-const loaderVariantMap = {
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+const styleMap: Record<ButtonVariant, string> = {
+  primary: 'bg-green-500 text-white hover:bg-green-600',
+  secondary: 'border border-green-500 bg-white text-green-600',
+  tertiary: 'border border-gray-200 bg-white text-gray-600',
+};
+
+const loaderColorMap: Record<
+  ButtonVariant,
+  'primary' | 'secondary' | 'tertiary'
+> = {
   primary: 'secondary',
   secondary: 'primary',
-  outlined: 'ghost',
-  ghost: 'ghost',
-} as const;
+  tertiary: 'tertiary',
+};
+
+const sizeStyles: Record<ButtonSize, string> = {
+  lg: 'h-12 w-full text-base',
+  md: 'h-10 w-fit rounded-lg px-4 text-sm',
+  sm: 'h-7 w-fit rounded-md px-4 text-xs',
+};
+
+const loaderSizeMap: Record<ButtonSize, 'sm' | 'lg'> = {
+  lg: 'lg',
+  md: 'sm',
+  sm: 'sm',
+};
 
 interface ButtonProps extends ComponentProps<'button'> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'outlined' | 'ghost';
-  size?: 'sm' | 'lg';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   isLoading?: boolean;
   className?: string;
 }
@@ -33,19 +56,8 @@ export const Button = ({
     <button
       className={cn(
         'relative rounded-xl font-semibold',
-        {
-          'h-12 w-full text-base': size === 'lg',
-          'h-10 w-fit px-4 text-sm': size === 'sm',
-        },
-        !disabled && {
-          'bg-green-500 text-white': variant === 'primary',
-          'border border-green-500 bg-white text-green-600':
-            variant === 'secondary',
-          'border border-gray-200 bg-white text-gray-600':
-            variant === 'outlined',
-          'bg-gray-100 text-gray-600': variant === 'ghost',
-        },
-        disabled && 'bg-gray-100 text-gray-600',
+        sizeStyles[size],
+        disabled ? 'bg-gray-100 text-gray-600' : styleMap[variant],
         className,
       )}
       disabled={disabled || isLoading}
@@ -55,7 +67,7 @@ export const Button = ({
       <span className={cn(isLoading && 'invisible')}>{children}</span>
       {isLoading && (
         <span className="absolute inset-0 flex items-center justify-center">
-          <Loader variant={loaderVariantMap[variant]} size={size} />
+          <Loader color={loaderColorMap[variant]} size={loaderSizeMap[size]} />
         </span>
       )}
     </button>

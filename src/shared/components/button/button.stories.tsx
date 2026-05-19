@@ -4,20 +4,16 @@ import { useState } from 'react';
 import { Button } from './button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Shared/Button',
+  title: 'Shared/Button/Default',
   component: Button,
   args: {
     children: 'Button',
-    type: 'button',
   },
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'outlined', 'ghost'],
-    },
-    size: { options: ['sm', 'lg'] },
-    isLoading: { control: 'boolean' },
-    disabled: { control: 'boolean' },
+    variant: { control: false },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    isLoading: { control: false },
+    disabled: { control: 'inline-radio', options: [true, false] },
   },
 };
 
@@ -39,17 +35,13 @@ const withLoading = (story: Story): Story => ({
 });
 
 export const Primary: Story = withLoading({
-  args: { variant: 'primary', children: 'Primary', size: 'lg' },
+  args: { variant: 'primary', size: 'lg', disabled: false },
 });
 
 export const Secondary: Story = withLoading({
-  args: { variant: 'secondary', children: 'Secondary', size: 'sm' },
+  args: { variant: 'secondary', size: 'lg', disabled: false },
 });
 
-export const Outlined: Story = withLoading({
-  args: { variant: 'outlined', children: 'Outlined', size: 'sm' },
+export const Tertiary: Story = withLoading({
+  args: { variant: 'tertiary', size: 'lg', disabled: false },
 });
-
-export const Disabled: Story = {
-  args: { disabled: true, children: 'Disabled', size: 'lg' },
-};
