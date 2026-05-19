@@ -2,8 +2,8 @@
 
 import { ComponentProps, ReactNode } from 'react';
 
-import { cn } from '../utils/cn';
-import { Loader } from './loader';
+import { cn } from '../../utils/cn';
+import { Loader } from '../loader/loader';
 
 const loaderVariantMap = {
   primary: 'secondary',
