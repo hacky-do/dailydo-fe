@@ -7,9 +7,9 @@ import { cn } from '../../utils/cn';
 type ButtonColor = 'primary' | 'secondary' | 'tertiary';
 
 const colorStyles: Record<ButtonColor, string> = {
-  primary: 'underline underline-offset-4 text-green-600',
-  secondary: 'underline underline-offset-4 text-white',
-  tertiary: 'underline underline-offset-4 text-gray-600',
+  primary: 'text-green-600',
+  secondary: 'text-white',
+  tertiary: 'text-gray-600',
 };
 
 interface UnderlineButtonProps extends ComponentProps<'button'> {
@@ -26,7 +26,11 @@ export const UnderlineButton = ({
 }: UnderlineButtonProps) => {
   return (
     <button
-      className={cn('h-fit w-fit text-sm font-semibold', colorStyles[color], className)}
+      className={cn(
+        'h-fit w-fit text-sm font-semibold underline underline-offset-4',
+        colorStyles[color],
+        className,
+      )}
       {...props}
     >
       {children}
