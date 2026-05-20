@@ -54,7 +54,7 @@ function ToastContainer({ items, exitingIds, onClose }: ContainerProps) {
     <div
       aria-live="polite"
       aria-label="알림 목록"
-      className="pointer-events-none fixed bottom-6 left-1/2 z-[9999] flex -translate-x-1/2 flex-col items-center gap-2"
+      className="pointer-events-none fixed bottom-6 left-1/2 z-9999 flex -translate-x-1/2 flex-col items-center gap-2"
     >
       {items.map((item) => (
         <Toast
