@@ -1,7 +1,8 @@
 import { API_ERRORS, ApiError } from './api-error.type';
 
-export type QueryOptions = Omit<RequestInit, 'method'> & {
+export type QueryOptions = Omit<RequestInit, 'method' | 'body'> & {
   method?: 'GET' | 'HEAD';
+  body?: never;
 };
 
 export type MutationOptions = Omit<RequestInit, 'method'> & {
