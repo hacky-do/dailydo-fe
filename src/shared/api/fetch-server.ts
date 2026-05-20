@@ -1,7 +1,11 @@
 import { cookies } from 'next/headers';
 
 import { BASE_URL } from './base-url.constant';
-import { buildHeaders, parseResponse, parseResponseStrict } from './fetch-helpers';
+import {
+  buildHeaders,
+  parseResponse,
+  parseResponseStrict,
+} from './fetch-helpers';
 
 // GET 요청용 (서버 컴포넌트) — 반환 타입 T (null 없음)
 export const fetchServerQuery = async <T>(
