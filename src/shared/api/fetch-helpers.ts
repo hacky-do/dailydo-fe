@@ -17,6 +17,7 @@ export function buildHeaders(options?: RequestInit): Headers {
   return headers;
 }
 
+// mutation용 (POST/PUT/DELETE): 204 응답 시 null 반환
 export async function parseResponse<T>(res: Response): Promise<T | null> {
   if (res.status === 401) {
     throw new ApiError(API_ERRORS.UNAUTHORIZED);
@@ -38,4 +39,13 @@ export async function parseResponse<T>(res: Response): Promise<T | null> {
   const raw = await res.text();
   if (!raw) return null;
   return JSON.parse(raw) as T;
+}
+
+// query용 (GET): 응답 본문이 없으면 에러, 항상 T 반환
+export async function parseResponseStrict<T>(res: Response): Promise<T> {
+  const result = await parseResponse<T>(res);
+  if (result === null) {
+    throw new ApiError(API_ERRORS.EMPTY_RESPONSE);
+  }
+  return result;
 }

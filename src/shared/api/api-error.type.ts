@@ -22,4 +22,9 @@ export const API_ERRORS = {
     error: 'UNAUTHORIZED',
     message: '인증이 필요합니다.',
   },
+  EMPTY_RESPONSE: {
+    code: 204,
+    error: 'EMPTY_RESPONSE',
+    message: '응답 본문이 없습니다.',
+  },
 } as const satisfies Record<string, ApiErrorData>;
