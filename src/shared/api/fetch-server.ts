@@ -14,7 +14,7 @@ export const fetchServer = async <T = unknown>(
     .getAll()
     .map(({ name, value }) => `${name}=${value}`)
     .join('; ');
-  if (cookieHeader) {
+  if (cookieHeader && !headers.has('Cookie')) {
     headers.set('Cookie', cookieHeader);
   }
 
