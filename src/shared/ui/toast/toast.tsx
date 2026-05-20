@@ -47,7 +47,11 @@ interface ToastStyle {
   transition: string;
 }
 
-function getToastStyle(isMounted: boolean, isExiting: boolean, dragY: number): ToastStyle {
+function getToastStyle(
+  isMounted: boolean,
+  isExiting: boolean,
+  dragY: number,
+): ToastStyle {
   const animSec = `${ANIM_DURATION / 1000}s`;
 
   if (!isMounted) {
@@ -69,8 +73,12 @@ function getToastStyle(isMounted: boolean, isExiting: boolean, dragY: number): T
   const isDragging = dragY > 0;
   return {
     transform: `translateY(${dragY}px)`,
-    opacity: isDragging ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR)) : 1,
-    transition: isDragging ? 'opacity 0.1s ease' : `transform ${animSec} ease, opacity ${animSec} ease`,
+    opacity: isDragging
+      ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
+      : 1,
+    transition: isDragging
+      ? 'opacity 0.1s ease'
+      : `transform ${animSec} ease, opacity ${animSec} ease`,
   };
 }
 
