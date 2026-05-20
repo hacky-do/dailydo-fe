@@ -56,3 +56,19 @@ export const fetchServerMutation = async <T = unknown>(
   });
   return parseResponse<T>(res);
 };
+
+type QueryOptionsWithoutMethod = Omit<QueryOptions, 'method'>;
+type MutationOptionsWithoutMethod = Omit<MutationOptions, 'method'>;
+
+export const serverApi = {
+  get: <T>(endpoint: string, options?: QueryOptionsWithoutMethod) =>
+    fetchServerQuery<T>(endpoint, { ...options, method: 'GET' }),
+  post: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchServerMutation<T>(endpoint, { ...options, method: 'POST' }),
+  put: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchServerMutation<T>(endpoint, { ...options, method: 'PUT' }),
+  patch: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchServerMutation<T>(endpoint, { ...options, method: 'PATCH' }),
+  delete: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchServerMutation<T>(endpoint, { ...options, method: 'DELETE' }),
+};

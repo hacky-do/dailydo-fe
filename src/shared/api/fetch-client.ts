@@ -34,3 +34,19 @@ export const fetchClientMutation = async <T = unknown>(
   });
   return parseResponse<T>(res);
 };
+
+type QueryOptionsWithoutMethod = Omit<QueryOptions, 'method'>;
+type MutationOptionsWithoutMethod = Omit<MutationOptions, 'method'>;
+
+export const clientApi = {
+  get: <T>(endpoint: string, options?: QueryOptionsWithoutMethod) =>
+    fetchClientQuery<T>(endpoint, { ...options, method: 'GET' }),
+  post: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchClientMutation<T>(endpoint, { ...options, method: 'POST' }),
+  put: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchClientMutation<T>(endpoint, { ...options, method: 'PUT' }),
+  patch: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchClientMutation<T>(endpoint, { ...options, method: 'PATCH' }),
+  delete: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
+    fetchClientMutation<T>(endpoint, { ...options, method: 'DELETE' }),
+};
