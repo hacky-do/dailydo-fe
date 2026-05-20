@@ -11,10 +11,8 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Toast } from './toast';
+import { ANIM_DURATION, Toast } from './toast';
 import type { ToastContextValue, ToastItem, ToastOptions } from './toast.types';
-
-export const ANIM_DURATION = 300;
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
