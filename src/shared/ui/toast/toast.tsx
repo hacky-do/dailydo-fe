@@ -41,6 +41,39 @@ const EXIT_OFFSET = 80;
 const DRAG_THRESHOLD = 60;
 const DRAG_OPACITY_FACTOR = 1.5;
 
+interface ToastStyle {
+  transform: string;
+  opacity: number;
+  transition: string;
+}
+
+function getToastStyle(isMounted: boolean, isExiting: boolean, dragY: number): ToastStyle {
+  const animSec = `${ANIM_DURATION / 1000}s`;
+
+  if (!isMounted) {
+    return {
+      transform: `translateY(${ENTER_OFFSET}px)`,
+      opacity: 0,
+      transition: `transform ${animSec} ease, opacity ${animSec} ease`,
+    };
+  }
+
+  if (isExiting) {
+    return {
+      transform: `translateY(${EXIT_OFFSET}px)`,
+      opacity: 0,
+      transition: `transform ${animSec} ease, opacity ${animSec} ease`,
+    };
+  }
+
+  const isDragging = dragY > 0;
+  return {
+    transform: `translateY(${dragY}px)`,
+    opacity: isDragging ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR)) : 1,
+    transition: isDragging ? 'opacity 0.1s ease' : `transform ${animSec} ease, opacity ${animSec} ease`,
+  };
+}
+
 export interface ToastProps extends ToastItem {
   onClose: (id: string) => void;
   isExiting?: boolean;
@@ -90,28 +123,7 @@ export function Toast({
     [id, onClose],
   );
 
-  const isDragging = dragY > 0;
-
-  let translateY: number;
-  let opacity: number;
-
-  if (!isMounted) {
-    translateY = ENTER_OFFSET;
-    opacity = 0;
-  } else if (isExiting) {
-    translateY = EXIT_OFFSET;
-    opacity = 0;
-  } else {
-    translateY = dragY;
-    opacity = isDragging
-      ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
-      : 1;
-  }
-
-  const animSec = `${ANIM_DURATION / 1000}s`;
-  const transition = isDragging
-    ? 'opacity 0.1s ease'
-    : `transform ${animSec} ease, opacity ${animSec} ease`;
+  const style = getToastStyle(isMounted, isExiting, dragY);
 
   return (
     <div
@@ -120,7 +132,7 @@ export function Toast({
       aria-label={config.ariaLabel}
       aria-atomic="true"
       className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none active:cursor-grabbing"
-      style={{ transform: `translateY(${translateY}px)`, opacity, transition }}
+      style={style}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
