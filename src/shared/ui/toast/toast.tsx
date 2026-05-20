@@ -34,8 +34,12 @@ const TYPE_CONFIG: Record<ToastItem['type'], TypeConfig> = {
   },
 };
 
-// 아래 방향 드래그 dismiss 임계값 (px)
+export const ANIM_DURATION = 300;
+
+const ENTER_OFFSET = 40;
+const EXIT_OFFSET = 80;
 const DRAG_THRESHOLD = 60;
+const DRAG_OPACITY_FACTOR = 1.5;
 
 export interface ToastProps extends ToastItem {
   onClose: (id: string) => void;
@@ -92,19 +96,22 @@ export function Toast({
   let opacity: number;
 
   if (!isMounted) {
-    translateY = 40;
+    translateY = ENTER_OFFSET;
     opacity = 0;
   } else if (isExiting) {
-    translateY = 80;
+    translateY = EXIT_OFFSET;
     opacity = 0;
   } else {
     translateY = dragY;
-    opacity = isDragging ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * 1.5)) : 1;
+    opacity = isDragging
+      ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
+      : 1;
   }
 
+  const animSec = `${ANIM_DURATION / 1000}s`;
   const transition = isDragging
     ? 'opacity 0.1s ease'
-    : 'transform 0.3s ease, opacity 0.3s ease';
+    : `transform ${animSec} ease, opacity ${animSec} ease`;
 
   return (
     <div
