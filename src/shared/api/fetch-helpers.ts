@@ -1,5 +1,13 @@
 import { API_ERRORS, ApiError } from './api-error.type';
 
+export type QueryOptions = Omit<RequestInit, 'method'> & {
+  method?: 'GET' | 'HEAD';
+};
+
+export type MutationOptions = Omit<RequestInit, 'method'> & {
+  method?: 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+};
+
 export function buildHeaders(options?: RequestInit): Headers {
   const headers = new Headers(options?.headers);
   const method = (options?.method ?? 'GET').toUpperCase();
@@ -9,6 +17,8 @@ export function buildHeaders(options?: RequestInit): Headers {
   if (
     hasBody &&
     !(options?.body instanceof FormData) &&
+    !(options?.body instanceof URLSearchParams) &&
+    !(options?.body instanceof Blob) &&
     !headers.has('Content-Type')
   ) {
     headers.set('Content-Type', 'application/json');
