@@ -1,7 +1,7 @@
 import { API_ERRORS, ApiError } from './api-error.type';
 
 export type QueryOptions = Omit<RequestInit, 'method' | 'body'> & {
-  method?: 'GET' | 'HEAD';
+  method?: 'GET';
   body?: never;
 };
 
