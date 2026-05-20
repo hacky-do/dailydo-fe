@@ -1,5 +1,5 @@
-import { BASE_URL } from './base-url.constant';
 import { buildHeaders, parseResponse } from './_core';
+import { BASE_URL } from './base-url.constant';
 
 export const fetchClient = async <T = unknown>(
   endpoint: string,

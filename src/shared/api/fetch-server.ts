@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
-import { BASE_URL } from './base-url.constant';
 import { buildHeaders, parseResponse } from './_core';
+import { BASE_URL } from './base-url.constant';
 
 export const fetchServer = async <T = unknown>(
   endpoint: string,
