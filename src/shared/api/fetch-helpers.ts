@@ -9,6 +9,9 @@ export type MutationOptions = Omit<RequestInit, 'method'> & {
   method?: 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 };
 
+export type QueryOptionsWithoutMethod = Omit<QueryOptions, 'method'>;
+export type MutationOptionsWithoutMethod = Omit<MutationOptions, 'method'>;
+
 export function buildHeaders(options?: RequestInit): Headers {
   const headers = new Headers(options?.headers);
   const method = (options?.method ?? 'GET').toUpperCase();

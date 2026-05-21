@@ -2,9 +2,11 @@ import { BASE_URL } from './base-url.constant';
 import {
   buildHeaders,
   MutationOptions,
+  MutationOptionsWithoutMethod,
   parseResponse,
   parseResponseStrict,
   QueryOptions,
+  QueryOptionsWithoutMethod,
 } from './fetch-helpers';
 
 // GET 요청용 — 반환 타입 T (null 없음)
@@ -34,9 +36,6 @@ export const fetchClientMutation = async <T = unknown>(
   });
   return parseResponse<T>(res);
 };
-
-type QueryOptionsWithoutMethod = Omit<QueryOptions, 'method'>;
-type MutationOptionsWithoutMethod = Omit<MutationOptions, 'method'>;
 
 export const clientApi = {
   get: <T>(endpoint: string, options?: QueryOptionsWithoutMethod) =>
