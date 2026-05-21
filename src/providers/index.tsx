@@ -1,7 +1,12 @@
 import { ReactNode } from 'react';
 
 import { MSWProvider } from './msw-provider';
+import { ReactQueryProvider } from './react-query-provider';
 
 export default function Providers({ children }: { children: ReactNode }) {
-  return <MSWProvider>{children}</MSWProvider>;
+  return (
+    <ReactQueryProvider>
+      <MSWProvider>{children}</MSWProvider>
+    </ReactQueryProvider>
+  );
 }
