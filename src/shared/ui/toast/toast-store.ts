@@ -9,10 +9,14 @@ interface ToastState {
   maxCount: number;
   toast: (options: ToastOptions) => void;
   close: (id: string) => void;
+  pauseTimer: (id: string) => void;
+  resumeTimer: (id: string) => void;
 }
 
 const timers = new Map<string, ReturnType<typeof setTimeout>>();
 const animTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const timerStartTimes = new Map<string, number>();
+const remainingTimes = new Map<string, number>();
 
 let _seq = 0;
 function genId(): string {
@@ -30,6 +34,8 @@ export const useToastStore = create<ToastState>((set, get) => ({
       clearTimeout(t);
       timers.delete(id);
     }
+    timerStartTimes.delete(id);
+    remainingTimes.delete(id);
 
     set((state) => ({ exitingIds: new Set([...state.exitingIds, id]) }));
 
@@ -48,6 +54,28 @@ export const useToastStore = create<ToastState>((set, get) => ({
     animTimers.set(id, animTimer);
   },
 
+  pauseTimer: (id: string) => {
+    const t = timers.get(id);
+    if (!t) return;
+    clearTimeout(t);
+    timers.delete(id);
+
+    const startTime = timerStartTimes.get(id) ?? Date.now();
+    const item = get().items.find((i) => i.id === id);
+    const duration = item?.duration ?? 3000;
+    remainingTimes.set(id, Math.max(0, duration - (Date.now() - startTime)));
+  },
+
+  resumeTimer: (id: string) => {
+    const remaining = remainingTimes.get(id);
+    if (remaining === undefined) return;
+    remainingTimes.delete(id);
+    timerStartTimes.set(id, Date.now());
+    const { close } = get();
+    const timer = setTimeout(() => close(id), remaining);
+    timers.set(id, timer);
+  },
+
   toast: ({ message, type, duration = 3000 }: ToastOptions) => {
     const id = genId();
     const { close, maxCount } = get();
@@ -59,9 +87,12 @@ export const useToastStore = create<ToastState>((set, get) => ({
     const { items, exitingIds } = get();
     const activeItems = items.filter((item) => !exitingIds.has(item.id));
     if (activeItems.length > maxCount) {
-      activeItems.slice(0, activeItems.length - maxCount).forEach((r) => close(r.id));
+      activeItems
+        .slice(0, activeItems.length - maxCount)
+        .forEach((r) => close(r.id));
     }
 
+    timerStartTimes.set(id, Date.now());
     const timer = setTimeout(() => close(id), duration);
     timers.set(id, timer);
   },

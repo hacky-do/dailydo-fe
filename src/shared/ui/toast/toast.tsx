@@ -88,6 +88,8 @@ function getToastStyle(
 
 export interface ToastProps extends ToastItem {
   onClose: (id: string) => void;
+  onPause?: (id: string) => void;
+  onResume?: (id: string) => void;
   isExiting?: boolean;
 }
 
@@ -96,6 +98,8 @@ export function Toast({
   message,
   type,
   onClose,
+  onPause,
+  onResume,
   isExiting = false,
 }: ToastProps) {
   const config = TYPE_CONFIG[type];
@@ -137,6 +141,9 @@ export function Toast({
     [id, onClose],
   );
 
+  const handleMouseEnter = useCallback(() => onPause?.(id), [id, onPause]);
+  const handleMouseLeave = useCallback(() => onResume?.(id), [id, onResume]);
+
   const style = getToastStyle(isMounted, isExiting, dragY, exitDirection);
 
   return (
@@ -147,6 +154,10 @@ export function Toast({
       aria-atomic="true"
       className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none active:cursor-grabbing"
       style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

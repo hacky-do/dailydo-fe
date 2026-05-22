@@ -22,6 +22,8 @@ function ToastContainer() {
   const items = useToastStore((state) => state.items);
   const exitingIds = useToastStore((state) => state.exitingIds);
   const close = useToastStore((state) => state.close);
+  const pauseTimer = useToastStore((state) => state.pauseTimer);
+  const resumeTimer = useToastStore((state) => state.resumeTimer);
 
   const mounted = useSyncExternalStore(
     noop,
@@ -42,6 +44,8 @@ function ToastContainer() {
           key={item.id}
           {...item}
           onClose={close}
+          onPause={pauseTimer}
+          onResume={resumeTimer}
           isExiting={exitingIds.has(item.id)}
         />
       ))}
