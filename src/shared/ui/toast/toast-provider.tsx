@@ -33,7 +33,7 @@ function ToastContainer() {
 
   return createPortal(
     <div
-      aria-live="polite"
+      role="region"
       aria-label="알림 목록"
       className="pointer-events-none fixed bottom-6 left-1/2 z-9999 flex -translate-x-1/2 flex-col items-center gap-2"
     >
