@@ -152,7 +152,8 @@ export function Toast({
       aria-live={config.ariaLive}
       aria-label={config.ariaLabel}
       aria-atomic="true"
-      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none active:cursor-grabbing"
+      tabIndex={0}
+      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none active:cursor-grabbing focus-visible:outline-none"
       style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
