@@ -1,14 +1,19 @@
 import { cn } from '../../utils/cn';
 
+type SkeletonVariant = 'sm' | 'lg';
+
+const variantSize: Record<SkeletonVariant, string> = {
+  sm: 'size-[30px] rounded-lg',
+  lg: 'size-15 rounded-xl',
+};
+
 interface SkeletonProps {
   className?: string;
+  variant?: SkeletonVariant;
 }
 
-export const Skeleton = ({ className }: SkeletonProps) => (
-  <div
-    className={cn(
-      'h-10 w-full animate-pulse rounded-2xl bg-gray-100',
-      className,
-    )}
+export const Skeleton = ({ className, variant = 'lg' }: SkeletonProps) => (
+  <span
+    className={cn('bg-skeleton animate-pulse', variantSize[variant], className)}
   />
 );
