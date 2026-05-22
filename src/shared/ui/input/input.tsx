@@ -4,6 +4,8 @@ import { cn } from '@/shared/utils/cn';
 
 interface InputProps extends ComponentProps<'input'> {
   variant?: 'sm' | 'lg';
+  label: string;
+  hideLabel?: boolean;
   description?: string;
   isError?: boolean;
   id: string;
@@ -12,6 +14,8 @@ interface InputProps extends ComponentProps<'input'> {
 export const Input = ({
   className,
   variant = 'lg',
+  label,
+  hideLabel = false,
   isError,
   description,
   id,
@@ -20,7 +24,15 @@ export const Input = ({
   const descriptionId = description ? `${id}-description` : undefined;
 
   return (
-    <div className="flex w-full flex-col gap-1.5">
+    <div className="flex w-full flex-col gap-1">
+      <label
+        htmlFor={id}
+        className={cn('px-1 text-sm font-medium text-gray-800', {
+          'sr-only': hideLabel,
+        })}
+      >
+        {label}
+      </label>
       <input
         className={cn(
           'w-full bg-gray-50 text-sm font-normal placeholder:text-gray-500',

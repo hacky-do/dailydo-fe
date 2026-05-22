@@ -7,10 +7,14 @@ const meta: Meta<typeof Textarea> = {
   title: 'Shared/Input/Textarea',
   component: Textarea,
   args: {
+    label: 'Label',
     placeholder: 'Input text',
     description: 'Description',
+    hideLabel: false,
   },
   argTypes: {
+    hideLabel: { control: 'boolean' },
+    resizable: { table: { disable: true } },
     id: { table: { disable: true } },
   },
 };
@@ -20,20 +24,17 @@ type Story = StoryObj<typeof Textarea>;
 
 export const Default: Story = {
   render: (args) => (
-    <div className="w-full">
-      <label className="sr-only" htmlFor="textarea-default">
-        Label
-      </label>
-      <Textarea {...args} id="textarea-default" />
-    </div>
+    <Textarea hideLabel={false} {...args} id="textarea-default" />
   ),
 };
 
 export const Interactive: Story = {
   args: {
+    label: '오늘을 한 줄로 남겨볼까요?',
     placeholder: '최대 100자까지 입력 가능해요',
   },
   argTypes: {
+    label: { table: { disable: true } },
     placeholder: { table: { disable: true } },
     description: { table: { disable: true } },
   },
@@ -42,19 +43,14 @@ export const Interactive: Story = {
     const MAX = 100;
 
     return (
-      <div className="w-full">
-        <label className="sr-only" htmlFor="textarea-interactive">
-          Label
-        </label>
-        <Textarea
-          {...args}
-          id="textarea-interactive"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          maxLength={MAX}
-          description={`${value.length}/${MAX}자`}
-        />
-      </div>
+      <Textarea
+        {...args}
+        id="textarea-interactive"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        maxLength={MAX}
+        description={`${value.length}/${MAX}자`}
+      />
     );
   },
 };

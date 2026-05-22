@@ -7,11 +7,15 @@ const meta: Meta<typeof Input> = {
   title: 'Shared/Input/Input',
   component: Input,
   args: {
+    label: 'Label',
     placeholder: 'Input text',
     description: 'Description',
+    hideLabel: false,
+    isError: false,
   },
   argTypes: {
-    isError: { control: 'inline-radio', options: [true, false] },
+    hideLabel: { control: 'boolean' },
+    isError: { control: 'boolean' },
     type: {
       control: 'select',
       options: ['text', 'password', 'email', 'number'],
@@ -25,34 +29,21 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 export const Large: Story = {
-  args: { variant: 'lg', isError: false },
-  render: (args) => (
-    <div className="flex w-full flex-col gap-1.5">
-      <label className="sr-only" htmlFor="input-large">
-        Label
-      </label>
-      <Input {...args} id="input-large" />
-    </div>
-  ),
+  args: { variant: 'lg' },
+  render: (args) => <Input {...args} id="input-large" />,
 };
 
 export const Small: Story = {
-  args: { variant: 'sm', isError: false },
-  render: (args) => (
-    <div className="flex w-full flex-col gap-1.5">
-      <label className="sr-only" htmlFor="input-small">
-        Label
-      </label>
-      <Input {...args} id="input-small" />
-    </div>
-  ),
+  args: { variant: 'sm' },
+  render: (args) => <Input {...args} id="input-small" />,
 };
 
 export const Interactive: Story = {
   args: {
     variant: 'lg',
+    label: '닉네임',
     description: '최대 8글자까지 입력 가능해요.',
-    placeholder: '텍스트를 입력해주세요',
+    placeholder: '닉네임을 입력해주세요',
     type: 'text',
   },
   argTypes: {
@@ -60,23 +51,19 @@ export const Interactive: Story = {
     description: { table: { disable: true } },
     type: { table: { disable: true } },
     isError: { table: { disable: true } },
+    variant: { control: 'inline-radio' },
   },
   render: (args) => {
     const [value, setValue] = useState('');
 
     return (
-      <div className="flex w-full flex-col gap-1.5">
-        <label className="sr-only" htmlFor="input-interactive">
-          Label
-        </label>
-        <Input
-          {...args}
-          id="input-interactive"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          isError={value.length > 8}
-        />
-      </div>
+      <Input
+        {...args}
+        id="input-interactive"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        isError={value.length > 8}
+      />
     );
   },
 };
