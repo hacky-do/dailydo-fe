@@ -6,6 +6,7 @@ interface InputProps extends ComponentProps<'input'> {
   variant?: 'sm' | 'lg';
   description?: string;
   isError?: boolean;
+  id: string;
 }
 
 export const Input = ({
@@ -13,6 +14,7 @@ export const Input = ({
   variant = 'lg',
   isError,
   description,
+  id,
   ...props
 }: InputProps) => {
   return (
@@ -28,6 +30,7 @@ export const Input = ({
           className,
         )}
         aria-invalid={isError}
+        id={id}
         {...props}
       />
       {description && (

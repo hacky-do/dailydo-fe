@@ -5,12 +5,14 @@ import { cn } from '@/shared/utils/cn';
 interface TextareaProps extends ComponentProps<'textarea'> {
   description?: string;
   resizable?: boolean;
+  id: string;
 }
 
 export const Textarea = ({
   description,
   className,
   resizable = false,
+  id,
   ...props
 }: TextareaProps) => {
   return (
@@ -21,6 +23,7 @@ export const Textarea = ({
           resizable ? 'resize-y' : 'resize-none',
           className,
         )}
+        id={id}
         {...props}
       />
       {description && (
