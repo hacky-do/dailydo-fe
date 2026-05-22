@@ -75,7 +75,10 @@ function getToastStyle(
   return {
     transform: `translateY(${dragY}px)`,
     opacity: isDragging
-      ? Math.max(0, 1 - Math.abs(dragY) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
+      ? Math.max(
+          0,
+          1 - Math.abs(dragY) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR),
+        )
       : 1,
     transition: isDragging
       ? 'opacity 0.1s ease'
