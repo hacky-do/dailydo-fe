@@ -41,6 +41,11 @@ const EXIT_OFFSET = 80;
 const DRAG_THRESHOLD = 30;
 const DRAG_OPACITY_FACTOR = 1.5;
 
+const TOAST_CLASS =
+  'pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center' +
+  ' gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none' +
+  ' focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:cursor-grabbing';
+
 interface ToastStyle {
   transform: string;
   opacity: number;
@@ -146,23 +151,35 @@ export function Toast({
 
   const style = getToastStyle(isMounted, isExiting, dragY, exitDirection);
 
+  const ariaProps = {
+    role: config.role,
+    'aria-live': config.ariaLive,
+    'aria-label': config.ariaLabel,
+    'aria-atomic': 'true' as const,
+    tabIndex: 0,
+  };
+
+  const pauseHandlers = {
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    onFocus: handleMouseEnter,
+    onBlur: handleMouseLeave,
+  };
+
+  const dragHandlers = {
+    onPointerDown: handlePointerDown,
+    onPointerMove: handlePointerMove,
+    onPointerUp: handlePointerUp,
+    onPointerCancel: handlePointerUp,
+  };
+
   return (
     <div
-      role={config.role}
-      aria-live={config.ariaLive}
-      aria-label={config.ariaLabel}
-      aria-atomic="true"
-      tabIndex={0}
-      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none active:cursor-grabbing focus-visible:outline-none"
+      {...ariaProps}
+      {...pauseHandlers}
+      {...dragHandlers}
+      className={TOAST_CLASS}
       style={style}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocus={handleMouseEnter}
-      onBlur={handleMouseLeave}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
     >
       <p className="justify-start text-xs leading-4 font-semibold text-white">
         {message}
