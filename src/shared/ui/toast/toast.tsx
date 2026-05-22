@@ -98,7 +98,7 @@ export interface ToastProps extends ToastItem {
   isExiting?: boolean;
 }
 
-export function Toast({
+export const Toast = ({
   id,
   message,
   type,
@@ -106,7 +106,7 @@ export function Toast({
   onPause,
   onResume,
   isExiting = false,
-}: ToastProps) {
+}: ToastProps) => {
   const config = TYPE_CONFIG[type];
   const [isMounted, setIsMounted] = useState(false);
   const [dragY, setDragY] = useState(0);
@@ -191,4 +191,4 @@ export function Toast({
       </p>
     </div>
   );
-}
+};
