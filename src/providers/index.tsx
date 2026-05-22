@@ -5,8 +5,8 @@ import { ReactQueryProvider } from './react-query-provider';
 
 export const Providers = ({ children }: { children: ReactNode }) => {
   return (
-    <ReactQueryProvider>
-      <MSWProvider>{children}</MSWProvider>
-    </ReactQueryProvider>
+    <MSWProvider>
+      <ReactQueryProvider>{children}</ReactQueryProvider>
+    </MSWProvider>
   );
 };
