@@ -51,6 +51,7 @@ function getToastStyle(
   isMounted: boolean,
   isExiting: boolean,
   dragY: number,
+  exitDirection: 1 | -1,
 ): ToastStyle {
   const animSec = `${ANIM_DURATION / 1000}s`;
 
@@ -64,17 +65,17 @@ function getToastStyle(
 
   if (isExiting) {
     return {
-      transform: `translateY(${EXIT_OFFSET}px)`,
+      transform: `translateY(${EXIT_OFFSET * exitDirection}px)`,
       opacity: 0,
       transition: `transform ${animSec} ease, opacity ${animSec} ease`,
     };
   }
 
-  const isDragging = dragY > 0;
+  const isDragging = dragY !== 0;
   return {
     transform: `translateY(${dragY}px)`,
     opacity: isDragging
-      ? Math.max(0, 1 - dragY / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
+      ? Math.max(0, 1 - Math.abs(dragY) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR))
       : 1,
     transition: isDragging
       ? 'opacity 0.1s ease'
@@ -97,6 +98,7 @@ export function Toast({
   const config = TYPE_CONFIG[type];
   const [isMounted, setIsMounted] = useState(false);
   const [dragY, setDragY] = useState(0);
+  const [exitDirection, setExitDirection] = useState<1 | -1>(1);
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
 
@@ -114,7 +116,7 @@ export function Toast({
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDraggingRef.current) return;
     const delta = e.clientY - startYRef.current;
-    setDragY(Math.max(0, delta));
+    setDragY(delta);
   }, []);
 
   const handlePointerUp = useCallback(
@@ -122,7 +124,8 @@ export function Toast({
       if (!isDraggingRef.current) return;
       isDraggingRef.current = false;
       const delta = e.clientY - startYRef.current;
-      if (delta >= DRAG_THRESHOLD) {
+      if (Math.abs(delta) >= DRAG_THRESHOLD) {
+        setExitDirection(delta > 0 ? 1 : -1);
         onClose(id);
       } else {
         setDragY(0);
@@ -131,7 +134,7 @@ export function Toast({
     [id, onClose],
   );
 
-  const style = getToastStyle(isMounted, isExiting, dragY);
+  const style = getToastStyle(isMounted, isExiting, dragY, exitDirection);
 
   return (
     <div
