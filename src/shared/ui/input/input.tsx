@@ -17,6 +17,8 @@ export const Input = ({
   id,
   ...props
 }: InputProps) => {
+  const descriptionId = description ? `${id}-description` : undefined;
+
   return (
     <div className="flex w-full flex-col gap-1.5">
       <input
@@ -30,11 +32,14 @@ export const Input = ({
           className,
         )}
         aria-invalid={isError}
+        aria-describedby={descriptionId}
+        aria-errormessage={isError ? descriptionId : undefined}
         id={id}
         {...props}
       />
       {description && (
         <p
+          id={descriptionId}
           className={cn('px-1 text-xs font-medium', {
             'text-gray-500': !isError,
             'text-error': isError,
