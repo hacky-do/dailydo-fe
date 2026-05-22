@@ -52,20 +52,15 @@ export const useToastStore = create<ToastState>((set, get) => ({
     const id = genId();
     const { close, maxCount } = get();
 
-    set((state) => {
-      const next = [...state.items, { id, message, type, duration }];
-      if (next.length > maxCount) {
-        const removed = next.splice(0, next.length - maxCount);
-        removed.forEach((r) => {
-          const t = timers.get(r.id);
-          if (t) {
-            clearTimeout(t);
-            timers.delete(r.id);
-          }
-        });
-      }
-      return { items: next };
-    });
+    set((state) => ({
+      items: [...state.items, { id, message, type, duration }],
+    }));
+
+    const { items, exitingIds } = get();
+    const activeItems = items.filter((item) => !exitingIds.has(item.id));
+    if (activeItems.length > maxCount) {
+      activeItems.slice(0, activeItems.length - maxCount).forEach((r) => close(r.id));
+    }
 
     const timer = setTimeout(() => close(id), duration);
     timers.set(id, timer);
