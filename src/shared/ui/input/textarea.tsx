@@ -15,6 +15,8 @@ export const Textarea = ({
   id,
   ...props
 }: TextareaProps) => {
+  const descriptionId = description ? `${id}-description` : undefined;
+
   return (
     <div className="flex w-full flex-col gap-1.5">
       <textarea
@@ -23,11 +25,15 @@ export const Textarea = ({
           resizable ? 'resize-y' : 'resize-none',
           className,
         )}
+        aria-describedby={descriptionId}
         id={id}
         {...props}
       />
       {description && (
-        <p className="ml-auto px-1 text-xs font-medium text-gray-500">
+        <p
+          id={descriptionId}
+          className="ml-auto px-1 text-xs font-medium text-gray-500"
+        >
           {description}
         </p>
       )}
