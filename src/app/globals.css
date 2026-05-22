@@ -63,6 +63,7 @@
   --color-gradient-600-end: #00b9de;
 
   --color-error: #e91616;
+  --color-skeleton: #f2f5f9;
 
   /* 그림자 */
   --shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
