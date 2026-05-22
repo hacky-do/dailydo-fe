@@ -4,8 +4,8 @@ import { useEffect, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Toast } from './toast';
-import { useToastStore } from './toast-store';
 import type { ToastContextValue } from './toast.types';
+import { useToastStore } from './toast-store';
 
 export function useToast(): ToastContextValue {
   const toast = useToastStore((state) => state.toast);
