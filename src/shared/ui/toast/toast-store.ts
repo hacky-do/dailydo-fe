@@ -37,7 +37,10 @@ export const useToastStore = create<ToastState>((set, get) => ({
       set((state) => {
         const next = new Set(state.exitingIds);
         next.delete(id);
-        return { items: state.items.filter((i) => i.id !== id), exitingIds: next };
+        return {
+          items: state.items.filter((i) => i.id !== id),
+          exitingIds: next,
+        };
       });
       animTimers.delete(id);
     }, ANIM_DURATION);
