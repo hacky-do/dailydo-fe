@@ -146,6 +146,11 @@ export function Toast({
     [id, onClose],
   );
 
+  const handlePointerCancel = useCallback(() => {
+    isDraggingRef.current = false;
+    setDragY(0);
+  }, []);
+
   const handleMouseEnter = useCallback(() => onPause?.(id), [id, onPause]);
   const handleMouseLeave = useCallback(() => onResume?.(id), [id, onResume]);
 
@@ -170,7 +175,7 @@ export function Toast({
     onPointerDown: handlePointerDown,
     onPointerMove: handlePointerMove,
     onPointerUp: handlePointerUp,
-    onPointerCancel: handlePointerUp,
+    onPointerCancel: handlePointerCancel,
   };
 
   return (
