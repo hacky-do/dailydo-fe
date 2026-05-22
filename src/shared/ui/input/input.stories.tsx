@@ -17,6 +17,7 @@ const meta: Meta<typeof Input> = {
       options: ['text', 'password', 'email', 'number'],
     },
     variant: { control: false },
+    id: { table: { disable: true } },
   },
 };
 
@@ -25,10 +26,26 @@ type Story = StoryObj<typeof Input>;
 
 export const Large: Story = {
   args: { variant: 'lg', isError: false },
+  render: (args) => (
+    <div className="flex w-full flex-col gap-1.5">
+      <label className="sr-only" htmlFor="input-large">
+        Label
+      </label>
+      <Input {...args} id="input-large" />
+    </div>
+  ),
 };
 
 export const Small: Story = {
   args: { variant: 'sm', isError: false },
+  render: (args) => (
+    <div className="flex w-full flex-col gap-1.5">
+      <label className="sr-only" htmlFor="input-small">
+        Label
+      </label>
+      <Input {...args} id="input-small" />
+    </div>
+  ),
 };
 
 export const Interactive: Story = {
@@ -48,12 +65,18 @@ export const Interactive: Story = {
     const [value, setValue] = useState('');
 
     return (
-      <Input
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        isError={value.length > 8}
-      />
+      <div className="flex w-full flex-col gap-1.5">
+        <label className="sr-only" htmlFor="input-interactive">
+          Label
+        </label>
+        <Input
+          {...args}
+          id="input-interactive"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          isError={value.length > 8}
+        />
+      </div>
     );
   },
 };
