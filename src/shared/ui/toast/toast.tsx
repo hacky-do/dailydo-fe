@@ -34,11 +34,11 @@ const TYPE_CONFIG: Record<ToastItem['type'], TypeConfig> = {
   },
 };
 
-export const ANIM_DURATION = 300;
+export const ANIM_DURATION = 250;
 
 const ENTER_OFFSET = 40;
 const EXIT_OFFSET = 80;
-const DRAG_THRESHOLD = 60;
+const DRAG_THRESHOLD = 30;
 const DRAG_OPACITY_FACTOR = 1.5;
 
 interface ToastStyle {
