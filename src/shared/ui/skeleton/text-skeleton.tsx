@@ -21,6 +21,7 @@ export const TextSkeleton = ({
   variant = 'base',
 }: TextSkeletonProps) => (
   <span
+    aria-hidden="true"
     className={cn(
       'bg-skeleton inline-block w-full animate-pulse rounded-2xl',
       className,
