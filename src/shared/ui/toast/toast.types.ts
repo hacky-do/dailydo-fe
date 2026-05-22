@@ -10,6 +10,13 @@ export interface ToastItem extends ToastOptions {
   id: string;
 }
 
+export interface ToastPromiseOptions<T = unknown> {
+  loading: string;
+  success: string | ((data: T) => string);
+  error: string | ((err: unknown) => string);
+}
+
 export interface ToastContextValue {
   toast: (options: ToastOptions) => void;
+  promise: <T>(p: Promise<T>, options: ToastPromiseOptions<T>) => Promise<T>;
 }

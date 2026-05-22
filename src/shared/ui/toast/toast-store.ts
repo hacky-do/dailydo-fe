@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 
 import { ANIM_DURATION } from './toast';
-import type { ToastItem, ToastOptions } from './toast.types';
+import type {
+  ToastItem,
+  ToastOptions,
+  ToastPromiseOptions,
+} from './toast.types';
 
 interface ToastState {
   items: ToastItem[];
@@ -11,6 +15,7 @@ interface ToastState {
   close: (id: string) => void;
   pauseTimer: (id: string) => void;
   resumeTimer: (id: string) => void;
+  promise: <T>(p: Promise<T>, options: ToastPromiseOptions<T>) => Promise<T>;
 }
 
 const timers = new Map<string, ReturnType<typeof setTimeout>>();
@@ -76,6 +81,47 @@ export const useToastStore = create<ToastState>((set, get) => ({
     timers.set(id, timer);
   },
 
+  promise: <T>(p: Promise<T>, options: ToastPromiseOptions<T>): Promise<T> => {
+    const loadingId = genId();
+    const { close, maxCount } = get();
+
+    set((state) => ({
+      items: [
+        ...state.items,
+        { id: loadingId, message: options.loading, type: 'info', duration: 0 },
+      ],
+    }));
+
+    const { items, exitingIds } = get();
+    const activeItems = items.filter((item) => !exitingIds.has(item.id));
+    if (activeItems.length > maxCount) {
+      activeItems
+        .slice(0, activeItems.length - maxCount)
+        .forEach((r) => close(r.id));
+    }
+
+    return p.then(
+      (data) => {
+        close(loadingId);
+        const msg =
+          typeof options.success === 'function'
+            ? options.success(data)
+            : options.success;
+        get().toast({ message: msg, type: 'success' });
+        return data;
+      },
+      (err: unknown) => {
+        close(loadingId);
+        const msg =
+          typeof options.error === 'function'
+            ? options.error(err)
+            : options.error;
+        get().toast({ message: msg, type: 'error' });
+        throw err;
+      },
+    );
+  },
+
   toast: ({ message, type, duration = 3000 }: ToastOptions) => {
     const id = genId();
     const { close, maxCount } = get();
@@ -92,8 +138,10 @@ export const useToastStore = create<ToastState>((set, get) => ({
         .forEach((r) => close(r.id));
     }
 
-    timerStartTimes.set(id, Date.now());
-    const timer = setTimeout(() => close(id), duration);
-    timers.set(id, timer);
+    if (duration > 0) {
+      timerStartTimes.set(id, Date.now());
+      const timer = setTimeout(() => close(id), duration);
+      timers.set(id, timer);
+    }
   },
 }));

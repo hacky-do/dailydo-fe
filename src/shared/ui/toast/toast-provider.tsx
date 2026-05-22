@@ -9,7 +9,8 @@ import { useToastStore } from './toast-store';
 
 export function useToast(): ToastContextValue {
   const toast = useToastStore((state) => state.toast);
-  return { toast };
+  const promise = useToastStore((state) => state.promise);
+  return { toast, promise };
 }
 
 // ─────────────────────────────────────────────
