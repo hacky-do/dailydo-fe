@@ -1,10 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { clientApi } from '../api/fetch-client';
+import { useBaseQuery } from './use-base-query';
 
 export const usePublicQuery = <T>(queryKey: string[], endpoint: string) =>
-  useQuery({
-    queryKey,
-    queryFn: () => clientApi.get<T>(endpoint),
-    retry: 2,
-  });
+  useBaseQuery<T>(queryKey, endpoint, 2);
