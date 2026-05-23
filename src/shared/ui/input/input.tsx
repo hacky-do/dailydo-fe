@@ -35,11 +35,11 @@ export const Input = ({
       </label>
       <input
         className={cn(
-          'w-full bg-gray-50 text-sm font-normal placeholder:text-gray-500',
+          'w-full border border-transparent bg-gray-50 text-sm font-normal placeholder:text-gray-500',
           {
-            'rounded-[10px] px-3 py-2.5': variant === 'sm',
+            'rounded-xl px-3 py-2.5': variant === 'sm',
             'rounded-xl p-3': variant === 'lg',
-            'border-error border': isError,
+            'border-error focus:outline-error': isError,
           },
           className,
         )}
