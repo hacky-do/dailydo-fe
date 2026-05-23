@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { useState } from 'react';
 
 import { TextSkeleton } from './text-skeleton';
 
@@ -64,28 +65,40 @@ export const Default: Story = {
   },
 };
 
-export const Interaction: StoryObj<{ loading: boolean }> = {
-  argTypes: {
-    loading: { control: 'boolean' },
-  },
-  args: {
-    loading: false,
-  },
-  render: ({ loading }) => (
-    <div className="flex flex-col gap-2">
-      {loading
-        ? items.map(({ skeletonClassName, variant }, i) => (
-            <TextSkeleton
-              key={i}
-              className={skeletonClassName}
-              variant={variant}
-            />
-          ))
-        : items.map(({ text, className }, i) => (
-            <div key={i} className={className}>
-              {text}
-            </div>
-          ))}
+const InteractionDemo = () => {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <div className="flex w-full flex-col items-center gap-3">
+      <div className="flex flex-col items-start gap-2">
+        {loading
+          ? items.map(({ skeletonClassName, variant }, i) => (
+              <TextSkeleton
+                key={i}
+                className={skeletonClassName}
+                variant={variant}
+              />
+            ))
+          : items.map(({ text, className }, i) => (
+              <div key={i} className={className}>
+                {text}
+              </div>
+            ))}
+      </div>
+      <button
+        onClick={() => setLoading((v) => !v)}
+        className="mt-2 w-30 rounded-lg bg-gray-800 py-1 text-sm text-white"
+      >
+        {loading ? 'Skeleton OFF' : 'Skeleton ON'}
+      </button>
     </div>
-  ),
+  );
+};
+
+export const Interaction: Story = {
+  argTypes: {
+    variant: { table: { disable: true } },
+    className: { table: { disable: true } },
+  },
+  render: () => <InteractionDemo />,
 };
