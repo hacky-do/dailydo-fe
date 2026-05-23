@@ -23,7 +23,7 @@ export const TextSkeleton = ({
   <span
     aria-hidden="true"
     className={cn(
-      'bg-skeleton inline-block w-full animate-pulse rounded-2xl',
+      'bg-skeleton animate-shimmer inline-block w-full rounded-2xl',
       className,
     )}
     style={{ height: variantHeight[variant] }}

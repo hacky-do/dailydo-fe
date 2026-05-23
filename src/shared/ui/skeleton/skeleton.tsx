@@ -16,7 +16,7 @@ export const Skeleton = ({ className, variant = 'lg' }: SkeletonProps) => (
   <span
     aria-hidden="true"
     className={cn(
-      'bg-skeleton inline-block animate-pulse',
+      'bg-skeleton animate-shimmer inline-block',
       variantSize[variant],
       className,
     )}
