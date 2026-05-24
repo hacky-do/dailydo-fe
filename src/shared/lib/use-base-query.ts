@@ -1,12 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { ApiError } from '../api/api-error.type';
 import { clientApi } from '../api/fetch-client';
 
+type BaseQueryOptions<T> = Omit<
+  UseQueryOptions<T>,
+  'queryKey' | 'queryFn' | 'retry'
+> & {
+  retry?: number | false;
+};
+
 export const useBaseQuery = <T>(
   queryKey: string[],
   endpoint: string,
-  retry: number | false,
+  { retry = 3, ...options }: BaseQueryOptions<T> = {},
 ) =>
   useQuery({
     queryKey,
@@ -20,4 +27,5 @@ export const useBaseQuery = <T>(
         return false;
       return failureCount < retry;
     },
+    ...options,
   });

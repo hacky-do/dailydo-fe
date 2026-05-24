@@ -1,4 +1,4 @@
 import { useBaseQuery } from './use-base-query';
 
 export const useAuthQuery = <T>(queryKey: string[], endpoint: string) =>
-  useBaseQuery<T>(queryKey, endpoint, 2);
+  useBaseQuery<T>(queryKey, endpoint, { retry: 2 });
