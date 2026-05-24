@@ -3,7 +3,7 @@ import { cn } from '../../utils/cn';
 type SkeletonVariant = 'sm' | 'lg';
 
 const variantSize: Record<SkeletonVariant, string> = {
-  sm: 'size-[30px] rounded-lg',
+  sm: 'size-8 rounded-lg',
   lg: 'size-15 rounded-xl',
 };
 
