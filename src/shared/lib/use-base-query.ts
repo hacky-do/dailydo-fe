@@ -3,7 +3,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { ApiError } from '../api/api-error.type';
 import { clientApi } from '../api/fetch-client';
 
-type BaseQueryOptions<T> = Omit<
+export type BaseQueryOptions<T> = Omit<
   UseQueryOptions<T>,
   'queryKey' | 'queryFn' | 'retry'
 > & {
