@@ -1,4 +1,4 @@
-import { MissionList } from './widgets/missionList';
+import { MissionList } from '@/widgets/missionList';
 
 export default function Home() {
   return (
