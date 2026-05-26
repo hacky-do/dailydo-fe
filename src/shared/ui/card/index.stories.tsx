@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useEffect, useRef } from 'react';
 
-import Card from '.';
+import { Card } from './card';
 
 const meta: Meta<typeof Card> = {
   title: 'Shared/Card',

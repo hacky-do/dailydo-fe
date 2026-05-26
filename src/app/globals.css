@@ -137,3 +137,43 @@
     animation: shimmer 1s infinite linear;
   }
 }
+
+@layer utilities {
+  .bg-basic-mission-card-pattern {
+    background: linear-gradient(
+      to top,
+      var(--color-gradient-500-start),
+      var(--color-gradient-500-end)
+    );
+  }
+
+  .bg-basic-mission-card-pattern::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background-image: url('/mission/icons/card_back.svg');
+    background-size: 55px;
+    background-repeat: repeat;
+    transform: rotate(20deg);
+    pointer-events: none;
+  }
+
+  .bg-special-mission-card-pattern {
+    background: linear-gradient(
+      to top,
+      var(--color-special-gradient-start),
+      var(--color-special-gradient-end)
+    );
+  }
+
+  .bg-special-mission-card-pattern::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background-image: url('/mission/icons/card_back.svg');
+    background-size: 55px;
+    background-repeat: repeat;
+    transform: rotate(20deg);
+    pointer-events: none;
+  }
+}
