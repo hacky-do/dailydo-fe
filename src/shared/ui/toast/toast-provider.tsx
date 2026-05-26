@@ -4,10 +4,10 @@ import { useEffect, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Toast } from './toast';
-import type { ToastContextValue } from './toast.types';
+import type { UseToastReturn } from './toast.types';
 import { useToastStore } from './toast-store';
 
-export function useToast(): ToastContextValue {
+export function useToast(): UseToastReturn {
   const toast = useToastStore((state) => state.toast);
   const promise = useToastStore((state) => state.promise);
   return { toast, promise };
