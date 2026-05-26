@@ -9,7 +9,7 @@ const meta: Meta<typeof CategoryCard> = {
   args: {
     id: 'hobby',
     label: '취미/창작',
-    image: '/common/icons/category01.svg',
+    image: '/common/icons/category_hobby.svg',
   },
 };
 
