@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import { initMocks } from '@/mocks';
-import Providers from '@/providers';
+import { Providers } from '@/providers';
 
 export const metadata: Metadata = {
   title: 'Daily:DO',
