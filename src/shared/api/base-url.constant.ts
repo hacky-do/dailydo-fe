@@ -1,5 +1,4 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
-console.log(BASE_URL, '');
 
 export function getBaseUrl(): string {
   if (!BASE_URL) {

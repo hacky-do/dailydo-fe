@@ -47,9 +47,10 @@ const Card = ({
   return (
     <div
       id={id}
-      className="relative h-full min-h-82 w-63.75 min-w-63.75 cursor-pointer perspective-midrange"
+      className="relative h-full min-h-82 w-56.25 min-w-56.25 cursor-pointer perspective-midrange"
       onClick={() => setFlipped((prev) => !prev)}
       role="button"
+      tabIndex={-1}
     >
       <div
         data-flipped={flipped}
@@ -65,23 +66,32 @@ const Card = ({
             flipped && 'pointer-events-none',
           )}
         >
-          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-2">
+          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-4">
             {isSpecial ? (
               <div className="bg-special flex h-20 w-20 items-center justify-center rounded-full">
-                <Image
-                  src="/images/special_back.svg"
-                  alt=""
-                  width={106}
-                  height={106}
-                />
+                <div className="relative h-20 w-20">
+                  <Image
+                    src="/mission/icons/special_back.svg"
+                    alt=""
+                    fill
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
               </div>
             ) : (
               <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-300">
-                <Image src="/images/_.svg" alt="" width={25} height={30} />
+                <div className="relative h-7.5 w-6.25">
+                  <Image
+                    src="/mission/icons/question_back.svg"
+                    alt=""
+                    fill
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
               </div>
             )}
             <div className="rounded-3xl bg-green-100 px-3 py-1">
-              <span className="text-lg font-bold text-green-600">
+              <span className="ttext-xl font-semibold text-green-600">
                 오늘의 미션
               </span>
             </div>
