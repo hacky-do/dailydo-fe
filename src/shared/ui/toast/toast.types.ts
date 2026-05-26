@@ -16,7 +16,7 @@ export interface ToastPromiseOptions<T = unknown> {
   error: string | ((err: unknown) => string);
 }
 
-export interface ToastContextValue {
+export interface UseToastReturn {
   toast: (options: ToastOptions) => void;
   promise: <T>(p: Promise<T>, options: ToastPromiseOptions<T>) => Promise<T>;
 }
