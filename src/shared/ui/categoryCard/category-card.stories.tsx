@@ -53,7 +53,7 @@ export const Grid: Story = {
         image: '/images/img_category02.svg',
       },
       {
-        id: 'challange',
+        id: 'challenge',
         label: '도전/탐험',
         image: '/images/img_category03.svg',
       },
