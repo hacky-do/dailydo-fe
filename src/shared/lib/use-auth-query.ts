@@ -6,10 +6,10 @@ export const useAuthQuery = <T>(
   options: BaseQueryOptions<T>,
 ) =>
   useBaseQuery<T>(endpoint, {
+    ...options,
     retry: (failureCount, error) =>
       !(
         error instanceof ApiError &&
         (error.code === 401 || error.code === 403)
       ) && failureCount < 2,
-    ...options,
   });
