@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { getURL } from 'next/dist/shared/lib/utils';
 
-import { Mission } from '@/entities/missions/model/type';
+import { Mission } from '@/entities/missions/model/mission.types';
 
-import Card from '.';
+import { Card } from './card';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+const BASE_URL = getURL();
 const fetchMissions = async (): Promise<Mission[]> => {
   const res = await fetch(`${BASE_URL}/api/missions/new`);
   return res.json();
