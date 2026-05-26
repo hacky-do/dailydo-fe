@@ -6,4 +6,5 @@ export type {
   ToastType,
   UseToastReturn,
 } from './toast.types';
-export { ToastProvider, useToast } from './toast-provider';
+export { ToastProvider } from './toast-provider';
+export { useToast } from './use-toast';

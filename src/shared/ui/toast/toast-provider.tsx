@@ -4,13 +4,7 @@ import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Toast } from './toast';
-import type { UseToastReturn } from './toast.types';
 import { useToastStore } from './toast-store';
-
-export function useToast(): UseToastReturn {
-  const toast = useToastStore((state) => state.toast);
-  return { toast };
-}
 
 // ─────────────────────────────────────────────
 // 컨테이너
