@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ANIM_DURATION } from './toast.constants';
 
 import type { ToastItem } from './toast.types';
 
@@ -34,17 +35,10 @@ const TYPE_CONFIG: Record<ToastItem['type'], TypeConfig> = {
   },
 };
 
-export const ANIM_DURATION = 250;
-
 const ENTER_OFFSET = 40;
 const EXIT_OFFSET = 80;
 const DRAG_THRESHOLD = 30;
 const DRAG_OPACITY_FACTOR = 1.5;
-
-const TOAST_CLASS =
-  'pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center' +
-  ' gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none' +
-  ' focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:cursor-grabbing';
 
 interface ToastStyle {
   transform: string;
@@ -183,7 +177,7 @@ export const Toast = ({
       {...ariaProps}
       {...pauseHandlers}
       {...dragHandlers}
-      className={TOAST_CLASS}
+      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:cursor-grabbing"
       style={style}
     >
       <p className="justify-start text-xs leading-4 font-semibold text-white">

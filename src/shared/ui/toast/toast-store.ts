@@ -1,12 +1,11 @@
 import { create } from 'zustand';
 
-import { ANIM_DURATION } from './toast';
+import { ANIM_DURATION, MAX_COUNT } from './toast.constants';
 import type { ToastItem, ToastOptions } from './toast.types';
 
 interface ToastState {
   items: ToastItem[];
   exitingIds: Set<string>;
-  maxCount: number;
   toast: (options: ToastOptions) => void;
   close: (id: string) => void;
   pauseTimer: (id: string) => void;
@@ -26,7 +25,6 @@ function genId(): string {
 export const useToastStore = create<ToastState>((set, get) => ({
   items: [],
   exitingIds: new Set(),
-  maxCount: 5,
 
   close: (id: string) => {
     const t = timers.get(id);
@@ -82,7 +80,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
 
   toast: ({ message, type, duration = 3000 }: ToastOptions) => {
     const id = genId();
-    const { close, maxCount } = get();
+    const { close } = get();
 
     set((state) => ({
       items: [...state.items, { id, message, type, duration }],
@@ -90,9 +88,9 @@ export const useToastStore = create<ToastState>((set, get) => ({
 
     const { items, exitingIds } = get();
     const activeItems = items.filter((item) => !exitingIds.has(item.id));
-    if (activeItems.length > maxCount) {
+    if (activeItems.length > MAX_COUNT) {
       activeItems
-        .slice(0, activeItems.length - maxCount)
+        .slice(0, activeItems.length - MAX_COUNT)
         .forEach((r) => close(r.id));
     }
 

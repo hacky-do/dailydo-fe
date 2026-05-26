@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Toast } from './toast';
@@ -60,14 +60,9 @@ function ToastContainer() {
 
 interface ToastProviderProps {
   children: React.ReactNode;
-  maxCount?: number;
 }
 
-export function ToastProvider({ children, maxCount = 5 }: ToastProviderProps) {
-  useEffect(() => {
-    useToastStore.setState({ maxCount });
-  }, [maxCount]);
-
+export function ToastProvider({ children }: ToastProviderProps) {
   return (
     <>
       {children}
