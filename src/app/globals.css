@@ -62,9 +62,13 @@
   --color-gradient-600-start: #00d361;
   --color-gradient-600-end: #00b9de;
 
+  --color-special-gradient-start: #fdeb49;
+  --color-special-gradient-end: #e5b01e;
+
   --color-error: #e91616;
   --color-skeleton: #f2f5f9;
 
+  --color-special: #f1eac5;
   /* 그림자 */
   --shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
   --shadow-xl: 0 0 50px 0 rgba(0, 0, 0, 0.08);
@@ -130,5 +134,44 @@
     );
     opacity: 0.6;
     animation: shimmer 1s infinite linear;
+    @layer utilities {
+      .bg-basic-mission-card-pattern {
+        background: linear-gradient(
+          to top,
+          var(--color-gradient-500-start),
+          var(--color-gradient-500-end)
+        );
+      }
+
+      .bg-basic-mission-card-pattern::before {
+        content: '';
+        position: absolute;
+        inset: -40%;
+        background-image: url('/images/card_back.svg');
+        background-size: 33px;
+        background-repeat: repeat;
+        transform: rotate(-15deg);
+        pointer-events: none;
+      }
+
+      .bg-special-mission-card-pattern {
+        background: linear-gradient(
+          to top,
+          var(--color-special-gradient-start),
+          var(--color-special-gradient-end)
+        );
+      }
+
+      .bg-special-mission-card-pattern::before {
+        content: '';
+        position: absolute;
+        inset: -40%;
+        background-image: url('/images/card_back.svg');
+        background-size: 33px;
+        background-repeat: repeat;
+        transform: rotate(-15deg);
+        pointer-events: none;
+      }
+    }
   }
 }

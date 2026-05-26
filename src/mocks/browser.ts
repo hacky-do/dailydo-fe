@@ -1,3 +1,5 @@
 import { setupWorker } from 'msw/browser';
 
-export const worker = setupWorker();
+import { handlers } from './api/mission';
+
+export const worker = setupWorker(...handlers);

@@ -1,0 +1,87 @@
+import { http, HttpResponse } from 'msw';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export const handlers = [
+  http.get(`${BASE_URL}/api/missions/new`, () => {
+    return HttpResponse.json([
+      {
+        id: '1',
+        title: '구름 사진 찍기',
+        categoryId: '2',
+        categoryName: '자연/힐링',
+        image: '',
+        completedCount: 23,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: false,
+      },
+      {
+        id: '2',
+        title: '공원에서 맨발 걷기',
+        categoryId: '2',
+        categoryName: '자연/힐링',
+        image: '',
+        completedCount: 15,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: false,
+      },
+      {
+        id: '3',
+        title: '별 보러 옥상 가기',
+        categoryId: '2',
+        categoryName: '히든 미션',
+        image: '',
+        completedCount: 5,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: true,
+      },
+      {
+        id: '4',
+        title: '오늘 점심 직접 요리하기',
+        categoryId: '3',
+        categoryName: '생활/습관',
+        image: '',
+        completedCount: 42,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: false,
+      },
+      {
+        id: '5',
+        title: '하루 물 2L 마시기',
+        categoryId: '3',
+        categoryName: '생활/습관',
+        image: '',
+        completedCount: 67,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: false,
+      },
+      {
+        id: '6',
+        title: '모르는 사람에게 먼저 인사하기',
+        categoryId: '1',
+        categoryName: '히든 미션',
+        image: '',
+        completedCount: 8,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: true,
+      },
+      {
+        id: '7',
+        title: '30분 독서하기',
+        categoryId: '4',
+        categoryName: '자기계발',
+        image: '',
+        completedCount: 31,
+        createdAt: '2025-05-03',
+        updatedAt: '2025-05-03',
+        isSpecial: false,
+      },
+    ]);
+  }),
+];
