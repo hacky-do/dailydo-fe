@@ -1,4 +1,4 @@
-import { ApiError } from '../api/api-error.type';
+import { ApiError } from '../api/api-error.types';
 import { BaseQueryOptions, useBaseQuery } from './use-base-query';
 
 export const useAuthQuery = <T>(

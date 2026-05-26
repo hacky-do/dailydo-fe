@@ -1,4 +1,4 @@
-import { API_ERRORS, ApiError } from './api-error.type';
+import { API_ERRORS, ApiError } from './api-error.types';
 
 export type QueryOptions = Omit<RequestInit, 'method' | 'body'> & {
   method?: 'GET';
