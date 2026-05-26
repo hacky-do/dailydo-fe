@@ -9,8 +9,7 @@ import { useToastStore } from './toast-store';
 
 export function useToast(): UseToastReturn {
   const toast = useToastStore((state) => state.toast);
-  const promise = useToastStore((state) => state.promise);
-  return { toast, promise };
+  return { toast };
 }
 
 // ─────────────────────────────────────────────
