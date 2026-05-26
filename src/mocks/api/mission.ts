@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { BASE_URL } from '@/shared/api/base-url.constant';
 
 export const handlers = [
   http.get(`${BASE_URL}/api/missions/new`, () => {

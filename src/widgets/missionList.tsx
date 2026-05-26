@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import { Mission } from '@/entities/missions/model/type';
-import Card from '@/shared/ui/card';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { Mission } from '@/entities/missions/model/mission.types';
+import { BASE_URL } from '@/shared/api/base-url.constant';
+import { Card } from '@/shared/ui/card';
 
 const MissionList = () => {
   const [missions, setMissions] = useState<Mission[]>([]);
