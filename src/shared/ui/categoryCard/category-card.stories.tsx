@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 
-import { CategoryCard } from './categoy-card';
+import { CategoryCard } from './category-card';
 
 const meta: Meta<typeof CategoryCard> = {
   title: 'Shared/CategoryCard',
