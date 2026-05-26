@@ -96,6 +96,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
         .forEach((r) => close(r.id));
     }
 
+    // duration이 0이면 자동 닫기 없이 수동 닫기만 허용
     if (duration > 0) {
       timerStartTimes.set(id, Date.now());
       const timer = setTimeout(() => close(id), duration);
