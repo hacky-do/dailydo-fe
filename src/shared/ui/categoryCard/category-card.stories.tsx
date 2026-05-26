@@ -9,7 +9,7 @@ const meta: Meta<typeof CategoryCard> = {
   args: {
     id: 'hobby',
     label: '취미/창작',
-    image: '/images/img_category01.svg',
+    image: '/common/icons/category01.svg',
   },
 };
 
@@ -45,32 +45,32 @@ export const Grid: Story = {
       {
         id: 'hobby',
         label: '취미/창작',
-        image: '/images/img_category01.svg',
+        image: '/common/icons/category_hobby.svg',
       },
       {
         id: 'study',
         label: '스터디/성장',
-        image: '/images/img_category02.svg',
+        image: '/common/icons/category_study.svg',
       },
       {
         id: 'challenge',
         label: '도전/탐험',
-        image: '/images/img_category03.svg',
+        image: '/common/icons/category_challenge.svg',
       },
       {
         id: 'exercise',
         label: '운동/건강',
-        image: '/images/img_category04.svg',
+        image: '/common/icons/category_exercise.svg',
       },
       {
         id: 'relationship',
         label: '관계/휴식',
-        image: '/images/img_category05.svg',
+        image: '/common/icons/category_relationship.svg',
       },
       {
-        id: 'health',
+        id: 'heal',
         label: '자연/힐링',
-        image: '/images/img_category06.svg',
+        image: '/common/icons/category_heal.svg',
       },
     ];
 
