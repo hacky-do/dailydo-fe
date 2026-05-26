@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ANIM_DURATION } from './toast.constants';
+import { useEffect, useRef, useState } from 'react';
 
+import { ANIM_DURATION } from './toast.constants';
 import type { ToastItem } from './toast.types';
 
 type Role = 'status' | 'alert';
@@ -113,40 +113,37 @@ export const Toast = ({
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+  const handlePointerDown = (e: React.PointerEvent) => {
     isDraggingRef.current = true;
     startYRef.current = e.clientY;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  }, []);
+  };
 
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+  const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDraggingRef.current) return;
     const delta = e.clientY - startYRef.current;
     setDragY(delta);
-  }, []);
+  };
 
-  const handlePointerUp = useCallback(
-    (e: React.PointerEvent) => {
-      if (!isDraggingRef.current) return;
-      isDraggingRef.current = false;
-      const delta = e.clientY - startYRef.current;
-      if (Math.abs(delta) >= DRAG_THRESHOLD) {
-        setExitDirection(delta > 0 ? 1 : -1);
-        onClose(id);
-      } else {
-        setDragY(0);
-      }
-    },
-    [id, onClose],
-  );
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    const delta = e.clientY - startYRef.current;
+    if (Math.abs(delta) >= DRAG_THRESHOLD) {
+      setExitDirection(delta > 0 ? 1 : -1);
+      onClose(id);
+    } else {
+      setDragY(0);
+    }
+  };
 
-  const handlePointerCancel = useCallback(() => {
+  const handlePointerCancel = () => {
     isDraggingRef.current = false;
     setDragY(0);
-  }, []);
+  };
 
-  const handleMouseEnter = useCallback(() => onPause?.(id), [id, onPause]);
-  const handleMouseLeave = useCallback(() => onResume?.(id), [id, onResume]);
+  const handleMouseEnter = () => onPause?.(id);
+  const handleMouseLeave = () => onResume?.(id);
 
   const style = getToastStyle(isMounted, isExiting, dragY, exitDirection);
 
