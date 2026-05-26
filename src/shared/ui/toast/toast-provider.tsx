@@ -15,9 +15,7 @@ const noop = () => () => {};
 function ToastContainer() {
   const items = useToastStore((state) => state.items);
   const exitingIds = useToastStore((state) => state.exitingIds);
-  const close = useToastStore((state) => state.close);
-  const pauseTimer = useToastStore((state) => state.pauseTimer);
-  const resumeTimer = useToastStore((state) => state.resumeTimer);
+  const { close, pauseTimer, resumeTimer } = useToastStore.getState();
 
   const mounted = useSyncExternalStore(
     noop,
