@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 interface FileInputProps {
@@ -36,19 +37,26 @@ export const FileInput = ({ onChange }: FileInputProps) => {
   }, [preview]);
 
   const previewImage = preview ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={preview} alt="미리보기" className="size-full object-cover" />
+    <Image
+      src={preview}
+      alt="미리보기"
+      fill
+      unoptimized
+      className="object-cover"
+    />
   ) : null;
 
   return (
     <div className="relative size-28.5">
-      <label className="flex size-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl bg-gray-50 text-gray-500">
+      <label
+        aria-label="파일 첨부"
+        className="relative flex size-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl bg-gray-50 text-gray-500"
+      >
         {previewImage ?? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/common/icons/image_plus.svg"
-              alt="파일 첨부"
+              alt=""
               width={18}
               height={18}
             />
@@ -67,12 +75,12 @@ export const FileInput = ({ onChange }: FileInputProps) => {
         <button
           type="button"
           onClick={handleDelete}
+          aria-label="삭제"
           className="absolute top-1 right-1"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/common/icons/delete_button.svg"
-            alt="삭제"
+            alt=""
             width={18}
             height={18}
           />
