@@ -23,7 +23,6 @@ export const CategoryCard = ({
 }: CategoryCardProps) => {
   return (
     <label
-      htmlFor={id}
       className={cn(
         'flex aspect-square flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl bg-slate-50 p-4 shadow transition-all',
         checked
