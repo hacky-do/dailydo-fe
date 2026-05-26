@@ -1,7 +1,7 @@
 'use client';
 
-import { ComponentProps } from 'react';
 import Image from 'next/image';
+import { ComponentProps } from 'react';
 
 import { cn } from '@/shared/utils/cn';
 
