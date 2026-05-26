@@ -20,7 +20,6 @@ const meta: Meta<typeof Input> = {
       control: 'select',
       options: ['text', 'password', 'email', 'number'],
     },
-    variant: { control: false },
     id: { table: { disable: true } },
   },
 };
@@ -28,19 +27,12 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-export const Large: Story = {
-  args: { variant: 'lg' },
+export const Default: Story = {
   render: (args) => <Input {...args} id="input-large" />,
-};
-
-export const Small: Story = {
-  args: { variant: 'sm' },
-  render: (args) => <Input {...args} id="input-small" />,
 };
 
 export const Interactive: Story = {
   args: {
-    variant: 'lg',
     label: '닉네임',
     description: '최대 8글자까지 입력 가능해요.',
     placeholder: '닉네임을 입력해주세요',
@@ -51,7 +43,6 @@ export const Interactive: Story = {
     description: { table: { disable: true } },
     type: { table: { disable: true } },
     isError: { table: { disable: true } },
-    variant: { control: 'inline-radio' },
   },
   render: (args) => {
     const [value, setValue] = useState('');

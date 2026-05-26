@@ -3,7 +3,6 @@ import { ComponentProps } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 interface InputProps extends ComponentProps<'input'> {
-  variant?: 'sm' | 'lg';
   label: string;
   hideLabel?: boolean;
   description?: string;
@@ -13,7 +12,6 @@ interface InputProps extends ComponentProps<'input'> {
 
 export const Input = ({
   className,
-  variant = 'lg',
   label,
   hideLabel = false,
   isError,
@@ -35,10 +33,8 @@ export const Input = ({
       </label>
       <input
         className={cn(
-          'w-full border border-transparent bg-gray-50 text-sm font-normal placeholder:text-gray-500',
+          'w-full rounded-xl border border-transparent bg-gray-50 px-3 py-2.5 text-sm font-normal placeholder:text-gray-500',
           {
-            'rounded-xl px-3 py-2.5': variant === 'sm',
-            'rounded-xl p-3': variant === 'lg',
             'border-error focus:outline-error': isError,
           },
           className,
