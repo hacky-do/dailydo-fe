@@ -68,7 +68,7 @@ const Card = ({
         >
           <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-4">
             {isSpecial ? (
-              <div className="bg-special flex h-20 w-20 items-center justify-center rounded-full">
+              <div className="bg-special --shadow flex h-20 w-20 items-center justify-center rounded-full">
                 <div className="relative h-20 w-20">
                   <Image
                     src="/mission/icons/special_back.svg"
@@ -79,7 +79,7 @@ const Card = ({
                 </div>
               </div>
             ) : (
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-300">
+              <div className="--shadow flex h-20 w-20 items-center justify-center rounded-full bg-green-300">
                 <div className="relative h-7.5 w-6.25">
                   <Image
                     src="/mission/icons/question_back.svg"
@@ -90,7 +90,7 @@ const Card = ({
                 </div>
               </div>
             )}
-            <div className="rounded-3xl bg-green-100 px-3 py-1">
+            <div className="--shadow rounded-3xl bg-green-100 px-3 py-1">
               <span className="ttext-xl font-semibold text-green-600">
                 오늘의 미션
               </span>
