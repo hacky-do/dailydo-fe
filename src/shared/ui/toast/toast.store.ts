@@ -14,8 +14,7 @@ interface ToastState {
 
 const timers = new Map<string, ReturnType<typeof setTimeout>>();
 const animTimers = new Map<string, ReturnType<typeof setTimeout>>();
-const timerStartTimes = new Map<string, number>();
-const remainingTimes = new Map<string, number>();
+const expiryTimes = new Map<string, number>();
 
 let _seq = 0;
 function genId(): string {
@@ -32,8 +31,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
       clearTimeout(t);
       timers.delete(id);
     }
-    timerStartTimes.delete(id);
-    remainingTimes.delete(id);
+    expiryTimes.delete(id);
 
     set((state) => ({ exitingIds: new Set([...state.exitingIds, id]) }));
 
@@ -58,21 +56,18 @@ export const useToastStore = create<ToastState>((set, get) => ({
     clearTimeout(t);
     timers.delete(id);
 
-    const startTime = timerStartTimes.get(id) ?? Date.now();
-    const scheduledDuration =
-      remainingTimes.get(id) ??
-      get().items.find((i) => i.id === id)?.duration ??
-      3000;
-    remainingTimes.set(
-      id,
-      Math.max(0, scheduledDuration - (Date.now() - startTime)),
-    );
+    const expiry = expiryTimes.get(id);
+    if (expiry === undefined) {
+      const duration = get().items.find((i) => i.id === id)?.duration ?? 3000;
+      expiryTimes.set(id, Date.now() + duration);
+    }
   },
 
   resumeTimer: (id: string) => {
-    const remaining = remainingTimes.get(id);
-    if (remaining === undefined) return;
-    timerStartTimes.set(id, Date.now());
+    const expiry = expiryTimes.get(id);
+    if (expiry === undefined) return;
+    const remaining = Math.max(0, expiry - Date.now());
+    expiryTimes.set(id, Date.now() + remaining);
     const { close } = get();
     const timer = setTimeout(() => close(id), remaining);
     timers.set(id, timer);
@@ -96,7 +91,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
 
     // duration이 0이면 자동 닫기 없이 수동 닫기만 허용
     if (duration > 0) {
-      timerStartTimes.set(id, Date.now());
+      expiryTimes.set(id, Date.now() + duration);
       const timer = setTimeout(() => close(id), duration);
       timers.set(id, timer);
     }
