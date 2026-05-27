@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+
 import { Button } from '../button';
 
 interface FallbackUIProps {
@@ -18,7 +19,7 @@ export const FallbackUI = ({
       <div className="relative h-18 w-30">
         <Image src="/common/emptyState.png" alt="" aria-hidden="true" fill />
       </div>
-      <p className="text-center text-base tracking-[-0.32px] whitespace-pre-line text-gray-800">
+      <p className="text-center text-base tracking-tight whitespace-pre-line text-gray-800">
         {message}
       </p>
       {onReset && (
