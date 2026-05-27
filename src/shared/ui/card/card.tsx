@@ -15,6 +15,9 @@ export interface CardProps {
   createdAt: string;
   updatedAt: string;
   isSpecial: boolean;
+  onSkip?: (id: string) => void;
+  onSelect?: (id: string) => void;
+  onCancel?: (id: string) => void;
 }
 
 const Card = ({
@@ -24,24 +27,27 @@ const Card = ({
   categoryName,
   completedCount,
   isSpecial,
+  onSkip,
+  onSelect,
+  onCancel,
 }: CardProps) => {
   const [flipped, setFlipped] = useState(false);
-  const [selected, setSelect] = useState<string[]>([]);
+  const [selected, setSelected] = useState(false);
 
-  const handleSelect = (id: string, e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSkip = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setSelect((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+    onSkip?.(id);
   };
-  const handleCancel = (id: string, e: React.MouseEvent) => {
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setSelect((prev) => prev.filter((item) => item !== id));
+    setSelected(true);
+    onSelect?.(id);
+  };
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelected(false);
     setFlipped(false);
+    onCancel?.(id);
   };
 
   return (
@@ -91,7 +97,7 @@ const Card = ({
               </div>
             )}
             <div className="--shadow rounded-3xl bg-green-100 px-3 py-1">
-              <span className="ttext-xl font-semibold text-green-600">
+              <span className="text-xl font-semibold text-green-600">
                 오늘의 미션
               </span>
             </div>
@@ -107,13 +113,13 @@ const Card = ({
           <p className="text-center text-lg font-bold text-gray-800">{title}</p>
           {/* <Image src={image} alt="Mission" width={80} height={80} /> */}
           <span className="text-sm text-gray-400">
-            {selected.length > 0 && `${completedCount}명이 완료했어요`}
+            {selected && `${completedCount}명이 완료했어요`}
           </span>
           <div className="flex items-center justify-center gap-2">
-            {selected.length > 0 ? (
+            {selected ? (
               <button
                 className="rounded-full bg-green-600 px-4 py-2 text-sm font-medium text-white"
-                onClick={(e) => handleCancel(id, e)}
+                onClick={(e) => handleCancel(e)}
               >
                 취소하기
               </button>
@@ -121,13 +127,13 @@ const Card = ({
               <>
                 <button
                   className="rounded-full bg-green-600 px-4 py-2 text-sm font-medium text-white"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => handleSkip(e)}
                 >
                   넘기기
                 </button>
                 <button
                   className="rounded-full bg-green-600 px-4 py-2 text-sm font-medium text-white"
-                  onClick={(e) => handleSelect(id, e)}
+                  onClick={(e) => handleSelect(e)}
                 >
                   선택하기
                 </button>
