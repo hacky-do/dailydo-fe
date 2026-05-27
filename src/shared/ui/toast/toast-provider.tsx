@@ -14,7 +14,6 @@ const noop = () => () => {};
 
 function ToastContainer() {
   const items = useToastStore((state) => state.items);
-  const exitingIds = useToastStore((state) => state.exitingIds);
   const { close, pauseTimer, resumeTimer } = useToastStore.getState();
 
   const mounted = useSyncExternalStore(
@@ -38,7 +37,7 @@ function ToastContainer() {
           onClose={close}
           onPause={pauseTimer}
           onResume={resumeTimer}
-          isExiting={exitingIds.has(item.id)}
+          isExiting={item.isExiting}
         />
       ))}
     </div>,

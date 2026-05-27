@@ -8,6 +8,7 @@ export interface ToastOptions {
 
 export interface ToastItem extends ToastOptions {
   id: string;
+  isExiting?: boolean;
 }
 
 export interface UseToastReturn {

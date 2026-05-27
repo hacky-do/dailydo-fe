@@ -5,7 +5,6 @@ import type { ToastItem, ToastOptions } from './toast.types';
 
 interface ToastState {
   items: ToastItem[];
-  exitingIds: Set<string>;
   toast: (options: ToastOptions) => void;
   close: (id: string) => void;
   pauseTimer: (id: string) => void;
@@ -23,7 +22,6 @@ function genId(): string {
 
 export const useToastStore = create<ToastState>((set, get) => ({
   items: [],
-  exitingIds: new Set(),
 
   close: (id: string) => {
     const t = timers.get(id);
@@ -33,17 +31,14 @@ export const useToastStore = create<ToastState>((set, get) => ({
     }
     expiryTimes.delete(id);
 
-    set((state) => ({ exitingIds: new Set([...state.exitingIds, id]) }));
+    set((state) => ({
+      items: state.items.map((i) =>
+        i.id === id ? { ...i, isExiting: true } : i,
+      ),
+    }));
 
     const animTimer = setTimeout(() => {
-      set((state) => {
-        const next = new Set(state.exitingIds);
-        next.delete(id);
-        return {
-          items: state.items.filter((i) => i.id !== id),
-          exitingIds: next,
-        };
-      });
+      set((state) => ({ items: state.items.filter((i) => i.id !== id) }));
       animTimers.delete(id);
     }, ANIM_DURATION);
 
@@ -81,8 +76,7 @@ export const useToastStore = create<ToastState>((set, get) => ({
       items: [...state.items, { id, message, type, duration }],
     }));
 
-    const { items, exitingIds } = get();
-    const activeItems = items.filter((item) => !exitingIds.has(item.id));
+    const activeItems = get().items.filter((item) => !item.isExiting);
     if (activeItems.length > MAX_COUNT) {
       activeItems
         .slice(0, activeItems.length - MAX_COUNT)
