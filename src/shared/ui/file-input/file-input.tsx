@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface FileInputProps {
   onChange?: (file: File | null) => void;
@@ -9,7 +9,9 @@ export const FileInput = ({ onChange }: FileInputProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // preview 등록 및 파일 등록
+  // 이전 URL
+  const prevPreviewRef = useRef<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
@@ -18,23 +20,25 @@ export const FileInput = ({ onChange }: FileInputProps) => {
     if (!allowedTypes.includes(selected.type)) return;
     if (selected.size > 2 * 1024 * 1024) return;
 
-    setPreview(URL.createObjectURL(selected));
+    // 이전 URL 해제
+    if (prevPreviewRef.current) URL.revokeObjectURL(prevPreviewRef.current);
+
+    const url = URL.createObjectURL(selected);
+    prevPreviewRef.current = url;
+    setPreview(url);
     onChange?.(selected);
   };
 
   const handleDelete = () => {
-    if (preview) URL.revokeObjectURL(preview);
+    if (prevPreviewRef.current) {
+      URL.revokeObjectURL(prevPreviewRef.current);
+      prevPreviewRef.current = null;
+    }
+
     setPreview(null);
     if (inputRef.current) inputRef.current.value = '';
     onChange?.(null);
   };
-
-  // preview가 바뀔 때마다 이전 blob URL 메모리 해제
-  useEffect(() => {
-    return () => {
-      if (preview) URL.revokeObjectURL(preview);
-    };
-  }, [preview]);
 
   const previewImage = preview ? (
     <Image
