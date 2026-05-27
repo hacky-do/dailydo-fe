@@ -4,7 +4,7 @@ import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Toast } from './toast';
-import { useToastStore } from './toast-store';
+import { useToastStore } from './toast.store';
 
 // ─────────────────────────────────────────────
 // 컨테이너
