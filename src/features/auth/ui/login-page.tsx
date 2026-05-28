@@ -112,10 +112,9 @@ export function LoginPage() {
           <Image
             src="/images/login/mainIllust.png"
             alt=""
-            className="mt-6"
+            className="mt-6 object-contain"
             aria-hidden="true"
             fill
-            objectFit="contain"
           />
         </div>
       </div>
