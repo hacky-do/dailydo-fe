@@ -47,6 +47,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className={cn(
         'flex h-12 w-full items-center justify-center gap-3 rounded-xl px-4 text-base leading-6 font-semibold tracking-tight',
