@@ -8,6 +8,9 @@ import { Sidebar } from './sidebar';
 const meta: Meta<typeof MobileHeader> = {
   title: 'Widgets/Header/MobileHeader',
   component: MobileHeader,
+  argTypes: {
+    className: { table: { disable: true } },
+  },
   decorators: [
     (Story) => (
       <ToastProvider>

@@ -28,7 +28,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
   const { toast } = useToast();
 
   const isLoggedIn = true; // TODO: 로그인 여부 검사로 변경
-  const missionCount: number | 'N' = 3; // TODO: 미션 쿼리에서 계산하는 것으로 변경
+  const missionStatus: number | 'N' = 3; // TODO: 미션 쿼리에서 계산하는 것으로 변경
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -63,7 +63,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
               onClick={() => handleClickLink(ROUTES.MISSIONS)}
               badge={
                 <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
-                  {missionCount}
+                  {missionStatus}
                 </span>
               }
             />

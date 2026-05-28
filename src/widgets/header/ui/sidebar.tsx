@@ -48,7 +48,7 @@ export const Sidebar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const pathname = usePathname();
   const { toast } = useToast();
 
-  const missionCount: number | 'N' = 'N'; // TODO: 미션 쿼리에서 계산하는 것으로 변경
+  const missionStatus: number | 'N' = 'N'; // TODO: 미션 쿼리에서 계산하는 것으로 변경
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -87,7 +87,7 @@ export const Sidebar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             onClick={() => handleClickLink(ROUTES.MISSIONS)}
             badge={
               <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
-                {missionCount}
+                {missionStatus}
               </span>
             }
           />

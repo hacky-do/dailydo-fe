@@ -18,6 +18,9 @@ const meta: Meta<typeof PcHeader> = {
       </ToastProvider>
     ),
   ],
+  argTypes: {
+    className: { table: { disable: true } },
+  },
   parameters: {
     layout: 'fullscreen',
   },
