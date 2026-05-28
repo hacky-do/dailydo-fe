@@ -20,7 +20,7 @@ type SocialLoginType = 'google' | 'naver';
 
 const LAST_LOGIN_KEY = 'dailydo_last_login';
 
-function RecentLoginBadge() {
+const RecentLoginBadge = () => {
   return (
     <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 animate-bounce flex-col items-center">
       <div className="rounded-3xl bg-[rgba(0,0,0,0.8)] px-3 py-1.5 whitespace-nowrap">
@@ -38,9 +38,9 @@ function RecentLoginBadge() {
       />
     </div>
   );
-}
+};
 
-export function LoginPage() {
+export const LoginPage = () => {
   const { toast } = useToast();
   const searchParams = useSearchParams();
   const [recentLogin] = useState<SocialLoginType | null>(() => {
@@ -135,4 +135,4 @@ export function LoginPage() {
       </div>
     </div>
   );
-}
+};
