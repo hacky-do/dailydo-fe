@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
+import DeleteFill from '@/shared/ui/icons/common/delete_fill.svg';
+import ImagePlus from '@/shared/ui/icons/common/image_plus.svg';
+
 interface FileInputProps {
   onChange?: (file: File | null) => void;
 }
@@ -58,12 +61,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
       >
         {previewImage ?? (
           <>
-            <Image
-              src="/common/icons/image_plus.svg"
-              alt=""
-              width={18}
-              height={18}
-            />
+            <ImagePlus className="size-4.5" />
             파일 첨부
           </>
         )}
@@ -82,12 +80,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
           aria-label="첨부 사진 삭제"
           className="absolute top-1 right-1"
         >
-          <Image
-            src="/common/icons/delete_button.svg"
-            alt=""
-            width={18}
-            height={18}
-          />
+          <DeleteFill className="size-4.5" />
         </button>
       )}
     </div>
