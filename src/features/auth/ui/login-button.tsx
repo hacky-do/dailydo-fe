@@ -42,6 +42,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       router.push(ROUTES.MISSIONS);
       return;
     }
+    localStorage.setItem('dailydo_last_login', type);
     window.location.href = `${getBaseUrl()}/api/auth/${type}`;
   };
 
