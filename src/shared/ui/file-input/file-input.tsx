@@ -43,7 +43,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
   const previewImage = preview ? (
     <Image
       src={preview}
-      alt="미리보기"
+      alt="첨부 사진 미리보기"
       fill
       unoptimized
       className="object-cover"
@@ -71,7 +71,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
           ref={inputRef}
           type="file"
           accept="image/png,image/jpeg,image/webp"
-          className="hidden"
+          className="sr-only"
           onChange={handleChange}
         />
       </label>
@@ -79,7 +79,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
         <button
           type="button"
           onClick={handleDelete}
-          aria-label="삭제"
+          aria-label="첨부 사진 삭제"
           className="absolute top-1 right-1"
         >
           <Image
