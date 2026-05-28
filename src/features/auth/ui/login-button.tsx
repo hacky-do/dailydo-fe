@@ -18,12 +18,12 @@ interface LoginButtonProps {
 const BUTTON_CONFIG = {
   google: {
     label: '구글로 계속하기',
-    icon: () => <Google />,
+    icon: () => <Google width={20} />,
     style: 'bg-white border border-gray-200 text-gray-800',
   },
   naver: {
     label: '네이버로 계속하기',
-    icon: () => <Naver />,
+    icon: () => <Naver width={16} />,
     style: 'bg-[#03C75A] text-white',
   },
   guest: {
