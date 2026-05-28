@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 
 import { getBaseUrl } from '@/shared/api/base-url.constant';
 import { ROUTES } from '@/shared/config/routes';
-import Google from '@/shared/ui/icons/google.svg';
-import Naver from '@/shared/ui/icons/naver.svg';
+import Google from '@/shared/ui/icons/auth/google.svg';
+import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
 
 type LoginType = 'google' | 'naver' | 'guest';
@@ -18,12 +18,12 @@ interface LoginButtonProps {
 const BUTTON_CONFIG = {
   google: {
     label: '구글로 계속하기',
-    icon: <Google />,
+    icon: () => <Google />,
     style: 'bg-white border border-gray-200 text-gray-800',
   },
   naver: {
     label: '네이버로 계속하기',
-    icon: <Naver />,
+    icon: () => <Naver />,
     style: 'bg-[#03C75A] text-white',
   },
   guest: {
@@ -33,9 +33,9 @@ const BUTTON_CONFIG = {
   },
 } as const;
 
-export function LoginButton({ type, className }: LoginButtonProps) {
+export const LoginButton = ({ type, className }: LoginButtonProps) => {
   const router = useRouter();
-  const { label, icon, style } = BUTTON_CONFIG[type];
+  const { label, icon: Icon, style } = BUTTON_CONFIG[type];
 
   const handleClick = () => {
     if (type === 'guest') {
@@ -54,8 +54,8 @@ export function LoginButton({ type, className }: LoginButtonProps) {
         className,
       )}
     >
-      {icon}
+      {Icon && <Icon />}
       <span>{label}</span>
     </button>
   );
-}
+};
