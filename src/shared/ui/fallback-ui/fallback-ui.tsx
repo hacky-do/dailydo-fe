@@ -17,7 +17,13 @@ export const FallbackUI = ({
   return (
     <div className="flex flex-col items-center gap-6 py-12">
       <div className="relative h-18 w-30">
-        <Image src="/common/emptyState.png" alt="" aria-hidden="true" fill />
+        <Image
+          src="/common/emptyState.png"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="430px"
+        />
       </div>
       <p className="text-center text-base tracking-tight whitespace-pre-line text-gray-800">
         {message}
