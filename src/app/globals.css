@@ -87,6 +87,7 @@
   /* 애니메이션 */
   --animate-float: float 4s ease-in-out infinite;
   --animate-float-slow: float 6s ease-in-out infinite 0.7s;
+  --animate-orbit-circle: orbit-circle 4s linear infinite;
 }
 
 @utility bg-gradient-100 {
@@ -174,6 +175,16 @@
 
   100% {
     transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes orbit-circle {
+  from {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
   }
 }
 
