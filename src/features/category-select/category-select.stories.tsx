@@ -39,17 +39,25 @@ const mockCategories = [
 
 export const Default: Story = {
   beforeEach() {
+    const originalFetch = globalThis.fetch;
     globalThis.fetch = () =>
       Promise.resolve(
         new Response(JSON.stringify(mockCategories), {
           headers: { 'Content-Type': 'application/json' },
         }),
       );
+    return () => {
+      globalThis.fetch = originalFetch;
+    };
   },
 };
 
 export const Loading: Story = {
   beforeEach() {
+    const origialFetch = globalThis.fetch;
     globalThis.fetch = () => new Promise(() => {});
+    return () => {
+      globalThis.fetch = origialFetch;
+    };
   },
 };
