@@ -38,7 +38,9 @@ const RecentLoginBadge = () => {
 
 export const LoginPage = ({ error }: { error?: string }) => {
   const { toast } = useToast();
-  const recentLogin = useAuthStore((state) => state.lastLogin);
+  const recentLogin = useAuthStore((state) =>
+    state._hasHydrated ? state.lastLogin : null,
+  );
 
   useEffect(() => {
     if (error) {
