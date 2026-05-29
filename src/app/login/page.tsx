@@ -1,9 +1,10 @@
 import { LoginPage } from '@/features/auth/ui';
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { error?: string };
+  searchParams: Promise<{ error?: string }>;
 }) {
-  return <LoginPage error={searchParams.error} />;
+  const { error } = await searchParams;
+  return <LoginPage error={error} />;
 }
