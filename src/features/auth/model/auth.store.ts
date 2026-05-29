@@ -3,21 +3,30 @@ import { persist } from 'zustand/middleware';
 
 export type SocialLoginType = 'google' | 'naver';
 
-const LAST_LOGIN_KEY = 'dailydo_last_login';
+const AUTH_STORE_KEY = 'dailydo_auth';
 
 interface AuthState {
   lastLogin: SocialLoginType | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   setLastLogin: (type: SocialLoginType) => void;
+  setAuth: (accessToken: string, refreshToken: string) => void;
+  clearAuth: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       lastLogin: null,
+      accessToken: null,
+      refreshToken: null,
       setLastLogin: (type) => set({ lastLogin: type }),
+      setAuth: (accessToken, refreshToken) =>
+        set({ accessToken, refreshToken }),
+      clearAuth: () => set({ accessToken: null, refreshToken: null }),
     }),
     {
-      name: LAST_LOGIN_KEY,
+      name: AUTH_STORE_KEY,
     },
   ),
 );
