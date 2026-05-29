@@ -20,17 +20,20 @@ interface LoginButtonProps {
 const BUTTON_CONFIG = {
   google: {
     label: '구글로 계속하기',
-    icon: () => <Google width={20} />,
+    icon: Google,
+    width: 20,
     style: 'bg-white border border-gray-200 text-gray-800',
   },
   naver: {
     label: '네이버로 계속하기',
-    icon: () => <Naver width={16} />,
+    icon: Naver,
+    width: 16,
     style: 'bg-[#03C75A] text-white',
   },
   guest: {
     label: '비회원으로 계속하기',
     icon: null,
+    width: null,
     style: 'bg-green-500 text-white',
   },
 } as const;
@@ -38,7 +41,7 @@ const BUTTON_CONFIG = {
 export const LoginButton = ({ type, className }: LoginButtonProps) => {
   const router = useRouter();
   const setLastLogin = useAuthStore((state) => state.setLastLogin);
-  const { label, icon: Icon, style } = BUTTON_CONFIG[type];
+  const { label, icon: Icon, width, style } = BUTTON_CONFIG[type];
 
   const handleClick = () => {
     if (type === 'guest') {
@@ -60,7 +63,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
         className,
       )}
     >
-      {Icon && <Icon />}
+      {Icon && <Icon width={width} />}
       <span>{label}</span>
     </button>
   );
