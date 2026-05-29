@@ -74,7 +74,7 @@ export const Grid: Story = {
       },
     ];
 
-    const toggle = (id: string) =>
+    const handleToggle = (id: string) =>
       setSelected((prev) =>
         prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
       );
@@ -88,7 +88,7 @@ export const Grid: Story = {
             label={cat.label}
             image={cat.image}
             checked={selected.includes(cat.id)}
-            onChange={() => toggle(cat.id)}
+            onChange={() => handleToggle(cat.id)}
           />
         ))}
       </div>

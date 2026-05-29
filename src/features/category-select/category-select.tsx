@@ -16,7 +16,7 @@ export const CategorySelect = () => {
     queryFn: () => clientApi.get<Category[]>('/api/category'),
   });
 
-  const toggle = (id: number) =>
+  const handleToggle = (id: number) =>
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
     );
@@ -40,7 +40,7 @@ export const CategorySelect = () => {
           label={category.name}
           image={category.image}
           checked={selected.includes(category.id)}
-          onChange={() => toggle(category.id)}
+          onChange={() => handleToggle(category.id)}
         />
       ))}
     </div>
