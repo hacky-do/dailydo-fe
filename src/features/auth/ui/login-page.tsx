@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 
 import DailyDoLogo from '@/shared/ui/icons/common/dailydoLogo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
@@ -38,8 +38,10 @@ const RecentLoginBadge = () => {
 
 export const LoginPage = ({ error }: { error?: string }) => {
   const { toast } = useToast();
-  const recentLogin = useAuthStore((state) =>
-    state._hasHydrated ? state.lastLogin : null,
+  const recentLogin = useSyncExternalStore(
+    useAuthStore.subscribe,
+    () => useAuthStore.getState().lastLogin,
+    () => null,
   );
 
   useEffect(() => {
