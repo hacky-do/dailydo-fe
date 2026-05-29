@@ -44,6 +44,7 @@ export const LoginPage = ({ error }: { error?: string }) => {
     () => null,
   );
 
+  // TODO: 추후 구현 방식 확정 후, 로그인 실패 시 에러 메시지 처리 로직 개선 필요
   useEffect(() => {
     if (error) {
       toast({ message: '로그인에 실패했어요.', type: 'error' });
