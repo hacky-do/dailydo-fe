@@ -8,6 +8,8 @@ import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
 
+import { useAuthStore } from '../model/auth.store';
+
 type LoginType = 'google' | 'naver' | 'guest';
 
 interface LoginButtonProps {
@@ -35,6 +37,7 @@ const BUTTON_CONFIG = {
 
 export const LoginButton = ({ type, className }: LoginButtonProps) => {
   const router = useRouter();
+  const setLastLogin = useAuthStore((state) => state.setLastLogin);
   const { label, icon: Icon, style } = BUTTON_CONFIG[type];
 
   const handleClick = () => {
@@ -42,7 +45,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       router.push(ROUTES.MISSIONS);
       return;
     }
-    localStorage.setItem('dailydo_last_login', type);
+    setLastLogin(type);
     window.location.href = `${getBaseUrl()}/api/auth/${type}`;
   };
 

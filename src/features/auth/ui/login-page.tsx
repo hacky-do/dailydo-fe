@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import DailyDoLogo from '@/shared/ui/icons/common/dailydoLogo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
@@ -14,11 +14,8 @@ import DecoLocation from '@/shared/ui/icons/login/decoLocation.svg';
 import DecoStar from '@/shared/ui/icons/login/decoStar.svg';
 import { useToast } from '@/shared/ui/toast/use-toast';
 
+import { useAuthStore } from '../model/auth.store';
 import { LoginButton } from './login-button';
-
-type SocialLoginType = 'google' | 'naver';
-
-const LAST_LOGIN_KEY = 'dailydo_last_login';
 
 const RecentLoginBadge = () => {
   return (
@@ -43,10 +40,7 @@ const RecentLoginBadge = () => {
 export const LoginPage = () => {
   const { toast } = useToast();
   const searchParams = useSearchParams();
-  const [recentLogin] = useState<SocialLoginType | null>(() => {
-    const stored = localStorage.getItem(LAST_LOGIN_KEY);
-    return stored === 'google' || stored === 'naver' ? stored : null;
-  });
+  const recentLogin = useAuthStore((state) => state.lastLogin);
 
   useEffect(() => {
     if (searchParams.get('error')) {
