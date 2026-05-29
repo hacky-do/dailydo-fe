@@ -48,6 +48,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       router.push(ROUTES.MISSIONS);
       return;
     }
+    // TODO: 로그인/회원가입 완료시점에 저장하도록 변경 필요
     setLastLogin(type);
     const redirectUri = `${window.location.origin}${ROUTES.AUTH_CALLBACK}`;
     window.location.href = `${BASE_URL}/auth/oauth2?type=${type}&redirectUri=${encodeURIComponent(redirectUri)}`;
