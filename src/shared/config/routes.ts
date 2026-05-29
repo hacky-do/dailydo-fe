@@ -3,4 +3,5 @@ export const ROUTES = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   MISSIONS: '/missions',
+  AUTH_CALLBACK: '/auth/callback',
 } as const;
