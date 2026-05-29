@@ -3,14 +3,14 @@
 import Image from 'next/image';
 import { useEffect, useSyncExternalStore } from 'react';
 
-import DailyDoLogo from '@/shared/ui/icons/common/dailydoLogo.svg';
+import DailyDoLogo from '@/shared/ui/icons/common/dailydo_logo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
-import DecoCircle from '@/shared/ui/icons/login/decoCircle.svg';
-import DecoCoffee from '@/shared/ui/icons/login/decoCoffee.svg';
-import DecoGraph from '@/shared/ui/icons/login/decoGraph.svg';
-import DecoLight from '@/shared/ui/icons/login/decoLight.svg';
-import DecoLocation from '@/shared/ui/icons/login/decoLocation.svg';
-import DecoStar from '@/shared/ui/icons/login/decoStar.svg';
+import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
+import DecoCoffee from '@/shared/ui/icons/login/deco_coffee.svg';
+import DecoGraph from '@/shared/ui/icons/login/deco_graph.svg';
+import DecoLight from '@/shared/ui/icons/login/deco_light.svg';
+import DecoLocation from '@/shared/ui/icons/login/deco_location.svg';
+import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
 import { useToast } from '@/shared/ui/toast/use-toast';
 
 import { useAuthStore } from '../model/auth.store';
