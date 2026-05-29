@@ -2,6 +2,11 @@ import type { StorybookConfig } from '@storybook/nextjs';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  env: (config) => ({
+    ...config,
+    NEXT_PUBLIC_API_URL:
+      process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000',
+  }),
   addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
   framework: '@storybook/nextjs',
   staticDirs: ['../public', { from: '../src/app/fonts', to: '/fonts' }],
