@@ -8,9 +8,9 @@ import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
 
-import { useAuthStore } from '../model/auth.store';
+import { SocialLoginType, useAuthStore } from '../model/auth.store';
 
-type LoginType = 'google' | 'naver' | 'guest';
+type LoginType = SocialLoginType | 'guest';
 
 interface LoginButtonProps {
   type: LoginType;
