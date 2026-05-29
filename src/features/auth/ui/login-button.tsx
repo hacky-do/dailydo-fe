@@ -46,7 +46,8 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       return;
     }
     setLastLogin(type);
-    window.location.href = `${BASE_URL}/api/auth/${type}`;
+    const redirectUri = `${window.location.origin}${ROUTES.AUTH_CALLBACK}`;
+    window.location.href = `${BASE_URL}/auth/oauth2?type=${type}&redirectUri=${encodeURIComponent(redirectUri)}`;
   };
 
   return (
