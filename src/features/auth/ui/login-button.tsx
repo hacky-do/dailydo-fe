@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { getBaseUrl } from '@/shared/api/base-url.constant';
+import { BASE_URL } from '@/shared/api/base-url.constant';
 import { ROUTES } from '@/shared/config/routes';
 import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
@@ -46,7 +46,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       return;
     }
     setLastLogin(type);
-    window.location.href = `${getBaseUrl()}/api/auth/${type}`;
+    window.location.href = `${BASE_URL}/api/auth/${type}`;
   };
 
   return (
