@@ -88,6 +88,7 @@
   --animate-float: float 4s ease-in-out infinite;
   --animate-float-slow: float 6s ease-in-out infinite 0.7s;
   --animate-orbit-circle: orbit-circle 4s linear infinite;
+  --animate-orbit-circle-reverse: orbit-circle 4s linear infinite reverse;
 }
 
 @utility bg-gradient-100 {
