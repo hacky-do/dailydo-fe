@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import DailyDoLogo from '@/shared/ui/icons/common/dailydoLogo.svg';
@@ -37,16 +36,15 @@ const RecentLoginBadge = () => {
   );
 };
 
-export const LoginPage = () => {
+export const LoginPage = ({ error }: { error?: string }) => {
   const { toast } = useToast();
-  const searchParams = useSearchParams();
   const recentLogin = useAuthStore((state) => state.lastLogin);
 
   useEffect(() => {
-    if (searchParams.get('error')) {
+    if (error) {
       toast({ message: '로그인에 실패했어요.', type: 'error' });
     }
-  }, [searchParams, toast]);
+  }, [error, toast]);
 
   return (
     <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5 [--gradient-dir:to_right]">
