@@ -52,50 +52,51 @@ export const LoginPage = ({ error }: { error?: string }) => {
   }, [error, toast]);
 
   return (
-    <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5 [--gradient-dir:to_right]">
-      {/* 배경장식 */}
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden opacity-50"
-        aria-hidden="true"
-      >
-        <DecoLocation
-          width={40}
-          className="animate-float-slow absolute"
-          style={{ right: '100px', top: '30px' }}
-        />
-        <DecoGraph
-          width={40}
-          className="animate-float-slow absolute"
-          style={{ left: '40px', top: '160px' }}
-        />
-        <DecoLight
-          width={40}
-          className="animate-float absolute"
-          style={{ left: '60px', top: '56px' }}
-        />
-        <DecoStar
-          width={10}
-          className="animate-orbit-circle-reverse absolute"
-          style={{ left: '130px', top: '121px' }}
-        />
-        <DecoCircle
-          width={10}
-          className="animate-orbit-circle absolute"
-          style={{ right: '80px', top: '105px' }}
-        />
-        <DecoCoffee
-          width={40}
-          className="animate-float absolute"
-          style={{ right: '37px', top: '190px' }}
-        />
-      </div>
+    <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5">
+      <div className="min-h-10 flex-1" aria-hidden="true" />
 
-      <div className="min-h-10 flex-2" />
-
-      {/* section: 로고 */}
-      <div className="relative z-10 flex flex-col items-center">
+      {/* section: 메인 컨텐츠 */}
+      <section className="relative z-10 flex flex-col items-center pt-24">
+        {/* 배경장식 */}
+        <div
+          className="pointer-events-none absolute inset-0 overflow-hidden opacity-50"
+          aria-hidden="true"
+        >
+          <DecoLocation
+            width={40}
+            className="animate-float-slow absolute"
+            style={{ right: '100px', top: '30px' }}
+          />
+          <DecoGraph
+            width={40}
+            className="animate-float-slow absolute"
+            style={{ left: '40px', top: '160px' }}
+          />
+          <DecoLight
+            width={40}
+            className="animate-float absolute"
+            style={{ left: '60px', top: '56px' }}
+          />
+          <DecoStar
+            width={10}
+            className="animate-orbit-circle-reverse absolute"
+            style={{ left: '130px', top: '121px' }}
+          />
+          <DecoCircle
+            width={10}
+            className="animate-orbit-circle absolute"
+            style={{ right: '80px', top: '105px' }}
+          />
+          <DecoCoffee
+            width={40}
+            className="animate-float absolute"
+            style={{ right: '37px', top: '190px' }}
+          />
+        </div>
         {/* App icon */}
-        <Logo width={48} />
+        <div className="animate-pulse">
+          <Logo width={48} />
+        </div>
         <h1 className="mt-4">
           <DailyDoLogo width={145} />
           <span className="sr-only">Daily:DO</span>
@@ -114,9 +115,9 @@ export const LoginPage = ({ error }: { error?: string }) => {
             fill
           />
         </div>
-      </div>
+      </section>
 
-      <div className="flex-1" />
+      <div className="flex-1" aria-hidden="true" />
 
       {/* 로그인 버튼 */}
       <div className="relative z-10 flex flex-col gap-4 px-5">
