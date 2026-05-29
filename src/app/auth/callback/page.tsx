@@ -15,6 +15,7 @@ function AuthCallbackHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const setLastLogin = useAuthStore((state) => state.setLastLogin);
 
   const token = searchParams.get('token');
   const type = searchParams.get('type') as SocialLoginType | null;
@@ -23,6 +24,7 @@ function AuthCallbackHandler() {
 
   const { mutate } = useSocialLoginMutation({
     onSuccess: (data) => {
+      if (type) setLastLogin(type);
       setAuth(data.accessToken, data.refreshToken);
       router.replace(ROUTES.MISSIONS);
     },

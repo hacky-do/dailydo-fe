@@ -8,7 +8,7 @@ import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
 
-import { SocialLoginType, useAuthStore } from '../model/auth.store';
+import { SocialLoginType } from '../model/auth.store';
 
 type LoginType = SocialLoginType | 'guest';
 
@@ -40,7 +40,6 @@ const BUTTON_CONFIG = {
 
 export const LoginButton = ({ type, className }: LoginButtonProps) => {
   const router = useRouter();
-  const setLastLogin = useAuthStore((state) => state.setLastLogin);
   const { label, icon: Icon, width, style } = BUTTON_CONFIG[type];
 
   const handleClick = () => {
@@ -48,8 +47,6 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       router.push(ROUTES.MISSIONS);
       return;
     }
-    // TODO: 로그인/회원가입 완료시점에 저장하도록 변경 필요
-    setLastLogin(type);
     const redirectUri = `${window.location.origin}${ROUTES.AUTH_CALLBACK}`;
     window.location.href = `${BASE_URL}/auth/oauth2?type=${type}&redirectUri=${encodeURIComponent(redirectUri)}`;
   };
