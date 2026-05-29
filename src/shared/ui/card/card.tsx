@@ -14,7 +14,13 @@ interface CardRootProps {
   onFlip?: () => void;
 }
 
-const CardRoot = ({ children, isSpecial = false, isCompleted = false, defaultFlipped = false, onFlip }: CardRootProps) => {
+const CardRoot = ({
+  children,
+  isSpecial = false,
+  isCompleted = false,
+  defaultFlipped = false,
+  onFlip,
+}: CardRootProps) => {
   const [flipped, setFlipped] = useState(defaultFlipped);
 
   const handleFlip = () => {
@@ -28,7 +34,13 @@ const CardRoot = ({ children, isSpecial = false, isCompleted = false, defaultFli
 
   return (
     <CardContext.Provider
-      value={{ flipped, isSpecial, isCompleted, onFlip: handleFlip, onUnflip: handleUnflip }}
+      value={{
+        flipped,
+        isSpecial,
+        isCompleted,
+        onFlip: handleFlip,
+        onUnflip: handleUnflip,
+      }}
     >
       <div
         className="relative h-full min-h-82 w-56.25 min-w-56.25 cursor-pointer perspective-midrange"

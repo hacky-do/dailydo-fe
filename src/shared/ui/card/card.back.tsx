@@ -3,7 +3,11 @@
 import { cn } from '@/shared/utils/cn';
 
 import { useCard } from './card.context';
-import { cardBgStyles, getCardBorderStyle, getCardVariant } from './card.styles';
+import {
+  cardBgStyles,
+  getCardBorderStyle,
+  getCardVariant,
+} from './card.styles';
 
 interface CardBackProps {
   children?: React.ReactNode;
@@ -23,7 +27,12 @@ export const CardBack = ({ children, selected = false }: CardBackProps) => {
       )}
     >
       {isCompleted && (
-        <div className={cn('animate-card-fill-up absolute inset-0', cardBgStyles[variant])} />
+        <div
+          className={cn(
+            'animate-card-fill-up absolute inset-0',
+            cardBgStyles[variant],
+          )}
+        />
       )}
       <div className="relative z-10 flex w-full flex-col items-center justify-center gap-3">
         {children}

@@ -1,6 +1,13 @@
-export type CardVariant = 'basic' | 'special' | 'completed' | 'specialCompleted';
+export type CardVariant =
+  | 'basic'
+  | 'special'
+  | 'completed'
+  | 'specialCompleted';
 
-export const getCardVariant = (isSpecial: boolean, isCompleted: boolean): CardVariant => {
+export const getCardVariant = (
+  isSpecial: boolean,
+  isCompleted: boolean,
+): CardVariant => {
   if (isCompleted && isSpecial) return 'specialCompleted';
   if (isCompleted) return 'completed';
   if (isSpecial) return 'special';
@@ -14,13 +21,21 @@ export const cardBgStyles: Record<CardVariant, string> = {
   specialCompleted: 'bg-special-complate-card-pattern',
 };
 
-export const cardBorderStyles: Record<'none' | 'selected' | 'specialSelected', string> = {
+export const cardBorderStyles: Record<
+  'none' | 'selected' | 'specialSelected',
+  string
+> = {
   none: 'border-transparent',
   selected: 'border-3 border-green-500',
   specialSelected: 'border-3 border-special-border',
 };
 
-export const getCardBorderStyle = (selected: boolean, isSpecial: boolean): string => {
+export const getCardBorderStyle = (
+  selected: boolean,
+  isSpecial: boolean,
+): string => {
   if (!selected) return cardBorderStyles.none;
-  return isSpecial ? cardBorderStyles.specialSelected : cardBorderStyles.selected;
+  return isSpecial
+    ? cardBorderStyles.specialSelected
+    : cardBorderStyles.selected;
 };
