@@ -1,4 +1,4 @@
-interface Mission {
+export interface Mission {
   id: string;
   title: string;
   categoryId: string;
@@ -9,5 +9,3 @@ interface Mission {
   updatedAt: string;
   isSpecial: boolean;
 }
-
-export type { Mission };

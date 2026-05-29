@@ -62,13 +62,22 @@
   --color-gradient-600-start: #00d361;
   --color-gradient-600-end: #00b9de;
 
-  --color-special-gradient-start: #fdeb49;
-  --color-special-gradient-end: #e5b01e;
+  --color-gradient-yellow: #fecd47;
+
+  --color-special-gradient-yellow-start: #d38600;
+  --color-special-gradient-yellow-end: #fdeb49;
+
+  --color-special-gradient-start: #e5b01e;
+  --color-special-gradient-end: #fdeb49;
 
   --color-error: #e91616;
   --color-skeleton: #f2f5f9;
-
+  --color-special-text-color: rgba(213, 138, 0, 1);
   --color-special: #f1eac5;
+
+  --color-special-border: #ecc12a;
+  --color-special-text: #ffbb00;
+
   /* 그림자 */
   --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
   --shadow-xl: 0 0 50px 0 rgba(0, 0, 0, 0.08);
@@ -105,6 +114,21 @@
     var(--color-gradient-600-start),
     var(--color-gradient-600-end)
   );
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@utility animate-slide-up {
+  animation: slide-up-fade-in 0.4s ease-out forwards;
 }
 
 @keyframes shimmer {
@@ -157,13 +181,21 @@
   }
 }
 
+@utility bg-complete-card-pattern {
+  background: linear-gradient(
+    to top,
+    var(--color-green-500),
+    var(--color-green-400)
+  );
+}
+
 @utility bg-special-mission-card-pattern {
   background: linear-gradient(
     to top,
     var(--color-special-gradient-start),
     var(--color-special-gradient-end)
   );
-
+  border: 3px solid var(--color-special-border);
   &::before {
     content: '';
     position: absolute;
@@ -174,4 +206,20 @@
     transform: rotate(20deg);
     pointer-events: none;
   }
+}
+
+@utility bg-complate-card-pattern {
+  background: linear-gradient(
+    to top,
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
+}
+
+@utility bg-special-complate-card-pattern {
+  background: linear-gradient(
+    to top,
+    var(--color-special-gradient-start),
+    var(--color-special-gradient-end)
+  );
 }
