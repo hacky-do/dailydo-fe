@@ -1,4 +1,7 @@
-export type MissionSelectionVariant = 'default' | 'selected' | 'specialSelected';
+export type MissionSelectionVariant =
+  | 'default'
+  | 'selected'
+  | 'specialSelected';
 
 export const getMissionSelectionVariant = (
   selected: boolean,
