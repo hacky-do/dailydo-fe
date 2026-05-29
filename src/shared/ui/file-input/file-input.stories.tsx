@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
+import { ToastProvider } from '../toast/toast-provider';
 import { FileInput } from './file-input';
 
 const meta: Meta<typeof FileInput> = {
@@ -8,6 +9,13 @@ const meta: Meta<typeof FileInput> = {
   argTypes: {
     onChange: { table: { disable: true } },
   },
+  decorators: [
+    (Story) => (
+      <ToastProvider>
+        <Story />
+      </ToastProvider>
+    ),
+  ],
 };
 
 export default meta;
