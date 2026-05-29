@@ -55,37 +55,37 @@ export const LoginPage = ({ error }: { error?: string }) => {
     <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5 [--gradient-dir:to_right]">
       {/* 배경장식 */}
       <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
+        className="pointer-events-none absolute inset-0 overflow-hidden opacity-50"
         aria-hidden="true"
       >
         <DecoLocation
           width={40}
-          className="animate-float-slow absolute opacity-50"
+          className="animate-float-slow absolute"
           style={{ right: '100px', top: '30px' }}
         />
         <DecoGraph
           width={40}
-          className="animate-float-slow absolute opacity-50"
+          className="animate-float-slow absolute"
           style={{ left: '40px', top: '160px' }}
         />
         <DecoLight
           width={40}
-          className="animate-float absolute opacity-50"
+          className="animate-float absolute"
           style={{ left: '60px', top: '56px' }}
         />
         <DecoStar
           width={10}
-          className="animate-orbit-circle-reverse absolute opacity-50"
+          className="animate-orbit-circle-reverse absolute"
           style={{ left: '130px', top: '121px' }}
         />
         <DecoCircle
           width={10}
-          className="animate-orbit-circle absolute opacity-50"
+          className="animate-orbit-circle absolute"
           style={{ right: '80px', top: '105px' }}
         />
         <DecoCoffee
           width={40}
-          className="animate-float absolute opacity-50"
+          className="animate-float absolute"
           style={{ right: '37px', top: '190px' }}
         />
       </div>
