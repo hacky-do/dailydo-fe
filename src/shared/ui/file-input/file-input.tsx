@@ -4,6 +4,8 @@ import { useRef, useState } from 'react';
 import DeleteFill from '@/shared/ui/icons/common/delete_fill.svg';
 import ImagePlus from '@/shared/ui/icons/common/image_plus.svg';
 
+import { useToast } from '../toast';
+
 interface FileInputProps {
   onChange?: (file: File | null) => void;
 }
@@ -11,6 +13,7 @@ interface FileInputProps {
 export const FileInput = ({ onChange }: FileInputProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   // 이전 URL
   const prevPreviewRef = useRef<string | null>(null);
@@ -20,8 +23,14 @@ export const FileInput = ({ onChange }: FileInputProps) => {
     if (!selected) return;
 
     const allowedTypes = ['image/png', 'image/jpeg', 'image/webp'];
-    if (!allowedTypes.includes(selected.type)) return;
-    if (selected.size > 2 * 1024 * 1024) return;
+    if (!allowedTypes.includes(selected.type)) {
+      toast({ type: 'info', message: '지원되지 않는 파일 형식입니다.' });
+      return;
+    }
+    if (selected.size > 2 * 1024 * 1024) {
+      toast({ type: 'info', message: '사진 용량은 2MB를 넘을 수 없습니다.' });
+      return;
+    }
 
     // 이전 URL 해제
     if (prevPreviewRef.current) URL.revokeObjectURL(prevPreviewRef.current);
