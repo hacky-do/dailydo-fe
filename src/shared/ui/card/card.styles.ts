@@ -21,21 +21,25 @@ export const cardBgStyles: Record<CardVariant, string> = {
   specialCompleted: 'bg-special-complate-card-pattern',
 };
 
+export const cardBorderBase = 'border-3';
+
 export const cardBorderStyles: Record<
   'none' | 'selected' | 'specialSelected',
   string
 > = {
   none: 'border-transparent',
-  selected: 'border-3 border-green-500',
-  specialSelected: 'border-3 border-special-border',
+  selected: 'border-green-500',
+  specialSelected: 'border-special-border',
 };
 
 export const getCardBorderStyle = (
   selected: boolean,
   isSpecial: boolean,
 ): string => {
-  if (!selected) return cardBorderStyles.none;
-  return isSpecial
-    ? cardBorderStyles.specialSelected
-    : cardBorderStyles.selected;
+  const color = !selected
+    ? cardBorderStyles.none
+    : isSpecial
+      ? cardBorderStyles.specialSelected
+      : cardBorderStyles.selected;
+  return `${cardBorderBase} ${color}`;
 };

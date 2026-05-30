@@ -24,6 +24,8 @@ const CardRoot = ({
   const [flipped, setFlipped] = useState(defaultFlipped);
 
   const handleFlip = () => {
+    if (flipped) return;
+
     setFlipped(true);
     onFlip?.();
   };
