@@ -69,7 +69,8 @@ export const FileInput = ({ onChange }: FileInputProps) => {
       >
         {previewImage ?? (
           <>
-            <ImagePlus />
+            <ImagePlus className="size-4.5" />
+            <span className="text-sm">사진 첨부</span>
           </>
         )}
         <input

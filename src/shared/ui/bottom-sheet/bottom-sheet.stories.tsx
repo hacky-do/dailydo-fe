@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 
 import { Button } from '../button';
-import { FileInput } from '../file-input';
+import { FileInput } from '@/widgets/file-input';
 import { Textarea } from '../input';
 import { ToastProvider } from '../toast/toast-provider';
 import { AlertBottomSheet } from './alert-bottom-sheet';
