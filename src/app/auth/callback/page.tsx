@@ -15,7 +15,6 @@ import { Loader } from '@/shared/ui/loader/loader';
 function AuthCallbackHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const setAuth = useAuthStore((state) => state.setAuth);
   const setLastLogin = useAuthStore((state) => state.setLastLogin);
 
   const token = searchParams.get('token');
@@ -24,9 +23,8 @@ function AuthCallbackHandler() {
   const error = searchParams.get('error');
 
   const { mutate } = useSocialLoginMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
       if (type) setLastLogin(type);
-      setAuth(data.accessToken, data.refreshToken);
       router.replace(ROUTES.MISSIONS);
     },
     onError: (err) => {
