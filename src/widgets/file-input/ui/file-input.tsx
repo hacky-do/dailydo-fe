@@ -62,15 +62,14 @@ export const FileInput = ({ onChange }: FileInputProps) => {
   ) : null;
 
   return (
-    <div className="relative size-28.5">
+    <div className="relative size-28.5 rounded-xl">
       <label
         aria-label="파일 첨부"
-        className="relative flex size-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl bg-gray-50 text-gray-500"
+        className="relative flex size-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl bg-gray-50 p-3 text-gray-500"
       >
         {previewImage ?? (
           <>
-            <ImagePlus className="size-4.5" />
-            파일 첨부
+            <ImagePlus />
           </>
         )}
         <input
