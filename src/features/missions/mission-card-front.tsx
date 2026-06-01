@@ -10,15 +10,15 @@ export const MissionCardFront = () => {
   return (
     <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-4">
       {isSpecial ? (
-        <div className="bg-special --shadow flex h-20 w-20 items-center justify-center rounded-full">
+        <div className="bg-special - flex h-20 w-20 items-center justify-center rounded-full">
           <SpecialBackIcon className="h-20 w-20 animate-pulse" />
         </div>
       ) : (
-        <div className="--shadow flex h-20 w-20 items-center justify-center rounded-full bg-green-300">
+        <div className="--shadow-card flex h-20 w-20 items-center justify-center rounded-full bg-green-300">
           <QuestionBackIcon className="h-7.5 w-auto animate-pulse" />
         </div>
       )}
-      <div className="--shadow rounded-3xl bg-green-100 px-3 py-1">
+      <div className="--shadow-card rounded-3xl bg-green-100 px-3 py-1">
         <span
           className={cn(
             'text-xl font-semibold',
