@@ -1,4 +1,9 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<<<<<<< HEAD
 <path d="M5.5 5L18.5 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
 <path d="M18.5 5L5.5 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+=======
+<path d="M5.5 5L18.5 18" stroke="#737373" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M18.5 5L5.5 18" stroke="#737373" stroke-width="1.8" stroke-linecap="round"/>
+>>>>>>> 950f105 (design: 바텀 시트 퍼블리싱 구현 완료(#48))
 </svg>
