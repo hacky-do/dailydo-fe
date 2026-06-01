@@ -10,6 +10,7 @@ import {
 } from '@/features/auth/model/auth.store';
 import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
+import { Loader } from '@/shared/ui/loader/loader';
 
 function AuthCallbackHandler() {
   const router = useRouter();
@@ -55,7 +56,11 @@ function AuthCallbackHandler() {
     mutate({ type, token });
   }, [error, mutate, router, token, type]);
 
-  return null;
+  return (
+    <div className="bg-gradient-100 flex h-screen items-center justify-center">
+      <Loader />
+    </div>
+  );
 }
 
 export default function Page() {
