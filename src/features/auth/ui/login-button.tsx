@@ -2,13 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 
+import { SocialLoginType } from '@/entities/session';
 import { BASE_URL } from '@/shared/api/base-url.constant';
 import { ROUTES } from '@/shared/config/routes';
 import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
-
-import { SocialLoginType } from '../model/auth.store';
 
 type LoginType = SocialLoginType | 'guest';
 

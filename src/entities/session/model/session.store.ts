@@ -1,23 +1,23 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type SocialLoginType = 'google' | 'naver';
+import { SocialLoginType } from './types';
 
-const AUTH_STORE_KEY = 'dailydo_auth';
+const SESSION_STORE_KEY = 'dailydo_auth';
 
-interface AuthState {
+interface SessionState {
   lastLogin: SocialLoginType | null;
   setLastLogin: (type: SocialLoginType) => void;
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useSessionStore = create<SessionState>()(
   persist(
     (set) => ({
       lastLogin: null,
       setLastLogin: (type) => set({ lastLogin: type }),
     }),
     {
-      name: AUTH_STORE_KEY,
+      name: SESSION_STORE_KEY,
     },
   ),
 );

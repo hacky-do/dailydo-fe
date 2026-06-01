@@ -1,15 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { SocialLoginResponse, SocialLoginType } from '@/entities/session';
 import { clientApi } from '@/shared/api/fetch-client';
-
-import { SocialLoginType } from '../model/auth.store';
-
-export interface SocialLoginResponse {
-  id: number;
-  accessToken: string;
-  expiresIn: number;
-  refreshToken: string;
-}
 
 export const socialLogin = (
   type: SocialLoginType,
