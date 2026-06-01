@@ -46,7 +46,11 @@ export const MobileHeader = ({ className }: { className?: string }) => {
         {isTitledRoute ? (
           // 뒤로가기 버튼, 페이지 제목
           <>
-            <button onClick={() => router.back()} aria-label="뒤로가기">
+            <button
+              onClick={() => router.back()}
+              type="button"
+              aria-label="뒤로가기"
+            >
               <ChevronLeft className="w-7.5 text-white" />
             </button>
             <h1 className="text-lg font-semibold text-white">
@@ -65,6 +69,7 @@ export const MobileHeader = ({ className }: { className?: string }) => {
         {/* 햄버거 버튼 */}
         <button
           onClick={handleOpenSidebar}
+          type="button"
           className="ml-auto"
           aria-label="메뉴 열기"
         >

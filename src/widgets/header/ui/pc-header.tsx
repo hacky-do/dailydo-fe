@@ -16,7 +16,11 @@ interface PcNavItemProps {
 
 const PcNavItem = ({ name, onClick, badge }: PcNavItemProps) => (
   <li className="flex">
-    <button onClick={onClick} className="flex items-center gap-1 p-4">
+    <button
+      onClick={onClick}
+      type="button"
+      className="flex items-center gap-1 p-4"
+    >
       {name}
       {badge}
     </button>
@@ -50,7 +54,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
       <div className="mx-auto flex h-full w-full max-w-7xl items-center gap-4 px-3">
         {/* 로고 */}
         <h1>
-          <Link href={ROUTES.HOME}>
+          <Link href={ROUTES.HOME} title="홈으로 이동">
             <Logo className="h-10" aria-label="daily:do" />
           </Link>
         </h1>
@@ -87,7 +91,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
                   {ROUTES_NAME.LOGIN}
                 </Link>
               ) : (
-                <button onClick={handleLogout} className="p-4">
+                <button onClick={handleLogout} type="button" className="p-4">
                   로그아웃
                 </button>
               )}

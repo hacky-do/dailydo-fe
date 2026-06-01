@@ -26,7 +26,7 @@ const SidebarNavItem = ({
   showLock = false,
 }: SidebarNavItemProps) => (
   <li>
-    <button onClick={onClick} className="flex w-full">
+    <button onClick={onClick} type="button" className="flex w-full">
       <div className="flex items-center gap-1 p-4">
         <span className={cn({ 'font-semibold text-green-600': isActive })}>
           {name}
@@ -117,7 +117,7 @@ export const Sidebar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 {ROUTES_NAME.LOGIN}
               </Link>
             ) : (
-              <button onClick={handleLogout} className="p-4">
+              <button onClick={handleLogout} type="button" className="p-4">
                 로그아웃
               </button>
             )}
