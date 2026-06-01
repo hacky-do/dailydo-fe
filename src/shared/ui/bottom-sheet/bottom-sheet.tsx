@@ -9,18 +9,30 @@ import { cn } from '../../utils/cn';
 
 const Root = Drawer.Root;
 
-const Trigger = ({ asChild = true, ...props }: ComponentProps<typeof Drawer.Trigger>) => (
+const Trigger = ({
+  asChild = true,
+  ...props
+}: ComponentProps<typeof Drawer.Trigger>) => (
   <Drawer.Trigger asChild={asChild} {...props} />
 );
 
-const Overlay = ({ className, ...props }: ComponentProps<typeof Drawer.Overlay>) => (
-  <Drawer.Overlay className={cn('fixed inset-0 z-40 bg-black/40', className)} {...props} />
+const Overlay = ({
+  className,
+  ...props
+}: ComponentProps<typeof Drawer.Overlay>) => (
+  <Drawer.Overlay
+    className={cn('fixed inset-0 z-40 bg-black/40', className)}
+    {...props}
+  />
 );
 
 const Handle = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     aria-hidden
-    className={cn('mx-auto mt-3 mb-2 h-1.5 w-10 shrink-0 rounded-full bg-gray-200', className)}
+    className={cn(
+      'mx-auto mt-3 mb-2 h-1.5 w-10 shrink-0 rounded-full bg-gray-200',
+      className,
+    )}
     {...props}
   />
 );
@@ -29,7 +41,12 @@ interface ContentProps extends ComponentProps<typeof Drawer.Content> {
   showCloseButton?: boolean;
 }
 
-const Content = ({ children, className, showCloseButton = true, ...props }: ContentProps) => (
+const Content = ({
+  children,
+  className,
+  showCloseButton = true,
+  ...props
+}: ContentProps) => (
   <Drawer.Portal>
     <Overlay />
     <Drawer.Content
@@ -55,12 +72,24 @@ const Header = ({ className, ...props }: ComponentProps<'div'>) => (
   <div className={cn('shrink-0 px-5 pt-2 pb-4', className)} {...props} />
 );
 
-const Title = ({ className, ...props }: ComponentProps<typeof Drawer.Title>) => (
-  <Drawer.Title className={cn('text-lg font-semibold text-gray-900', className)} {...props} />
+const Title = ({
+  className,
+  ...props
+}: ComponentProps<typeof Drawer.Title>) => (
+  <Drawer.Title
+    className={cn('text-lg font-semibold text-gray-900', className)}
+    {...props}
+  />
 );
 
-const Description = ({ className, ...props }: ComponentProps<typeof Drawer.Description>) => (
-  <Drawer.Description className={cn('mt-1 text-sm text-gray-500', className)} {...props} />
+const Description = ({
+  className,
+  ...props
+}: ComponentProps<typeof Drawer.Description>) => (
+  <Drawer.Description
+    className={cn('mt-1 text-sm text-gray-500', className)}
+    {...props}
+  />
 );
 
 const Body = ({ className, ...props }: ComponentProps<'div'>) => (
@@ -71,7 +100,10 @@ const Footer = ({ className, ...props }: ComponentProps<'div'>) => (
   <div className={cn('shrink-0 px-5 pt-2 pb-6', className)} {...props} />
 );
 
-const Close = ({ asChild = true, ...props }: ComponentProps<typeof Drawer.Close>) => (
+const Close = ({
+  asChild = true,
+  ...props
+}: ComponentProps<typeof Drawer.Close>) => (
   <Drawer.Close asChild={asChild} {...props} />
 );
 
