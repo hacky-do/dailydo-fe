@@ -117,7 +117,6 @@ export const Toast = ({
       el.style.opacity = String(
         Math.max(0, 1 - Math.abs(dy) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR)),
       );
-      el.style.transition = 'opacity 0.1s ease';
     }
   };
 
