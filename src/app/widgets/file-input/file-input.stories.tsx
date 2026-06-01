@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { ToastProvider } from '../toast/toast-provider';
-import { FileInput } from './file-input';
+import { ToastProvider } from '@/shared/ui/toast';
+
+import { FileInput } from './ui/file-input';
 
 const meta: Meta<typeof FileInput> = {
   title: 'Shared/FileInput',

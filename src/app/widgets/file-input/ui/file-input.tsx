@@ -3,8 +3,7 @@ import { useRef, useState } from 'react';
 
 import DeleteFill from '@/shared/ui/icons/common/delete_fill.svg';
 import ImagePlus from '@/shared/ui/icons/common/image_plus.svg';
-
-import { useToast } from '../toast';
+import { useToast } from '@/shared/ui/toast';
 
 interface FileInputProps {
   onChange?: (file: File | null) => void;
