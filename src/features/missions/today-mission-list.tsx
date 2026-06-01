@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 
+import { useMissions } from '@/entities/missions/apis/use-missions';
 import { Mission } from '@/entities/missions/model/mission.types';
 import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
-import { useMissions } from '@/entities/missions/model/use-missions';
 import {
   categoryBadgeStyles,
   getMissionSelectionVariant,
@@ -152,7 +152,7 @@ export const TodayMissionCard = ({
 };
 
 export const TodayMissionList = () => {
-  const missions = useMissions();
+  const { data: missions = [] } = useMissions();
 
   return (
     <div className="flex gap-4">

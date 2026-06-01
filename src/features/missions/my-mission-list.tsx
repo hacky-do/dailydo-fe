@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { useMissions } from '@/entities/missions/apis/use-missions';
 import { Mission } from '@/entities/missions/model/mission.types';
-import { useMissions } from '@/entities/missions/model/use-missions';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
@@ -151,7 +151,7 @@ export const MyMissionCard = ({ mission }: { mission: Mission }) => {
 };
 
 export const MyMissionList = () => {
-  const missions = useMissions();
+  const { data: missions = [] } = useMissions();
 
   return (
     <div className="flex gap-4">
