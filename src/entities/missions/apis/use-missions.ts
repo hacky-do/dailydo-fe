@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getMissions } from './mission.api';
 import { missionsQueryKey } from './mission.constans';
+import { getMissions } from './mission.querys';
 
 export const useMissions = () =>
   useQuery({
