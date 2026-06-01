@@ -32,6 +32,14 @@ export const MobileHeader = ({ className }: { className?: string }) => {
     // TODO: 사이드바 오픈 구현
   };
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(ROUTES.HOME);
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -47,7 +55,7 @@ export const MobileHeader = ({ className }: { className?: string }) => {
           // 뒤로가기 버튼, 페이지 제목
           <>
             <button
-              onClick={() => router.back()}
+              onClick={handleBack}
               type="button"
               aria-label="뒤로가기"
             >
