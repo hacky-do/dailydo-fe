@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { Mission } from '@/entities/missions/model/mission.types';
-import { useMissions } from '@/entities/missions/model/useMissions';
+import { useMissions } from '@/entities/missions/model/use-missions';
 import { Button } from '@/shared/ui/button/button';
-import { Card } from '@/shared/ui/card';
+import { Card } from '@/widgets/card';
 import { cn } from '@/shared/utils/cn';
 
 interface MissionCompleteSheetProps {

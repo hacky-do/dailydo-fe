@@ -3,18 +3,18 @@
 import Image from 'next/image';
 
 import { Mission } from '@/entities/missions/model/mission.types';
-import { useMissionCardState } from '@/entities/missions/model/useMissionCardState';
-import { useMissions } from '@/entities/missions/model/useMissions';
+import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
+import { useMissions } from '@/entities/missions/model/use-missions';
 import {
   categoryBadgeStyles,
   getMissionSelectionVariant,
   titleStyles,
-} from '@/entities/missions/ui/missionCard.styles';
-import { MissionCardFront } from '@/entities/missions/ui/MissionCardFront';
+} from '@/features/missions/mission-card.styles';
+import { MissionCardFront } from '@/features/missions/mission-card-front';
 import { Button } from '@/shared/ui/button';
-import { Card } from '@/shared/ui/card';
-import { useCard } from '@/shared/ui/card/card.context';
 import { cn } from '@/shared/utils/cn';
+import { Card } from '@/widgets/card';
+import { useCard } from '@/widgets/card/card-context';
 
 interface TodayMissionBackContentProps {
   mission: Mission;

@@ -2,12 +2,12 @@
 
 import { cn } from '@/shared/utils/cn';
 
-import { useCard } from './card.context';
 import {
   cardBgStyles,
   getCardBorderStyle,
   getCardVariant,
 } from './card.styles';
+import { useCard } from './card-context';
 
 interface CardBackProps {
   children?: React.ReactNode;

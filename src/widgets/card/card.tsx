@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
-import { CardBack } from './card.back';
-import { CardContext } from './card.context';
-import { CardFront } from './card.front';
+import { CardBack } from './card-back';
+import { CardContext } from './card-context';
+import { CardFront } from './card-front';
 
 interface CardRootProps {
   children: React.ReactNode;

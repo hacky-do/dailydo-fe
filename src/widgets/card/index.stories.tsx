@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import { userEvent, within } from 'storybook/test';
 
 import { Mission } from '@/entities/missions/model/mission.types';
-import { MyMissionCard } from '@/widgets/missions/MyMissionList';
-import { TodayMissionCard } from '@/widgets/missions/TodayMissionList';
+import { MyMissionCard } from '@/features/missions/my-mission-list';
+import { TodayMissionCard } from '@/features/missions/today-mission-list';
 
 import { Card } from './card';
 

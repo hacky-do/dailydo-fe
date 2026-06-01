@@ -1,9 +1,9 @@
 'use client';
 
-import { useCard } from '@/shared/ui/card/card.context';
 import QuestionBackIcon from '@/shared/ui/icons/mission/question_back.svg';
 import SpecialBackIcon from '@/shared/ui/icons/mission/special_back.svg';
 import { cn } from '@/shared/utils/cn';
+import { useCard } from '@/widgets/card/card-context';
 
 export const MissionCardFront = () => {
   const { isSpecial } = useCard();

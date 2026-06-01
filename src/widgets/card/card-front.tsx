@@ -2,7 +2,7 @@
 
 import { cn } from '@/shared/utils/cn';
 
-import { useCard } from './card.context';
+import { useCard } from './card-context';
 import { cardBgStyles, getCardVariant } from './card.styles';
 
 // 클릭 시 화면 전환
