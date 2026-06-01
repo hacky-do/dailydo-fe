@@ -25,16 +25,11 @@ interface SocialLoginParams {
   token: string;
 }
 
-export const useSocialLoginMutation = (callbacks: {
-  onSuccess: (data: SocialLoginResponse) => void;
-  onError: (err: unknown) => void;
-}) =>
+export const useSocialLoginMutation = () =>
   useMutation({
     mutationFn: async ({ type, token }: SocialLoginParams) => {
       const data = await socialLogin(type, token, true);
       if (!data) throw new Error('No response');
       return data;
     },
-    onSuccess: callbacks.onSuccess,
-    onError: callbacks.onError,
   });

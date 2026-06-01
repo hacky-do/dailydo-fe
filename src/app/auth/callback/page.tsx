@@ -22,22 +22,7 @@ function AuthCallbackHandler() {
   const user = searchParams.get('user');
   const error = searchParams.get('error');
 
-  const { mutate } = useSocialLoginMutation({
-    onSuccess: () => {
-      if (type) setLastLogin(type);
-      router.replace(ROUTES.MISSIONS);
-    },
-    onError: (err) => {
-      if (err instanceof ApiError && err.code === 404) {
-        const params = new URLSearchParams({ token: token!, type: type! });
-        if (user) params.set('user', user);
-        router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
-        return;
-      }
-      sessionStorage.setItem('auth_error', '로그인 중 오류가 발생했습니다.');
-      router.replace(ROUTES.LOGIN);
-    },
-  });
+  const { mutate } = useSocialLoginMutation();
 
   useEffect(() => {
     if (error) {
@@ -51,8 +36,29 @@ function AuthCallbackHandler() {
       return;
     }
 
-    mutate({ type, token });
-  }, [error, mutate, router, token, type]);
+    mutate(
+      { type, token },
+      {
+        onSuccess: () => {
+          if (type) setLastLogin(type);
+          router.replace(ROUTES.MISSIONS);
+        },
+        onError: (err) => {
+          if (err instanceof ApiError && err.code === 404) {
+            const params = new URLSearchParams({ token: token!, type: type! });
+            if (user) params.set('user', user);
+            router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
+            return;
+          }
+          sessionStorage.setItem(
+            'auth_error',
+            '로그인 중 오류가 발생했습니다.',
+          );
+          router.replace(ROUTES.LOGIN);
+        },
+      },
+    );
+  }, [error, mutate, router, setLastLogin, token, type, user]);
 
   return (
     <div className="bg-gradient-100 flex h-screen items-center justify-center">
