@@ -5,7 +5,7 @@ import { SocialLoginType, useSessionStore } from '@/entities/session';
 import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
 
-import { useSocialLogin } from '../api/auth.api';
+import { useSocialLogin } from './use-social-login';
 
 export const useSocialLoginCallback = () => {
   const router = useRouter();
@@ -38,7 +38,7 @@ export const useSocialLoginCallback = () => {
           if (type) setLastLogin(type);
           router.replace(ROUTES.MISSIONS);
         },
-        onError: (err) => {
+        onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
             const params = new URLSearchParams({ token: token!, type: type! });
             if (user) params.set('user', user);
