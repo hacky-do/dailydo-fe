@@ -49,7 +49,6 @@ interface ToastStyle {
 function getToastStyle(
   isMounted: boolean,
   isExiting: boolean,
-  dragY: number,
   exitDirection: 1 | -1,
 ): ToastStyle {
   const animSec = `${ANIM_DURATION / 1000}s`;
@@ -70,18 +69,10 @@ function getToastStyle(
     };
   }
 
-  const isDragging = dragY !== 0;
   return {
-    transform: `translateY(${dragY}px)`,
-    opacity: isDragging
-      ? Math.max(
-          0,
-          1 - Math.abs(dragY) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR),
-        )
-      : 1,
-    transition: isDragging
-      ? 'opacity 0.1s ease'
-      : `transform ${animSec} ease, opacity ${animSec} ease`,
+    transform: 'translateY(0px)',
+    opacity: 1,
+    transition: `transform ${animSec} ease, opacity ${animSec} ease`,
   };
 }
 
@@ -103,15 +94,32 @@ export const Toast = ({
 }: ToastProps) => {
   const config = TYPE_CONFIG[type];
   const [isMounted, setIsMounted] = useState(false);
-  const [dragY, setDragY] = useState(0);
   const [exitDirection, setExitDirection] = useState<1 | -1>(1);
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
+  const dragYRef = useRef(0);
+  const toastElRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setIsMounted(true));
     return () => cancelAnimationFrame(raf);
   }, []);
+
+  const applyDragStyle = (dy: number) => {
+    const el = toastElRef.current;
+    if (!el) return;
+    if (dy === 0) {
+      el.style.removeProperty('transform');
+      el.style.removeProperty('opacity');
+      el.style.removeProperty('transition');
+    } else {
+      el.style.transform = `translateY(${dy}px)`;
+      el.style.opacity = String(
+        Math.max(0, 1 - Math.abs(dy) / (DRAG_THRESHOLD * DRAG_OPACITY_FACTOR)),
+      );
+      el.style.transition = 'opacity 0.1s ease';
+    }
+  };
 
   const handlePointerDown = (e: React.PointerEvent) => {
     isDraggingRef.current = true;
@@ -122,7 +130,8 @@ export const Toast = ({
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDraggingRef.current) return;
     const delta = e.clientY - startYRef.current;
-    setDragY(delta);
+    dragYRef.current = delta;
+    applyDragStyle(delta);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
@@ -133,19 +142,21 @@ export const Toast = ({
       setExitDirection(delta > 0 ? 1 : -1);
       onClose(id);
     } else {
-      setDragY(0);
+      dragYRef.current = 0;
+      applyDragStyle(0);
     }
   };
 
   const handlePointerCancel = () => {
     isDraggingRef.current = false;
-    setDragY(0);
+    dragYRef.current = 0;
+    applyDragStyle(0);
   };
 
   const handleMouseEnter = () => onPause?.(id);
   const handleMouseLeave = () => onResume?.(id);
 
-  const style = getToastStyle(isMounted, isExiting, dragY, exitDirection);
+  const style = getToastStyle(isMounted, isExiting, exitDirection);
 
   const ariaProps = {
     role: config.role,
@@ -171,6 +182,7 @@ export const Toast = ({
 
   return (
     <div
+      ref={toastElRef}
       {...ariaProps}
       {...pauseHandlers}
       {...dragHandlers}
