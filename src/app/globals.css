@@ -208,7 +208,7 @@
   }
 }
 
-@utility bg-complate-card-pattern {
+@utility bg-complete-card-pattern {
   background: linear-gradient(
     to top,
     var(--color-gradient-500-start),
@@ -216,7 +216,7 @@
   );
 }
 
-@utility bg-special-complate-card-pattern {
+@utility bg-special-complete-card-pattern {
   background: linear-gradient(
     to top,
     var(--color-special-gradient-start),

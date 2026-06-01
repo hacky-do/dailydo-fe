@@ -17,8 +17,8 @@ export const getCardVariant = (
 export const cardBgStyles: Record<CardVariant, string> = {
   basic: 'bg-basic-mission-card-pattern',
   special: 'bg-special-mission-card-pattern',
-  completed: 'bg-complate-card-pattern',
-  specialCompleted: 'bg-special-complate-card-pattern',
+  completed: 'bg-complete-card-pattern',
+  specialCompleted: 'bg-special-complete-card-pattern',
 };
 
 export const cardBorderBase = 'border-3';
