@@ -2,8 +2,8 @@
 
 import { cn } from '@/shared/utils/cn';
 
-import { useCard } from './card-context';
 import { cardBgStyles, getCardVariant } from './card.styles';
+import { useCard } from './card-context';
 
 // 클릭 시 화면 전환
 export const CardFront = ({ children }: { children?: React.ReactNode }) => {

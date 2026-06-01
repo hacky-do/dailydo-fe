@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Mission } from '@/entities/missions/model/mission.types';
-import { BASE_URL } from '@/shared/api/base-url.constant';
 import { MyMissionCard } from '@/features/missions/my-mission-list';
 import { TodayMissionCard } from '@/features/missions/today-mission-list';
+import { BASE_URL } from '@/shared/api/base-url.constant';
 
 const fetchMissions = async (): Promise<Mission[]> => {
   const res = await fetch(`${BASE_URL}/api/missions/new`);
