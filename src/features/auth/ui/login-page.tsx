@@ -113,6 +113,8 @@ export const LoginPage = () => {
             alt=""
             className="mt-6 object-contain"
             aria-hidden="true"
+            loading="eager"
+            sizes="(max-width: 768px) 100vw, 70vw"
             fill
           />
         </div>
