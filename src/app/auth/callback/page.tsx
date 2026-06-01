@@ -15,7 +15,7 @@ import { Loader } from '@/shared/ui/loader/loader';
 function AuthCallbackHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const setLastLogin = useAuthStore((state) => state.setLastLogin);
+  const { setLastLogin } = useAuthStore.getState();
 
   const token = searchParams.get('token');
   const type = searchParams.get('type') as SocialLoginType | null;
