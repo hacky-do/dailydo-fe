@@ -17,7 +17,7 @@ interface SocialLoginParams {
   token: string;
 }
 
-export const useSocialLoginMutation = () =>
+export const useSocialLogin = () =>
   useMutation({
     mutationFn: async ({ type, token }: SocialLoginParams) => {
       const data = await socialLogin(type, token, true);

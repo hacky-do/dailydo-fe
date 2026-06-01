@@ -5,7 +5,7 @@ import { SocialLoginType, useSessionStore } from '@/entities/session';
 import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
 
-import { useSocialLoginMutation } from '../api/auth.api';
+import { useSocialLogin } from '../api/auth.api';
 
 export const useSocialLoginCallback = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ export const useSocialLoginCallback = () => {
   const user = searchParams.get('user');
   const error = searchParams.get('error');
 
-  const { mutate } = useSocialLoginMutation();
+  const { mutate } = useSocialLogin();
 
   useEffect(() => {
     if (error) {
