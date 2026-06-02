@@ -172,7 +172,8 @@ export const TodayMissionList = () => {
   const handleSlideChangeStart = (swiper: SwiperClass) => {
     swiper.slides.forEach((slide) => {
       const wrapper = slide.querySelector<HTMLElement>('[data-card-wrapper]');
-      if (wrapper) wrapper.style.transition = `transform ${swiper.params.speed}ms ease`;
+      if (wrapper)
+        wrapper.style.transition = `transform ${swiper.params.speed}ms ease`;
     });
     applySlideEffects(swiper);
   };

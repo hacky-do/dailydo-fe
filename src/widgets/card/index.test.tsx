@@ -66,9 +66,7 @@ describe('카드 컴포넌트', () => {
 
       await user.click(container.firstChild as HTMLElement);
 
-      expect(
-        screen.getByText(missionData.items[0].title),
-      ).toBeInTheDocument();
+      expect(screen.getByText(missionData.items[0].title)).toBeInTheDocument();
       expect(
         screen.getByText(missionData.items[0].categoryName),
       ).toBeInTheDocument();
@@ -151,10 +149,7 @@ describe('카드 컴포넌트', () => {
       const user = userEvent.setup();
       const onCancel = jest.fn();
       const { container } = render(
-        <TodayMissionCard
-          mission={missionData.items[0]}
-          onCancel={onCancel}
-        />,
+        <TodayMissionCard mission={missionData.items[0]} onCancel={onCancel} />,
       );
 
       await user.click(container.firstChild as HTMLElement);
@@ -244,9 +239,7 @@ describe('카드 컴포넌트', () => {
       await user.click(screen.getByRole('button', { name: '완료' }));
 
       expect(screen.getByText('히든 미션')).toBeInTheDocument();
-      expect(
-        screen.getByText(missionData.items[2].title),
-      ).toBeInTheDocument();
+      expect(screen.getByText(missionData.items[2].title)).toBeInTheDocument();
     });
   });
 });
