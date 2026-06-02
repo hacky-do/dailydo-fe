@@ -21,8 +21,7 @@ export const useSocialLoginCallback = () => {
 
   useEffect(() => {
     if (error) {
-      sessionStorage.setItem('auth_error', error);
-      router.replace(ROUTES.LOGIN);
+      router.replace(`${ROUTES.LOGIN}?auth_error=1`);
       return;
     }
 
@@ -45,11 +44,7 @@ export const useSocialLoginCallback = () => {
             router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
             return;
           }
-          sessionStorage.setItem(
-            'auth_error',
-            '로그인 중 오류가 발생했습니다.',
-          );
-          router.replace(ROUTES.LOGIN);
+          router.replace(`${ROUTES.LOGIN}?auth_error=1`);
         },
       },
     );

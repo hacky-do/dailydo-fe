@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { useSessionStore } from '@/entities/session';
 import { LoginButton } from '@/features/auth';
+import { ROUTES } from '@/shared/config/routes';
 import DailyDoLogo from '@/shared/ui/icons/common/dailydo_logo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
@@ -37,19 +39,21 @@ const RecentLoginBadge = () => {
 
 export const LoginPage = () => {
   const { toast } = useToast();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const recentLogin = useSyncExternalStore(
     useSessionStore.subscribe,
     () => useSessionStore.getState().lastLogin,
     () => null,
   );
 
+  const authError = searchParams.get('auth_error');
   useEffect(() => {
-    const error = sessionStorage.getItem('auth_error');
-    if (error) {
-      sessionStorage.removeItem('auth_error');
+    if (authError) {
       toast({ message: '로그인에 실패했어요.', type: 'error' });
+      router.replace(ROUTES.LOGIN);
     }
-  }, [toast]);
+  }, [authError, router, toast]);
 
   return (
     <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5">
