@@ -26,7 +26,7 @@ const loaderColorMap: Record<
 const sizeStyles: Record<ButtonSize, string> = {
   lg: 'h-12 w-full text-base',
   md: 'h-10 w-fit rounded-lg px-4 text-sm',
-  sm: 'h-7 w-fit rounded-md px-4 text-xs',
+  sm: 'h-7 w-fit rounded-lg px-4 text-xs',
 };
 
 const loaderSizeMap: Record<ButtonSize, 'sm' | 'lg'> = {
