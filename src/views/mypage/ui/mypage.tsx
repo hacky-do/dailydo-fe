@@ -13,7 +13,7 @@ import { ProfileSection, ProfileSectionSkeleton } from './profile-section';
 export const Mypage = () => (
   <div className="relative h-screen w-full bg-green-100">
     <div className="absolute inset-x-0 top-0">
-      <div className="bg-gradient-600 h-20 [--gradient-dir:to_right]" />
+      <div className="bg-gradient-500 h-20 [--gradient-dir:to_right]" />
       <div className="ml-auto flex w-fit gap-1 px-5 py-4">
         <Button variant="secondary" size="sm">
           프로필 수정
