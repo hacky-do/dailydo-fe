@@ -5,7 +5,12 @@ import { ROUTES } from '@/shared/config/routes';
 
 const ACCESS_TOKEN_COOKIE = 'accessToken';
 
-const PROTECTED_ROUTES = [ROUTES.MISSIONS];
+const PROTECTED_ROUTES = [
+  ROUTES.MISSIONS,
+  ROUTES.MYPAGE,
+  ROUTES.MYLOG,
+  ROUTES.COLLECTIONS,
+];
 const AUTH_ROUTES = [ROUTES.LOGIN, ROUTES.SIGNUP];
 
 export function proxy(request: NextRequest) {
