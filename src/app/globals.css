@@ -81,7 +81,6 @@
 
   /* 그림자 */
   --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 0 50px 0 rgba(0, 0, 0, 0.08);
   --shadow-card: 0 16px 16px 0 rgba(0, 0, 0, 0.12);
 
   /* 애니메이션 */
@@ -92,27 +91,35 @@
 }
 
 @utility bg-gradient-100 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-100-start),
-      var(--color-gradient-100-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-100-start),
+    var(--color-gradient-100-end)
+  );
 }
 
 @utility bg-gradient-200 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-200-start),
-      var(--color-gradient-200-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-200-start),
+    var(--color-gradient-200-end)
+  );
 }
 
 @utility bg-gradient-500 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 }
 
 @utility bg-gradient-600 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-600-start),
-      var(--color-gradient-600-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-600-start),
+    var(--color-gradient-600-end)
+  );
 }
 
 @keyframes slide-up-fade-in {
@@ -193,6 +200,13 @@
   }
 }
 
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility animate-shimmer {
   position: relative;
   overflow: hidden;
@@ -204,19 +218,23 @@
     left: -100%;
     width: 100%;
     height: 200%;
-    background: linear-gradient(0deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent);
+    background: linear-gradient(
+      0deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
     opacity: 0.6;
     animation: shimmer 1s infinite linear;
   }
 }
 
 @utility bg-basic-mission-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    to top,
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 
   &::before {
     content: '';
@@ -231,15 +249,19 @@
 }
 
 @utility bg-complete-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-green-500),
-      var(--color-green-400));
+  background: linear-gradient(
+    to top,
+    var(--color-green-500),
+    var(--color-green-400)
+  );
 }
 
 @utility bg-special-mission-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-special-gradient-start),
-      var(--color-special-gradient-end));
+  background: linear-gradient(
+    to top,
+    var(--color-special-gradient-start),
+    var(--color-special-gradient-end)
+  );
   border: 3px solid var(--color-special-border);
 
   &::before {
@@ -255,13 +277,17 @@
 }
 
 @utility bg-complete-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    to top,
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 }
 
 @utility bg-special-complete-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-special-gradient-start),
-      var(--color-special-gradient-end));
+  background: linear-gradient(
+    to top,
+    var(--color-special-gradient-start),
+    var(--color-special-gradient-end)
+  );
 }
