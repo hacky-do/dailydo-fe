@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { userEvent, within } from 'storybook/test';
 
-import { Mission } from '@/entities/missions/model/mission.types';
+import { MissionItem } from '@/entities/missions/model/mission.types';
 import { MyMissionCard } from '@/features/missions/my-mission-list';
 import { TodayMissionCard } from '@/features/missions/today-mission-list';
 
@@ -11,27 +11,25 @@ import { Card } from './card';
 // Mock data
 // ────────────────────────────────────────
 
-const normalMission: Mission = {
-  id: '1',
+const normalMission: MissionItem = {
+  missionId: 1,
   title: '구름 사진 찍기',
-  categoryId: '2',
+  description: '',
+  categoryId: 2,
   categoryName: '자연/힐링',
   image: '',
-  completedCount: 23,
-  createdAt: '2025-05-03',
-  updatedAt: '2025-05-03',
+  totalCompletedCount: 23,
   isSpecial: false,
 };
 
-const specialMission: Mission = {
-  id: '2',
+const specialMission: MissionItem = {
+  missionId: 2,
   title: '별 보러 옥상 가기',
-  categoryId: '2',
+  description: '',
+  categoryId: 2,
   categoryName: '우주/자연',
   image: '',
-  completedCount: 5,
-  createdAt: '2025-05-03',
-  updatedAt: '2025-05-03',
+  totalCompletedCount: 5,
   isSpecial: true,
 };
 

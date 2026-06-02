@@ -1,9 +1,13 @@
 'use client';
 
+import 'swiper/css';
+
 import Image from 'next/image';
+import type { Swiper as SwiperClass } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useGetTodayMissions } from '@/entities/missions/api/use-get-missions';
-import { Mission } from '@/entities/missions/model/mission.types';
+import { MissionItem } from '@/entities/missions/model/mission.types';
 import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
 import {
   categoryBadgeStyles,
@@ -17,7 +21,7 @@ import { Card } from '@/widgets/card';
 import { useCard } from '@/widgets/card/card-context';
 
 interface TodayMissionBackContentProps {
-  mission: Mission;
+  mission: MissionItem;
   selected: boolean;
   onSelect: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onSkip: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -68,7 +72,7 @@ const TodayMissionBackContent = ({
         )}
       >
         <span className="overflow-hidden text-xs font-semibold text-gray-600">
-          {`${mission.completedCount}명이 미션에 도전중이에요!`}
+          {`${mission.totalCompletedCount}명이 미션에 도전중이에요!`}
         </span>
       </div>
       <div className="flex items-center justify-center gap-2">
@@ -102,10 +106,10 @@ const TodayMissionBackContent = ({
 };
 
 interface TodayMissionCardProps {
-  mission: Mission;
-  onSelect?: (id: string) => void;
-  onSkip?: (id: string) => void;
-  onCancel?: (id: string) => void;
+  mission: MissionItem;
+  onSelect?: (id: number) => void;
+  onSkip?: (id: number) => void;
+  onCancel?: (id: number) => void;
 }
 
 export const TodayMissionCard = ({
@@ -119,18 +123,18 @@ export const TodayMissionCard = ({
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     select();
-    onSelect?.(mission.id);
+    onSelect?.(mission.missionId);
   };
 
   const handleSkip = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onSkip?.(mission.id);
+    onSkip?.(mission.missionId);
   };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     cancel();
-    onCancel?.(mission.id);
+    onCancel?.(mission.missionId);
   };
 
   return (
@@ -151,14 +155,66 @@ export const TodayMissionCard = ({
   );
 };
 
+const applySlideEffects = (swiper: SwiperClass) => {
+  swiper.slides.forEach((slide) => {
+    const el = slide as HTMLElement & { progress: number };
+    const progress = Math.max(-1, Math.min(1, el.progress ?? 0));
+    const wrapper = el.querySelector<HTMLElement>('[data-card-wrapper]');
+    if (!wrapper) return;
+    wrapper.style.transform = `rotate(${progress * 6}deg) translateY(${Math.abs(progress) * 16}px)`;
+  });
+};
+
 export const TodayMissionList = () => {
-  const { data: missions = [] } = useGetTodayMissions();
+  const { data } = useGetTodayMissions();
+  const missions = data?.items ?? [];
+
+  const handleSlideChangeStart = (swiper: SwiperClass) => {
+    swiper.slides.forEach((slide) => {
+      const wrapper = slide.querySelector<HTMLElement>('[data-card-wrapper]');
+      if (wrapper) wrapper.style.transition = `transform ${swiper.params.speed}ms ease`;
+    });
+    applySlideEffects(swiper);
+  };
+
+  const handleSlideChangeEnd = (swiper: SwiperClass) => {
+    swiper.slides.forEach((slide) => {
+      const wrapper = slide.querySelector<HTMLElement>('[data-card-wrapper]');
+      if (wrapper) wrapper.style.transition = '';
+    });
+  };
+
+  const handleTouchStart = (swiper: SwiperClass) => {
+    swiper.slides.forEach((slide) => {
+      const wrapper = slide.querySelector<HTMLElement>('[data-card-wrapper]');
+      if (wrapper) wrapper.style.transition = '';
+    });
+  };
 
   return (
-    <div className="flex gap-4">
-      {missions.map((mission) => (
-        <TodayMissionCard key={mission.id} mission={mission} />
-      ))}
+    <div className="w-full overflow-x-hidden py-2">
+      <Swiper
+        slidesPerView="auto"
+        centeredSlides
+        spaceBetween={24}
+        loop
+        grabCursor
+        watchSlidesProgress
+        style={{ overflow: 'visible' }}
+        onInit={applySlideEffects}
+        onSetTranslate={applySlideEffects}
+        onTouchStart={handleTouchStart}
+        onSlideChangeTransitionStart={handleSlideChangeStart}
+        onSlideChangeTransitionEnd={handleSlideChangeEnd}
+      >
+        {missions.map((mission) => (
+          <SwiperSlide key={mission.missionId} className="!w-[225px]">
+            <div data-card-wrapper>
+              <TodayMissionCard mission={mission} />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
