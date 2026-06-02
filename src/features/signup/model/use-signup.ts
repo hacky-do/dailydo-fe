@@ -1,11 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { signup } from '../api/signup.api';
-
-interface SignupParams {
-  nickname: string;
-  category: number[];
-}
+import { signup, SignupParams } from '../api/signup.api';
 
 export const useSignup = () =>
   useMutation({

@@ -34,12 +34,12 @@ export const useSocialLoginCallback = () => {
       { type, token },
       {
         onSuccess: () => {
-          if (type) setLastLogin(type);
+          setLastLogin(type);
           router.replace(ROUTES.MISSIONS);
         },
         onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
-            const params = new URLSearchParams({ token: token!, type: type! });
+            const params = new URLSearchParams({ token, type });
             if (user) params.set('user', user);
             router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
             return;

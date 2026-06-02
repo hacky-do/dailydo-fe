@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { SocialLoginType } from '@/entities/session';
 import { ROUTES } from '@/shared/config/routes';
 
 export type SignupStep = 'nickname' | 'category' | 'welcome';
@@ -15,6 +16,9 @@ export const useSignupFlow = () => {
   const searchParams = useSearchParams();
   const [nickname, setNickname] = useState('');
   const [categoryIds, setCategoryIds] = useState<number[]>([]);
+
+  const socialToken = searchParams.get('token') ?? '';
+  const type = (searchParams.get('type') ?? 'google') as SocialLoginType;
 
   const rawStep = searchParams.get('step') as SignupStep | null;
   const urlStep: SignupStep =
@@ -60,6 +64,8 @@ export const useSignupFlow = () => {
     step,
     nickname,
     categoryIds,
+    socialToken,
+    type,
     setCategoryIds,
     goToCategory: (value: string) => {
       setNickname(value);

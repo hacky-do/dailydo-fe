@@ -39,6 +39,8 @@ export const SignupPage = () => {
     step,
     nickname,
     categoryIds,
+    socialToken,
+    type,
     setCategoryIds,
     goToCategory,
     goToPrev,
@@ -49,7 +51,7 @@ export const SignupPage = () => {
 
   const handleStart = () => {
     signup(
-      { nickname, category: categoryIds },
+      { nickname, category: categoryIds, type, socialToken },
       {
         onSuccess: () => {
           toast({
