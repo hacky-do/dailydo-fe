@@ -4,7 +4,7 @@ import {
   myMissionsQueryKey,
   todayMissionsQueryKey,
 } from '../model/mission.constants';
-import { getMyMissions, getTodayMissions } from './mission.queries';
+import { getMyMissions, getTodayMissions } from './mission.api';
 
 export const useGetTodayMissions = () =>
   useQuery({
