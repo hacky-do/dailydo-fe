@@ -49,6 +49,7 @@ export const Button = ({
   size = 'lg',
   isLoading = false,
   disabled,
+  type = 'button',
   className,
   ...props
 }: ButtonProps) => {
@@ -62,6 +63,7 @@ export const Button = ({
       )}
       disabled={disabled || isLoading}
       aria-busy={isLoading}
+      type={type}
       {...props}
     >
       <span className={cn(isLoading && 'invisible')}>{children}</span>

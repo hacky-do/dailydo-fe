@@ -38,10 +38,10 @@ const CategoryItemSkeleton = () => (
 export const CategorySectionSkeleton = () => (
   <section className="flex flex-col gap-2">
     <h4>
-      <button className={`flex items-center gap-1 ${sectionLabelClass}`}>
+      <div className={`flex items-center gap-1 ${sectionLabelClass}`}>
         나의 카테고리
         <ChevronRight height={16} aria-hidden="true" />
-      </button>
+      </div>
     </h4>
     <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
       {Array.from({ length: SKELETON_COUNT }, (_, i) => (
@@ -63,7 +63,7 @@ const CategoryItem = ({ src, label }: { src: string; label: string }) => {
         <Image
           src={src}
           fill
-          alt={`카테고리 - ${label}`}
+          alt=""
           className={`object-cover ${isImageLoading ? 'invisible' : 'visible'}`}
           onLoad={() => setIsImageLoading(false)}
         />
@@ -78,7 +78,10 @@ export const CategorySection = () => (
 
   <section className="flex flex-col gap-2">
     <h4>
-      <button className={`flex items-center gap-1 ${sectionLabelClass}`}>
+      <button
+        type="button"
+        className={`flex items-center gap-1 ${sectionLabelClass}`}
+      >
         나의 카테고리
         <ChevronRight height={16} aria-hidden="true" />
       </button>
