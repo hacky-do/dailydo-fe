@@ -50,7 +50,9 @@ export const PcHeader = ({ className }: { className?: string }) => {
   };
 
   return (
-    <header className={cn('sticky top-0 h-18 w-full bg-gray-50', className)}>
+    <header
+      className={cn('sticky top-0 z-30 h-18 w-full bg-gray-50', className)}
+    >
       <div className="mx-auto flex h-full w-full max-w-7xl items-center gap-4 px-3">
         {/* 로고 */}
         <h1>
@@ -79,11 +81,11 @@ export const PcHeader = ({ className }: { className?: string }) => {
               name={ROUTES_NAME.MYPAGE}
               onClick={() => handleClickLink(ROUTES.MYPAGE)}
             />
-            <PcNavItem
+            {/* TODO: 컬렉션 페이지 구현 후 활성화 */}
+            {/* <PcNavItem
               name={ROUTES_NAME.COLLECTIONS}
               onClick={() => handleClickLink(ROUTES.COLLECTIONS)}
-            />
-
+            /> */}
             {/* 로그인, 로그아웃 버튼 */}
             <li className="mt-auto ml-auto">
               {!isLoggedIn ? (

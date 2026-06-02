@@ -23,7 +23,12 @@ const TITLED_ROUTES_NAME: Record<TitledRoute, string> = {
   [ROUTES.COLLECTIONS]: ROUTES_NAME.COLLECTIONS,
 };
 
-export const MobileHeader = ({ className }: { className?: string }) => {
+interface MobileHeaderProps {
+  variant: '100' | '500';
+  className?: string;
+}
+
+export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const isTitledRoute = TITLED_ROUTES.includes(pathname as TitledRoute);
@@ -43,22 +48,19 @@ export const MobileHeader = ({ className }: { className?: string }) => {
   return (
     <header
       className={cn(
-        'sticky top-0 h-13 w-full bg-green-100',
+        'sticky top-0 z-30 flex h-13 w-full shrink-0 [--gradient-dir:to_right]',
         {
-          'bg-gradient-500 [--gradient-dir:to_right]': isTitledRoute,
+          'bg-gradient-100': variant === '100',
+          'bg-gradient-500': variant === '500',
         },
         className,
       )}
     >
-      <div className="flex h-full w-full items-center gap-4 px-3">
+      <div className="flex w-full items-center gap-4 px-3">
         {isTitledRoute ? (
           // 뒤로가기 버튼, 페이지 제목
           <>
-            <button
-              onClick={handleBack}
-              type="button"
-              aria-label="뒤로가기"
-            >
+            <button onClick={handleBack} type="button" aria-label="뒤로가기">
               <ChevronLeft className="w-7.5 text-white" />
             </button>
             <h1 className="text-lg font-semibold text-white">

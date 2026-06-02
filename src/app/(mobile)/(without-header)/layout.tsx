@@ -1,7 +1,3 @@
-export default function MobileWithoutHeaderLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <main>{children}</main>;
 }

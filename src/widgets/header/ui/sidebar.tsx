@@ -103,12 +103,13 @@ export const Sidebar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             onClick={() => handleClickLink(ROUTES.MYPAGE)}
             showLock={!isLoggedIn}
           />
-          <SidebarNavItem
+          {/* TODO: 컬렉션 페이지 구현 후 활성화 */}
+          {/* <SidebarNavItem
             name={ROUTES_NAME.COLLECTIONS}
             isActive={pathname === ROUTES.COLLECTIONS}
             onClick={() => handleClickLink(ROUTES.COLLECTIONS)}
             showLock={!isLoggedIn}
-          />
+          /> */}
 
           {/* 로그인, 로그아웃 버튼 */}
           <li className="mt-auto ml-auto">
