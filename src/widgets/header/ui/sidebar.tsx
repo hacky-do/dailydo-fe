@@ -69,7 +69,7 @@ export const Sidebar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <aside
       className={cn(
-        'absolute top-0 right-0 flex h-full w-78.5 flex-col gap-6 rounded-tl-3xl bg-white p-6 shadow',
+        'absolute top-0 right-0 z-200 flex h-full w-78.5 flex-col gap-6 rounded-tl-3xl bg-white p-6 shadow',
         { 'md:hidden': pathname === ROUTES.HOME },
       )}
     >

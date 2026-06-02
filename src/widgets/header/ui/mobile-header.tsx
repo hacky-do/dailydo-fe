@@ -3,25 +3,11 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
+import { ROUTE_META, ROUTES } from '@/shared/config/routes';
 import ChevronLeft from '@/shared/ui/icons/common/chevron_left.svg';
 import Hamburger from '@/shared/ui/icons/common/hamburger.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { cn } from '@/shared/utils/cn';
-
-const TITLED_ROUTES = [
-  ROUTES.MYPAGE,
-  ROUTES.MYLOG,
-  ROUTES.COLLECTIONS,
-] as const;
-
-type TitledRoute = (typeof TITLED_ROUTES)[number];
-
-const TITLED_ROUTES_NAME: Record<TitledRoute, string> = {
-  [ROUTES.MYPAGE]: ROUTES_NAME.MYPAGE,
-  [ROUTES.MYLOG]: ROUTES_NAME.MYLOG,
-  [ROUTES.COLLECTIONS]: ROUTES_NAME.COLLECTIONS,
-};
 
 interface MobileHeaderProps {
   variant: '100' | '500';
@@ -31,7 +17,6 @@ interface MobileHeaderProps {
 export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const isTitledRoute = TITLED_ROUTES.includes(pathname as TitledRoute);
 
   const handleOpenSidebar = () => {
     // TODO: 사이드바 오픈 구현
@@ -48,7 +33,7 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-13 w-full shrink-0 [--gradient-dir:to_right]',
+        'sticky top-0 z-100 flex h-13 w-full shrink-0 [--gradient-dir:to_right]',
         {
           'bg-gradient-100': variant === '100',
           'bg-gradient-500': variant === '500',
@@ -57,14 +42,14 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
       )}
     >
       <div className="flex w-full items-center gap-4 px-3">
-        {isTitledRoute ? (
+        {variant === '500' ? (
           // 뒤로가기 버튼, 페이지 제목
           <>
             <button onClick={handleBack} type="button" aria-label="뒤로가기">
               <ChevronLeft className="w-7.5 text-white" />
             </button>
             <h1 className="text-lg font-semibold text-white">
-              {TITLED_ROUTES_NAME[pathname as TitledRoute]}
+              {ROUTE_META[pathname as keyof typeof ROUTE_META]?.name}
             </h1>
           </>
         ) : (
@@ -86,7 +71,7 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
           <Hamburger
             className={cn(
               'w-6',
-              isTitledRoute ? 'text-white' : 'text-gray-600',
+              variant === '500' ? 'text-white' : 'text-gray-600',
             )}
           />
         </button>
