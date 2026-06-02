@@ -1,7 +1,11 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { SocialLoginType, useSessionStore } from '@/entities/session';
+import {
+  SOCIAL_LOGIN_TYPES,
+  SocialLoginType,
+  useSessionStore,
+} from '@/entities/session';
 import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
 
@@ -13,7 +17,12 @@ export const useSocialLoginCallback = () => {
   const { setLastLogin } = useSessionStore.getState();
 
   const token = searchParams.get('token');
-  const type = searchParams.get('type') as SocialLoginType | null;
+  const rawType = searchParams.get('type');
+  const type: SocialLoginType | null = SOCIAL_LOGIN_TYPES.includes(
+    rawType as SocialLoginType,
+  )
+    ? (rawType as SocialLoginType)
+    : null;
   const user = searchParams.get('user');
   const error = searchParams.get('error');
 
