@@ -26,6 +26,11 @@ export default meta;
 type Story = StoryObj<typeof MobileHeader>;
 
 export const Default: Story = {
+  render: () => (
+    <>
+      <MobileHeader variant="500" />
+    </>
+  ),
   parameters: {
     nextjs: {
       navigation: {
@@ -38,7 +43,7 @@ export const Default: Story = {
 export const SidebarLoggedIn: Story = {
   render: () => (
     <>
-      <MobileHeader />
+      <MobileHeader variant="500" />
       <Sidebar isLoggedIn />
     </>
   ),
@@ -54,7 +59,7 @@ export const SidebarLoggedIn: Story = {
 export const SidebarLoggedOut: Story = {
   render: () => (
     <>
-      <MobileHeader />
+      <MobileHeader variant="100" />
       <Sidebar isLoggedIn={false} />
     </>
   ),

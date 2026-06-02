@@ -51,7 +51,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
 
   return (
     <header
-      className={cn('sticky top-0 z-30 h-18 w-full bg-gray-50', className)}
+      className={cn('sticky top-0 z-100 h-18 w-full bg-gray-50', className)}
     >
       <div className="mx-auto flex h-full w-full max-w-7xl items-center gap-4 px-3">
         {/* 로고 */}

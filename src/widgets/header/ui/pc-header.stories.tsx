@@ -33,7 +33,7 @@ export const Default: Story = {
   render: () => (
     <>
       <PcHeader className="hidden md:block" />
-      <MobileHeader className="md:hidden" />
+      <MobileHeader variant="100" className="md:hidden" />
     </>
   ),
 };
@@ -42,7 +42,7 @@ export const WithSidebar: Story = {
   render: () => (
     <>
       <PcHeader className="hidden md:block" />
-      <MobileHeader className="md:hidden" />
+      <MobileHeader variant="100" className="md:hidden" />
       <Sidebar isLoggedIn />
     </>
   ),
