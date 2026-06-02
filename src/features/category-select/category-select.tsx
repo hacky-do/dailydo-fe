@@ -8,18 +8,27 @@ import { clientApi } from '@/shared/api/fetch-client';
 import { CategoryCard } from '@/shared/ui/category-card';
 import { Skeleton } from '@/shared/ui/skeleton/skeleton';
 
-export const CategorySelect = () => {
-  const [selected, setSelected] = useState<number[]>([]);
+interface CategorySelectProps {
+  value?: number[];
+  onChange?: (ids: number[]) => void;
+}
+
+export const CategorySelect = ({ value, onChange }: CategorySelectProps) => {
+  const [internalSelected, setInternalSelected] = useState<number[]>([]);
+  const selected = value ?? internalSelected;
 
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: () => clientApi.get<Category[]>('/api/category'),
   });
 
-  const handleToggle = (id: number) =>
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
-    );
+  const handleToggle = (id: number) => {
+    const next = selected.includes(id)
+      ? selected.filter((v) => v !== id)
+      : [...selected, id];
+    onChange?.(next);
+    if (value === undefined) setInternalSelected(next);
+  };
 
   if (isLoading) {
     return (
