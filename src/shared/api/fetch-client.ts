@@ -75,7 +75,6 @@ export const fetchClientMutation = async <T = unknown>(
   const res = await executeWithRetry(BASE_URL + endpoint, init);
   return parseResponse<T>(res);
 };
-
 export const clientApi = {
   get: <T>(endpoint: string, options?: QueryOptionsWithoutMethod) =>
     fetchClientQuery<T>(endpoint, { ...options, method: 'GET' }),

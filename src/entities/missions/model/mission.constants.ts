@@ -1,2 +1,5 @@
-export const myMissionsQueryKey = ['my-missions'] as const;
-export const todayMissionsQueryKey = ['today-missions'] as const;
+export const missionQueryKeys = {
+  myMissions: ['my-missions'],
+  todayMissions: ['today-missions'],
+  //   postTodayMissions: ['todayMissions'],
+} as const;

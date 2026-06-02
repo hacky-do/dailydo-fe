@@ -3,18 +3,23 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { useGetMyMissions } from '@/entities/missions/api/use-get-missions';
+import {
+  useCompleteMission,
+  useGetMyMissions,
+} from '@/entities/missions/api/mission.queries';
 import { MissionItem } from '@/entities/missions/model/mission.types';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
 
 interface MissionCompleteSheetProps {
+  isPending: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
 const MissionCompleteSheet = ({
+  isPending,
   onConfirm,
   onCancel,
 }: MissionCompleteSheetProps) => {
@@ -30,12 +35,19 @@ const MissionCompleteSheet = ({
             variant="secondary"
             size="md"
             onClick={onCancel}
+            disabled={isPending}
             type="button"
           >
             취소
           </Button>
-          <Button variant="primary" size="md" onClick={onConfirm} type="button">
-            완료
+          <Button
+            variant="primary"
+            size="md"
+            onClick={onConfirm}
+            disabled={isPending}
+            type="button"
+          >
+            {isPending ? '완료 중...' : '완료'}
           </Button>
         </div>
       </div>
@@ -110,15 +122,20 @@ const MyMissionBackContent = ({
 export const MyMissionCard = ({ mission }: { mission: MissionItem }) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const { mutate: completeMission } = useCompleteMission();
 
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsSheetOpen(true);
   };
 
-  const handleConfirm = async () => {
-    setIsCompleted(true);
-    setIsSheetOpen(false);
+  const handleConfirm = () => {
+    completeMission(mission.missionId, {
+      onSuccess: () => {
+        setIsCompleted(true);
+        setIsSheetOpen(false);
+      },
+    });
   };
 
   const handleSheetCancel = () => {

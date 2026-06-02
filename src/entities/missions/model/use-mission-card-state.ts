@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 export const useMissionCardState = () => {
-  const [selected, setSelected] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
-  const select = () => setSelected(true);
-  const cancel = () => setSelected(false);
+  const click = () => setClicked(true);
+  const cancel = () => setClicked(false);
 
-  return { selected, select, cancel };
+  return { clicked, click, cancel };
 };
