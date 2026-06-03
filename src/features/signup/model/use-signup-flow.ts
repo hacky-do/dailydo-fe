@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { SOCIAL_LOGIN_TYPES, SocialLoginType } from '@/entities/session';
 import { ROUTES } from '@/shared/config/routes';
@@ -11,11 +11,14 @@ export type SignupStep = 'nickname' | 'category' | 'welcome';
 const STEP_ORDER: SignupStep[] = ['nickname', 'category', 'welcome'];
 export const MIN_CATEGORY_COUNT = 2;
 
-export const useSignupFlow = () => {
+interface SignupFlowValues {
+  nickname: string;
+  categoryIds: number[];
+}
+
+export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [nickname, setNickname] = useState('');
-  const [categoryIds, setCategoryIds] = useState<number[]>([]);
 
   const socialToken = searchParams.get('token') ?? '';
   const rawType = searchParams.get('type');
@@ -67,15 +70,9 @@ export const useSignupFlow = () => {
 
   return {
     step,
-    nickname,
-    categoryIds,
     socialToken,
     type,
-    setCategoryIds,
-    goToCategory: (value: string) => {
-      setNickname(value);
-      navigateTo('category');
-    },
+    goToCategory: () => navigateTo('category'),
     goToPrev: () => navigateTo('nickname'),
     goToWelcome: () => navigateTo('welcome'),
   };

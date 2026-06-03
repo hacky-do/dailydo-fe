@@ -2,14 +2,14 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { CategorySelect } from '@/features/category-select';
 import {
   CategoryStep,
   MIN_CATEGORY_COUNT,
-  NICKNAME_FORM_ID,
   NicknameStep,
+  SignupFormValues,
   useSignupFlow,
   WelcomeStep,
 } from '@/features/signup';
@@ -36,22 +36,34 @@ export const SignupPage = () => {
   const { mutate: signup, isPending } = useSignup();
 
   const {
-    step,
-    nickname,
-    categoryIds,
-    socialToken,
-    type,
-    setCategoryIds,
-    goToCategory,
-    goToPrev,
-    goToWelcome,
-  } = useSignupFlow();
+    control,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useForm<SignupFormValues>({
+    mode: 'onChange',
+    defaultValues: { nickname: '', categoryIds: [] },
+  });
 
-  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const nickname = useWatch({ control, name: 'nickname', defaultValue: '' });
+  const categoryIds = useWatch({
+    control,
+    name: 'categoryIds',
+    defaultValue: [],
+  });
+
+  const { step, socialToken, type, goToCategory, goToPrev, goToWelcome } =
+    useSignupFlow({ nickname, categoryIds });
+
+  const handleNicknameNext = async () => {
+    const valid = await trigger('nickname');
+    if (valid) goToCategory();
+  };
 
   const handleStart = () => {
+    const { nickname: name, categoryIds: ids } = getValues();
     signup(
-      { nickname, category: categoryIds, type, socialToken },
+      { nickname: name, category: ids, type, socialToken },
       {
         onSuccess: () => {
           toast({
@@ -66,6 +78,8 @@ export const SignupPage = () => {
       },
     );
   };
+
+  const isNicknameValid = !!nickname && !errors.nickname;
 
   return (
     <div className="bg-gradient-100 flex h-dvh flex-col overflow-hidden">
@@ -85,16 +99,19 @@ export const SignupPage = () => {
           transition={{ duration: 0.3, ease: 'easeOut' }}
           className="flex flex-1 flex-col overflow-hidden"
         >
-          {step === 'nickname' && (
-            <NicknameStep
-              defaultValue={nickname}
-              onNext={goToCategory}
-              onValidChange={setIsNicknameValid}
-            />
-          )}
+          {step === 'nickname' && <NicknameStep control={control} />}
           {step === 'category' && (
             <CategoryStep>
-              <CategorySelect value={categoryIds} onChange={setCategoryIds} />
+              <Controller
+                name="categoryIds"
+                control={control}
+                render={({ field }) => (
+                  <CategorySelect
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
             </CategoryStep>
           )}
           {step === 'welcome' && <WelcomeStep nickname={nickname} />}
@@ -112,11 +129,7 @@ export const SignupPage = () => {
           className="shrink-0 px-8 pb-9.5"
         >
           {step === 'nickname' && (
-            <Button
-              type="submit"
-              form={NICKNAME_FORM_ID}
-              disabled={!isNicknameValid}
-            >
+            <Button onClick={handleNicknameNext} disabled={!isNicknameValid}>
               다음
             </Button>
           )}
