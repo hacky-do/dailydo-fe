@@ -32,12 +32,12 @@ export const Default: Story = {
           <BottomSheet.Content>
             <BottomSheet.Header>
               <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
-              <BottomSheet.Description>
-                기억하고 싶은 순간이 있나요?
-              </BottomSheet.Description>
             </BottomSheet.Header>
             <BottomSheet.Body>
-              <div className="pb-12">
+              <span className="mt-8 mb-1 text-sm font-medium">
+                기억하고 싶은 순간이 있나요?
+              </span>
+              <div className="mb-12">
                 <FileInput />
               </div>
               <div className="pb-8">

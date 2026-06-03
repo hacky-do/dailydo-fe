@@ -56,14 +56,13 @@ const Content = ({
       )}
       {...props}
     >
-      <Handle />
+      {children}
       {showCloseButton && (
         <Drawer.Close className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none">
           <DeleteIcon aria-hidden width={20} height={20} />
           <span className="sr-only">닫기</span>
         </Drawer.Close>
       )}
-      {children}
     </Drawer.Content>
   </Drawer.Portal>
 );
