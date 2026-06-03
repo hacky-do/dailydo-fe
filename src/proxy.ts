@@ -6,6 +6,7 @@ import { ROUTES } from '@/shared/config/routes';
 const ACCESS_TOKEN_COOKIE = 'accessToken';
 
 const PROTECTED_ROUTES = [
+  ROUTES.HOME,
   ROUTES.MISSIONS,
   ROUTES.MYPAGE,
   ROUTES.MYLOG,
