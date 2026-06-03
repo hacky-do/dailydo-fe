@@ -38,7 +38,12 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    ...PROTECTED_ROUTES.map((route) => `${route}/:path*`),
-    ...AUTH_ROUTES,
+    '/:path*',
+    '/missions/:path*',
+    '/mypage/:path*',
+    '/mylogs/:path*',
+    '/collections/:path*',
+    '/login',
+    '/signup',
   ],
 };
