@@ -3,10 +3,10 @@ export async function initMocks() {
   if (typeof window === 'undefined') {
     // 서버 사이드
     const { server } = await import('./server');
-    server.listen();
+    server.listen({ onUnhandledRequest: 'bypass' });
   } else {
     // 클라이언트 사이드
     const { worker } = await import('./browser');
-    await worker.start();
+    await worker.start({ onUnhandledRequest: 'bypass' });
   }
 }

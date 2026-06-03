@@ -3,7 +3,7 @@
 import 'swiper/css';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -175,10 +175,11 @@ const applySlideEffects = (swiper: SwiperClass) => {
 export const TodayMissionList = () => {
   const { data } = useGetTodayMissions();
   const { mutate: postTodayMissions, isPending } = usePostTodayMissions();
+  const swiperRef = useRef<SwiperClass | null>(null);
 
   const missions = data?.items ?? [];
   const maxSelectableCount = data?.maxSelectableCount ?? 5;
-  const minSelectableCount = data?.minSelectableCount ?? 1;
+  // const minSelectableCount = data?.minSelectableCount ?? 1;
 
   const [selectedMissionIds, setSelectedMissionIds] = useState<number[]>([]);
 
@@ -189,6 +190,10 @@ export const TodayMissionList = () => {
 
   const handleCancel = (id: number) => {
     setSelectedMissionIds((prev) => prev.filter((mId) => mId !== id));
+  };
+
+  const handleSkip = () => {
+    swiperRef.current?.slideNext();
   };
 
   const handleConfirm = () => {
@@ -219,7 +224,7 @@ export const TodayMissionList = () => {
   };
 
   return (
-    <div className="mb-10 flex w-full flex-col items-center gap-6">
+    <div className="flex w-full flex-col items-center">
       <div className="w-full overflow-x-clip overflow-y-visible">
         <Swiper
           slidesPerView="auto"
@@ -229,6 +234,9 @@ export const TodayMissionList = () => {
           grabCursor
           watchSlidesProgress
           style={{ overflow: 'visible' }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
           onInit={applySlideEffects}
           onSetTranslate={applySlideEffects}
           onTouchStart={handleTouchStart}
@@ -242,27 +250,33 @@ export const TodayMissionList = () => {
                   mission={mission}
                   onSelect={handleSelect}
                   onCancel={handleCancel}
+                  onSkip={handleSkip}
                 />
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      <Button
-        variant="primary"
-        size="md"
-        onClick={handleConfirm}
-        disabled={selectedMissionIds.length < minSelectableCount || isPending}
-        type="button"
-      >
-        {isPending ? (
-          <Loader />
-        ) : selectedMissionIds.length === minSelectableCount ? (
-          '이대로 선택할게요.'
-        ) : (
-          `${selectedMissionIds.length}개 선택 했어요`
-        )}
-      </Button>
+      <div className="w-full shrink-0 px-8 pb-9.5">
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={handleConfirm}
+          disabled={selectedMissionIds.length === 0 || isPending}
+          type="button"
+          // className="mt-[87.43px]"
+        >
+          {isPending ? (
+            <Loader />
+          ) : selectedMissionIds.length === 0 ? (
+            '미션을 선택해주세요'
+          ) : selectedMissionIds.length === maxSelectableCount ? (
+            '이대로 선택할게요'
+          ) : (
+            `현재 ${selectedMissionIds.length}개 선택했어요`
+          )}
+        </Button>
+      </div>
     </div>
   );
 };
