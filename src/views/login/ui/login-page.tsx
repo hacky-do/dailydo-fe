@@ -50,7 +50,7 @@ export const LoginPage = () => {
   const authError = searchParams.get('auth_error');
   const handledRef = useRef(false);
   useEffect(() => {
-    if (authError && !handledRef.current) {
+    if (authError !== null && !handledRef.current) {
       handledRef.current = true;
       toast({ message: '로그인에 실패했어요.', type: 'error' });
       router.replace(ROUTES.LOGIN);

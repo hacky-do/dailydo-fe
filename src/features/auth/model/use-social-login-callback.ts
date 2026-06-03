@@ -30,7 +30,7 @@ export const useSocialLoginCallback = () => {
 
   useEffect(() => {
     if (error) {
-      router.replace(`${ROUTES.LOGIN}?auth_error=1`);
+      router.replace(`${ROUTES.LOGIN}?auth_error`);
       return;
     }
 
@@ -53,7 +53,7 @@ export const useSocialLoginCallback = () => {
             router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
             return;
           }
-          router.replace(`${ROUTES.LOGIN}?auth_error=1`);
+          router.replace(`${ROUTES.LOGIN}?auth_error`);
         },
       },
     );
