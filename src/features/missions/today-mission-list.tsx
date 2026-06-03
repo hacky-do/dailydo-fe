@@ -224,7 +224,7 @@ export const TodayMissionList = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <>
       <div className="w-full overflow-x-clip overflow-y-visible">
         <Swiper
           slidesPerView="auto"
@@ -257,7 +257,7 @@ export const TodayMissionList = () => {
           ))}
         </Swiper>
       </div>
-      <div className="w-full shrink-0 px-8 pb-9.5">
+      <div className="mt-auto w-full shrink-0 px-8 pb-9.5">
         <Button
           variant="primary"
           size="lg"
@@ -277,6 +277,6 @@ export const TodayMissionList = () => {
           )}
         </Button>
       </div>
-    </div>
+    </>
   );
 };

@@ -8,19 +8,19 @@ import MissionHeader from '@/widgets/mission/mission-header';
 
 const MyMissionListPage = () => {
   return (
-    <>
+    <div className="flex h-full w-full flex-col items-center">
       <MissionHeader />
       <TodayMissionList />
-    </>
+    </div>
   );
 };
 
 const TodayMissionListPage = () => {
   return (
-    <>
+    <div className="flex h-full w-full flex-col items-center">
       <MissionHeader />
       <TodayMissionList />
-    </>
+    </div>
   );
 };
 
