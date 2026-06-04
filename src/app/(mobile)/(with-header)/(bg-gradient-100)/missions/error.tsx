@@ -2,7 +2,7 @@
 
 import { FallbackUI } from '@/shared/ui/fallback-ui';
 
-export const Error = () => {
+const Error = () => {
   return <FallbackUI />;
 };
 

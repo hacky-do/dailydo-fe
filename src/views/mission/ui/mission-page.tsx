@@ -1,3 +1,4 @@
+import { useGetTodayMissions } from '@/entities/missions/api/mission.queries';
 import { MissionPageProps } from '@/entities/missions/model/mission.types';
 import { MyMissionList } from '@/features/missions/my-mission-list';
 import { TodayMissionList } from '@/features/missions/today-mission-list';
@@ -20,5 +21,14 @@ export const TodayMissionListPage = ({
       <MissionHeader maxSelectableCount={maxSelectableCount} />
       <TodayMissionList />
     </div>
+  );
+};
+
+export const MissionPage = () => {
+  const { data } = useGetTodayMissions();
+  return data?.isGuest ? (
+    <TodayMissionListPage maxSelectableCount={data.maxSelectableCount} />
+  ) : (
+    <MyMissionListPage />
   );
 };

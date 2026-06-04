@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import IcImage from '@/shared/ui/icons/mission/ic.svg';
 import IcAlarmImage from '@/shared/ui/icons/mission/ic_alarm.svg';
@@ -11,12 +11,14 @@ interface MissionHeaderProps {
 }
 
 const MissionHeader = ({ maxSelectableCount }: MissionHeaderProps) => {
-  const [timer, setTimer] = useState(getTimeUntilReset());
-
-  useEffect(() => {
-    const id = setInterval(() => setTimer(getTimeUntilReset()), 1000);
-    return () => clearInterval(id);
-  }, []);
+  const timer = useSyncExternalStore(
+    (onStoreChange) => {
+      const id = setInterval(onStoreChange, 1000);
+      return () => clearInterval(id);
+    },
+    getTimeUntilReset,
+    () => '',
+  );
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">

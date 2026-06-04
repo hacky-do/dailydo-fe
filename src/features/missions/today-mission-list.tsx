@@ -111,6 +111,7 @@ const TodayMissionBackContent = ({
 
 interface TodayMissionCardProps {
   mission: MissionItem;
+  isActive?: boolean;
   onSelect?: (id: number) => void;
   onCancel?: (id: number) => void;
   onSkip?: (id: number) => void;
@@ -118,6 +119,7 @@ interface TodayMissionCardProps {
 
 export const TodayMissionCard = ({
   mission,
+  isActive = true,
   onSelect,
   onCancel,
   onSkip,
@@ -142,7 +144,7 @@ export const TodayMissionCard = ({
   };
 
   return (
-    <Card isSpecial={mission.isSpecial}>
+    <Card isSpecial={mission.isSpecial} disabled={!isActive}>
       <Card.Front>
         <MissionCardFront />
       </Card.Front>
@@ -175,6 +177,7 @@ export const TodayMissionList = () => {
   const { data } = useGetTodayMissions();
   const { mutate: postTodayMissions, isPending } = usePostTodayMissions();
   const swiperRef = useRef<SwiperClass | null>(null);
+  const [activeRealIndex, setActiveRealIndex] = useState(0);
 
   const missions = data?.items ?? [];
   const maxSelectableCount = data?.maxSelectableCount ?? 5;
@@ -240,12 +243,14 @@ export const TodayMissionList = () => {
           onTouchStart={handleTouchStart}
           onSlideChangeTransitionStart={handleSlideChangeStart}
           onSlideChangeTransitionEnd={handleSlideChangeEnd}
+          onRealIndexChange={(swiper) => setActiveRealIndex(swiper.realIndex)}
         >
-          {missions.map((mission) => (
+          {missions.map((mission, index) => (
             <SwiperSlide key={mission.missionId} className="!w-[225px]">
               <div data-card-wrapper>
                 <TodayMissionCard
                   mission={mission}
+                  isActive={index === activeRealIndex}
                   onSelect={handleSelect}
                   onCancel={handleCancel}
                   onSkip={handleSkip}
