@@ -14,6 +14,6 @@ export const useSocialLogin = () =>
   useMutation({
     mutationFn: async ({ type, socialToken }: SocialLoginParams) => {
       const verified = await verifySocialToken(type, socialToken);
-      return socialLogin(type, verified.token, false);
+      return socialLogin(type, verified.token, true);
     },
   });

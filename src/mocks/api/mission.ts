@@ -80,7 +80,7 @@ export const handlers = [
   http.get(`${BASE_URL}/api/missions/new`, () => {
     return HttpResponse.json({
       status: 'ARRIVED',
-      isGuest: true,
+      isGuest: false,
       missionDate: new Date().toISOString().split('T')[0],
       minSelectableCount: 1,
       maxSelectableCount: 5,

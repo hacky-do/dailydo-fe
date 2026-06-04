@@ -20,6 +20,16 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const [socialUser] = useState(() => {
+    try {
+      const raw = sessionStorage.getItem('signup_user');
+      if (!raw) return { email: '', name: '' };
+      const parsed = JSON.parse(raw) as { email?: string; name?: string };
+      return { email: parsed.email ?? '', name: parsed.name ?? '' };
+    } catch {
+      return { email: '', name: '' };
+    }
+  });
   const [socialToken] = useState(
     () => sessionStorage.getItem('signup_socialToken') ?? '',
   );
@@ -83,6 +93,7 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
 
   return {
     step,
+    email: socialUser.email,
     socialToken,
     type,
     goToCategory: () => navigateTo('category'),
