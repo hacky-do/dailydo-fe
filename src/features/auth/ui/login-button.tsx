@@ -32,7 +32,7 @@ const BUTTON_CONFIG = {
     style: 'bg-[#03C75A] text-white',
   },
   guest: {
-    label: '비회원으로 계속하기',
+    label: '테스트 계정으로 계속하기',
     icon: null,
     width: null,
     style: 'bg-green-500 text-white',
