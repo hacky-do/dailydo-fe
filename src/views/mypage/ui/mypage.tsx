@@ -1,23 +1,16 @@
 import { Suspense } from 'react';
 
-import { Button } from '@/shared/ui/button';
-
 import {
   CategorySection,
   CategorySectionSkeleton,
-} from '../../../features/mypage/ui/category-section';
-import {
   MissionStatusSection,
   MissionStatusSectionSkeleton,
-} from '../../../features/mypage/ui/mission-status-section';
-import {
   MyStatusSection,
   MyStatusSectionSkeleton,
-} from '../../../features/mypage/ui/my-status-section';
-import {
   ProfileSection,
   ProfileSectionSkeleton,
-} from '../../../features/mypage/ui/profile-section';
+} from '@/features/mypage';
+import { Button } from '@/shared/ui/button';
 
 export const Mypage = () => (
   <div className="relative h-full w-full pt-20">
