@@ -29,11 +29,14 @@ export function proxy(request: NextRequest) {
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 
-  if (isHomeRoute || (isProtectedRoute && !hasAccessToken)) {
+  if (
+    (isHomeRoute && !hasAccessToken) ||
+    (isProtectedRoute && !hasAccessToken)
+  ) {
     return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
   }
 
-  if (isAuthRoute && hasAccessToken) {
+  if ((isHomeRoute && hasAccessToken) || (isAuthRoute && hasAccessToken)) {
     return NextResponse.redirect(new URL(ROUTES.MISSIONS, request.url));
   }
 
