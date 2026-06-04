@@ -11,6 +11,7 @@ interface CardRootProps {
   isSpecial?: boolean;
   isCompleted?: boolean;
   defaultFlipped?: boolean;
+  disabled?: boolean;
   onFlip?: () => void;
 }
 
@@ -19,12 +20,13 @@ const CardRoot = ({
   isSpecial = false,
   isCompleted = false,
   defaultFlipped = false,
+  disabled = false,
   onFlip,
 }: CardRootProps) => {
   const [flipped, setFlipped] = useState(defaultFlipped);
 
   const handleFlip = () => {
-    if (flipped) return;
+    if (flipped || disabled) return;
 
     setFlipped(true);
     onFlip?.();
