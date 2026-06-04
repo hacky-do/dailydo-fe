@@ -25,27 +25,33 @@ export const WelcomeStep = ({ nickname }: WelcomeStepProps) => {
       >
         <DecoLocation
           width={40}
-          className="animate-float-slow absolute top-10 right-8"
-        />
-        <DecoLight
-          width={40}
-          className="animate-float absolute top-20 left-6"
+          className="animate-float-slow absolute"
+          style={{ right: '100px', top: '30px' }}
         />
         <DecoGraph
           width={40}
-          className="animate-float absolute top-20 right-6"
+          className="animate-float-slow absolute"
+          style={{ left: '40px', top: '160px' }}
         />
-        <DecoCoffee
+        <DecoLight
           width={40}
-          className="animate-float absolute top-20 left-6"
+          className="animate-float absolute"
+          style={{ left: '60px', top: '56px' }}
         />
         <DecoStar
-          width={12}
-          className="animate-orbit-circle-reverse absolute top-40 left-12"
+          width={10}
+          className="animate-orbit-circle-reverse absolute"
+          style={{ left: '130px', top: '121px' }}
         />
         <DecoCircle
           width={10}
-          className="animate-orbit-circle absolute right-12 bottom-32"
+          className="animate-orbit-circle absolute"
+          style={{ right: '80px', top: '105px' }}
+        />
+        <DecoCoffee
+          width={40}
+          className="animate-float absolute"
+          style={{ right: '37px', top: '190px' }}
         />
       </div>
 
