@@ -21,6 +21,11 @@ export const NicknameStep = ({ control }: NicknameStepProps) => {
     rules: { validate: validateNickname },
   });
 
+  const { field: marketingField } = useController({
+    name: 'agreeMarketing',
+    control,
+  });
+
   return (
     <div className="flex flex-col gap-9 px-8 pt-9">
       <h1 className="text-2xl leading-8 font-semibold tracking-tight text-gray-800">
@@ -41,6 +46,15 @@ export const NicknameStep = ({ control }: NicknameStepProps) => {
         onChange={field.onChange}
         onBlur={field.onBlur}
       />
+      <label className="flex items-center gap-2 text-sm text-gray-600">
+        <input
+          type="checkbox"
+          checked={marketingField.value}
+          onChange={marketingField.onChange}
+          onBlur={marketingField.onBlur}
+        />
+        마케팅 정보 수신에 동의합니다 (선택)
+      </label>
     </div>
   );
 };
