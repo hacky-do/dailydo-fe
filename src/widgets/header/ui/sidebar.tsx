@@ -5,6 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Drawer } from 'vaul';
 
+import {
+  useGetMyMissions,
+  useGetTodayMissions,
+} from '@/entities/missions/api/mission.queries';
 import { COOKIES } from '@/shared/config/cookies';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
@@ -56,8 +60,18 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   const pathname = usePathname();
   const { toast } = useToast();
 
-  const isLoggedIn = true; // TODO: 로그인 여부 검사로 변경
-  const missionStatus: number | 'N' = 'N'; // TODO: 미션 쿼리에서 계산하는 것으로 변경
+  const isLoggedIn = true;
+
+  const { data: todayMissions, isPending: isTodayMissionsPending } =
+    useGetTodayMissions();
+  const { data: myMissions, isPending: isMyMissionsPending } =
+    useGetMyMissions();
+
+  // 미션에 배지에 표시할 값
+  const missionStatus =
+    todayMissions?.status === 'ARRIVED'
+      ? 'N'
+      : myMissions?.items.filter((item) => !item.completed).length;
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -111,9 +125,11 @@ export const Sidebar = ({ variant }: SidebarProps) => {
                   isActive={pathname === ROUTES.MISSIONS}
                   onClick={() => handleClickLink(ROUTES.MISSIONS)}
                   badge={
-                    <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
-                      {missionStatus}
-                    </span>
+                    !isTodayMissionsPending && !isMyMissionsPending ? (
+                      <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
+                        {missionStatus}
+                      </span>
+                    ) : undefined
                   }
                 />
                 <SidebarNavItem
