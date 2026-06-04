@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SOCIAL_LOGIN_TYPES, SocialLoginType } from '@/entities/session';
 import { ROUTES } from '@/shared/config/routes';
@@ -20,13 +20,15 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const socialToken = searchParams.get('token') ?? '';
-  const rawType = searchParams.get('type');
-  const type: SocialLoginType = SOCIAL_LOGIN_TYPES.includes(
-    rawType as SocialLoginType,
-  )
-    ? (rawType as SocialLoginType)
-    : 'google';
+  const [socialToken] = useState(
+    () => sessionStorage.getItem('signup_socialToken') ?? '',
+  );
+  const [type] = useState<SocialLoginType>(() => {
+    const stored = sessionStorage.getItem('signup_type');
+    return stored && SOCIAL_LOGIN_TYPES.includes(stored as SocialLoginType)
+      ? (stored as SocialLoginType)
+      : 'google';
+  });
 
   const rawStep = searchParams.get('step') as SignupStep | null;
   const urlStep: SignupStep =
@@ -40,6 +42,13 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
           (!nickname || categoryIds.length < MIN_CATEGORY_COUNT)
         ? 'nickname'
         : urlStep;
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const currentStep = url.searchParams.get('step');
+    url.search = currentStep ? `?step=${currentStep}` : '';
+    window.history.replaceState(null, '', url.toString());
+  }, []);
 
   useEffect(() => {
     if (step === urlStep) return;
