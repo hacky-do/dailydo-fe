@@ -37,3 +37,5 @@ export const emailLogin = (
   clientApi.post<SocialLoginResponse>('/auth', {
     body: JSON.stringify({ email, password, remember }),
   });
+
+export const emailLogout = () => clientApi.delete<SocialLoginResponse>('/auth');
