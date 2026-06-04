@@ -57,14 +57,14 @@ export const Default: Story = {
     month: { control: 'date' },
   },
   args: {
-    month: new Date('2026-06').getTime(),
+    month: new Date(2026, 5, 1).getTime(),
     logs: [],
   },
 };
 
 export const WithData: Story = {
   args: {
-    month: new Date('2026-06').getTime(),
+    month: new Date(2026, 5, 1).getTime(),
     logs: mockLogs,
   },
 };
