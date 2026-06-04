@@ -80,7 +80,7 @@
   --color-special-text: #ffbb00;
 
   --color-timer-text: #337aff;
-
+  --color-bg-timer: rgba(24, 220, 255, 0.2);
   /* 그림자 */
   --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
   --shadow-card: 0 16px 16px 0 rgba(0, 0, 0, 0.12);

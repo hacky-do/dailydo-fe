@@ -2,43 +2,46 @@
 import { Suspense } from 'react';
 
 import { useGetTodayMissions } from '@/entities/missions/api/mission.queries';
+import { MyMissionList } from '@/features/missions/my-mission-list';
 import { TodayMissionList } from '@/features/missions/today-mission-list';
 import { Loader } from '@/shared/ui/loader';
 import MissionHeader from '@/widgets/mission/mission-header';
+
+interface MissionPageProps {
+  maxSelectableCount: number;
+}
 
 const MyMissionListPage = () => {
   return (
     <div className="flex h-full w-full flex-col items-center">
       <MissionHeader />
-      <TodayMissionList />
+      <MyMissionList />
     </div>
   );
 };
 
-const TodayMissionListPage = () => {
+const TodayMissionListPage = ({ maxSelectableCount }: MissionPageProps) => {
   return (
     <div className="flex h-full w-full flex-col items-center">
-      <MissionHeader />
+      <MissionHeader maxSelectableCount={maxSelectableCount} />
       <TodayMissionList />
     </div>
   );
 };
 
-const Page = () => {
+const MissionContent = () => {
   const { data } = useGetTodayMissions();
-  return (
-    <>
-      <Suspense
-        fallback={
-          <>
-            <Loader />
-          </>
-        }
-      >
-        {data?.isGuest ? <TodayMissionListPage /> : <MyMissionListPage />}
-      </Suspense>
-    </>
+  return data?.isGuest ? (
+    <TodayMissionListPage maxSelectableCount={data.maxSelectableCount} />
+  ) : (
+    <MyMissionListPage />
   );
 };
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <MissionContent />
+    </Suspense>
+  );
+}

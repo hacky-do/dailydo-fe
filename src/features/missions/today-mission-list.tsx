@@ -76,8 +76,8 @@ const TodayMissionBackContent = ({
             : 'pointer-events-none grid-rows-[0fr] opacity-0',
         )}
       >
-        <span className="overflow-hidden text-xs font-semibold text-gray-600">
-          {`${mission.totalCompletedCount}명이 미션에 도전중이에요!`}
+        <span className="overflow-hidden text-xs font-bold text-gray-600">
+          {`${mission.totalCompletedCount}명이 미션에 도전했어요!`}
         </span>
       </div>
       <div className="flex items-center justify-center gap-2">
@@ -179,7 +179,6 @@ export const TodayMissionList = () => {
 
   const missions = data?.items ?? [];
   const maxSelectableCount = data?.maxSelectableCount ?? 5;
-  // const minSelectableCount = data?.minSelectableCount ?? 1;
 
   const [selectedMissionIds, setSelectedMissionIds] = useState<number[]>([]);
 
@@ -262,9 +261,9 @@ export const TodayMissionList = () => {
           variant="primary"
           size="lg"
           onClick={handleConfirm}
-          disabled={selectedMissionIds.length === 0 || isPending}
+          disabled={selectedMissionIds.length === 0}
+          isLoading={isPending}
           type="button"
-          // className="mt-[87.43px]"
         >
           {isPending ? (
             <Loader />
@@ -273,7 +272,7 @@ export const TodayMissionList = () => {
           ) : selectedMissionIds.length === maxSelectableCount ? (
             '이대로 선택할게요'
           ) : (
-            `현재 ${selectedMissionIds.length}개 선택했어요`
+            `${selectedMissionIds.length}개 선택했어요`
           )}
         </Button>
       </div>

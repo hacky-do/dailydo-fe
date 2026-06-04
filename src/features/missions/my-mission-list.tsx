@@ -3,57 +3,11 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import {
-  useCompleteMission,
-  useGetMyMissions,
-} from '@/entities/missions/api/mission.queries';
+import { useGetMyMissions } from '@/entities/missions/api/mission.queries';
 import { MissionItem } from '@/entities/missions/model/mission.types';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
-
-interface MissionCompleteSheetProps {
-  isPending: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
-
-const MissionCompleteSheet = ({
-  isPending,
-  onConfirm,
-  onCancel,
-}: MissionCompleteSheetProps) => {
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
-      <div className="absolute inset-0 bg-black/40" onClick={onCancel} />
-      <div className="relative w-full max-w-md rounded-t-2xl bg-white px-6 pt-6 pb-10">
-        <p className="mb-6 text-center text-lg font-semibold text-gray-800">
-          미션을 완료하시겠어요?
-        </p>
-        <div className="flex gap-2">
-          <Button
-            variant="secondary"
-            size="md"
-            onClick={onCancel}
-            disabled={isPending}
-            type="button"
-          >
-            취소
-          </Button>
-          <Button
-            variant="primary"
-            size="md"
-            onClick={onConfirm}
-            disabled={isPending}
-            type="button"
-          >
-            {isPending ? '완료 중...' : '완료'}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 interface MyMissionBackContentProps {
   mission: MissionItem;
@@ -120,26 +74,10 @@ const MyMissionBackContent = ({
 };
 
 export const MyMissionCard = ({ mission }: { mission: MissionItem }) => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const { mutate: completeMission } = useCompleteMission();
+  const [isCompleted] = useState(false);
 
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setIsSheetOpen(true);
-  };
-
-  const handleConfirm = () => {
-    completeMission(mission.missionId, {
-      onSuccess: () => {
-        setIsCompleted(true);
-        setIsSheetOpen(false);
-      },
-    });
-  };
-
-  const handleSheetCancel = () => {
-    setIsSheetOpen(false);
   };
 
   return (
@@ -157,12 +95,6 @@ export const MyMissionCard = ({ mission }: { mission: MissionItem }) => {
           />
         </Card.Back>
       </Card>
-      {isSheetOpen && (
-        <MissionCompleteSheet
-          onConfirm={handleConfirm}
-          onCancel={handleSheetCancel}
-        />
-      )}
     </>
   );
 };

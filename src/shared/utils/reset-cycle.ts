@@ -1,8 +1,8 @@
-const RESET_HOUR = 17;
+const RESET_HOUR = 5;
 
 /**
- * 현재 시각 기준으로 다음 오후 5시까지 남은 시간을 "HH:MM:SS" 형식으로 반환합니다.
- * 사이클: 오후 5시 → 다음날 오후 5시
+ * 현재 시각 기준으로 다음 오전 5시까지 남은 시간을 "HH:MM:SS" 형식으로 반환합니다.
+ * 사이클: 오전 5시 → 다음날 오전 5시
  */
 export function getTimeUntilReset(now = new Date()): string {
   const next = new Date(now);
