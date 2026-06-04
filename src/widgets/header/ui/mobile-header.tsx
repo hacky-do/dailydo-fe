@@ -5,9 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { ROUTE_META, ROUTES } from '@/shared/config/routes';
 import ChevronLeft from '@/shared/ui/icons/common/chevron_left.svg';
-import Hamburger from '@/shared/ui/icons/common/hamburger.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { cn } from '@/shared/utils/cn';
+
+import { Sidebar } from './sidebar';
 
 interface MobileHeaderProps {
   variant: '100' | '500';
@@ -17,10 +18,6 @@ interface MobileHeaderProps {
 export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
-
-  const handleOpenSidebar = () => {
-    // TODO: 사이드바 오픈 구현
-  };
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -61,20 +58,7 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
           </h1>
         )}
 
-        {/* 햄버거 버튼 */}
-        <button
-          onClick={handleOpenSidebar}
-          type="button"
-          className="ml-auto"
-          aria-label="메뉴 열기"
-        >
-          <Hamburger
-            className={cn(
-              'w-6',
-              variant === '500' ? 'text-white' : 'text-gray-600',
-            )}
-          />
-        </button>
+        <Sidebar variant={variant} />
       </div>
     </header>
   );

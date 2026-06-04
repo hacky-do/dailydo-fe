@@ -1,3 +1,17 @@
+export interface MyMissionItem extends MissionItem {
+  itemId: number;
+  myCompletedCount: number;
+  totalCompletedCount: number;
+  completed: boolean;
+  completedAt: string;
+  mylog: MyLog | null;
+}
+
+export interface MyMission {
+  isGuest: boolean;
+  items: MyMissionItem[];
+}
+
 export interface MissionItem {
   missionId: number;
   title: string;
@@ -16,6 +30,20 @@ export interface Mission {
   minSelectableCount: number;
   maxSelectableCount: number;
   items: MissionItem[];
+}
+
+export interface MyLog {
+  id: number;
+  photo: string;
+  memo: string;
+}
+export interface MyMissionComplete {
+  itemId: number;
+  completed: true;
+  completedAt: string;
+  totalCompletedCount: number;
+  myCompletedCount: number;
+  mylog: MyLog;
 }
 
 export interface MissionPageProps {
