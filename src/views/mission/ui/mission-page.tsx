@@ -27,8 +27,8 @@ export const TodayMissionListPage = ({
 export const MissionPage = () => {
   const { data } = useGetTodayMissions();
   return data?.isGuest ? (
-    <TodayMissionListPage maxSelectableCount={data.maxSelectableCount} />
-  ) : (
     <MyMissionListPage />
+  ) : (
+    <TodayMissionListPage maxSelectableCount={data?.maxSelectableCount} />
   );
 };
