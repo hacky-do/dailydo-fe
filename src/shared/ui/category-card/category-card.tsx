@@ -44,6 +44,7 @@ export const CategoryCard = ({
           aria-hidden="true"
           fill
           className="object-contain"
+          sizes="(max-width: 768px) 100vw, 70vw"
         />
       </div>
       <span className="text-sm font-medium text-gray-800">{label}</span>
