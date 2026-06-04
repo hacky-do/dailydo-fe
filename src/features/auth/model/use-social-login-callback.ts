@@ -26,7 +26,7 @@ export const useSocialLoginCallback = () => {
   const user = searchParams.get('user');
   const error = searchParams.get('error');
 
-  const { mutate } = useSocialLogin();
+  const { mutate: login } = useSocialLogin();
 
   useEffect(() => {
     if (error) {
@@ -39,8 +39,8 @@ export const useSocialLoginCallback = () => {
       return;
     }
 
-    mutate(
-      { type, token },
+    login(
+      { type, socialToken: token },
       {
         onSuccess: () => {
           setLastLogin(type);
@@ -48,14 +48,15 @@ export const useSocialLoginCallback = () => {
         },
         onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
-            const params = new URLSearchParams({ token, type });
-            if (user) params.set('user', user);
-            router.replace(`${ROUTES.SIGNUP}?${params.toString()}`);
+            sessionStorage.setItem('signup_socialToken', token);
+            sessionStorage.setItem('signup_type', type);
+            if (user) sessionStorage.setItem('signup_user', user);
+            router.replace(ROUTES.SIGNUP);
             return;
           }
           router.replace(`${ROUTES.LOGIN}?auth_error`);
         },
       },
     );
-  }, [error, mutate, router, setLastLogin, token, type, user]);
+  }, [error, login, router, setLastLogin, token, type, user]);
 };
