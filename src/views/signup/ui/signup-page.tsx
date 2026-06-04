@@ -82,13 +82,7 @@ export const SignupPage = () => {
   const isNicknameValid = !!nickname && !errors.nickname;
 
   return (
-    <div className="bg-gradient-100 flex h-dvh flex-col overflow-hidden">
-      {/* TODO: 공통 GNB 컴포넌트 연결 */}
-      <header
-        className="h-14 shrink-0 drop-shadow-[0px_4px_2px_rgba(0,0,0,0.04)]"
-        aria-hidden="true"
-      />
-
+    <div className="flex h-full flex-col">
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
@@ -126,7 +120,7 @@ export const SignupPage = () => {
           animate="center"
           exit="exit"
           transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="shrink-0 px-8 pb-9.5"
+          className="mt-auto shrink-0 px-8 pb-9.5"
         >
           {step === 'nickname' && (
             <Button onClick={handleNicknameNext} disabled={!isNicknameValid}>
