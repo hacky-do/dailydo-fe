@@ -82,72 +82,79 @@ export const SignupPage = () => {
   const isNicknameValid = !!nickname && !errors.nickname;
 
   return (
-    <div className="flex h-full flex-col">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          variants={contentVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="flex flex-1 flex-col overflow-hidden"
-        >
-          {step === 'nickname' && <NicknameStep control={control} />}
-          {step === 'category' && (
-            <CategoryStep>
-              <Controller
-                name="categoryIds"
-                control={control}
-                render={({ field }) => (
-                  <CategorySelect
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-            </CategoryStep>
-          )}
-          {step === 'welcome' && <WelcomeStep nickname={nickname} />}
-        </motion.div>
-      </AnimatePresence>
+    <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden">
+      <div className="min-h-10 flex-1" aria-hidden="true" />
+      <div className="flex h-full flex-col">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            variants={contentVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="flex flex-1 flex-col overflow-hidden"
+          >
+            {step === 'nickname' && <NicknameStep control={control} />}
+            {step === 'category' && (
+              <CategoryStep>
+                <Controller
+                  name="categoryIds"
+                  control={control}
+                  render={({ field }) => (
+                    <CategorySelect
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  )}
+                />
+              </CategoryStep>
+            )}
+            {step === 'welcome' && <WelcomeStep nickname={nickname} />}
+          </motion.div>
+        </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step + '_action'}
-          variants={actionVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="mt-auto shrink-0 px-8 pb-9.5"
-        >
-          {step === 'nickname' && (
-            <Button onClick={handleNicknameNext} disabled={!isNicknameValid}>
-              다음
-            </Button>
-          )}
-          {step === 'category' && (
-            <div className="flex gap-4">
-              <Button variant="secondary" onClick={goToPrev} className="flex-1">
-                이전
-              </Button>
-              <Button
-                onClick={goToWelcome}
-                disabled={categoryIds.length < MIN_CATEGORY_COUNT}
-                className="flex-1"
-              >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step + '_action'}
+            variants={actionVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="mt-auto shrink-0 px-8 pb-9.5"
+          >
+            {step === 'nickname' && (
+              <Button onClick={handleNicknameNext} disabled={!isNicknameValid}>
                 다음
               </Button>
-            </div>
-          )}
-          {step === 'welcome' && (
-            <Button onClick={handleStart} isLoading={isPending}>
-              시작하기
-            </Button>
-          )}
-        </motion.div>
-      </AnimatePresence>
+            )}
+            {step === 'category' && (
+              <div className="flex gap-4">
+                <Button
+                  variant="secondary"
+                  onClick={goToPrev}
+                  className="flex-1"
+                >
+                  이전
+                </Button>
+                <Button
+                  onClick={goToWelcome}
+                  disabled={categoryIds.length < MIN_CATEGORY_COUNT}
+                  className="flex-1"
+                >
+                  다음
+                </Button>
+              </div>
+            )}
+            {step === 'welcome' && (
+              <Button onClick={handleStart} isLoading={isPending}>
+                시작하기
+              </Button>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
