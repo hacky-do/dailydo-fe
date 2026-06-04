@@ -46,7 +46,11 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
   useEffect(() => {
     const url = new URL(window.location.href);
     const currentStep = url.searchParams.get('step');
-    url.search = currentStep ? `?step=${currentStep}` : '';
+    if (currentStep) {
+      url.searchParams.set('step', currentStep);
+    } else {
+      url.searchParams.delete('step');
+    }
     window.history.replaceState(null, '', url.toString());
   }, []);
 
