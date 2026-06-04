@@ -2,11 +2,6 @@ import { http, HttpResponse } from 'msw';
 
 import { BASE_URL } from '@/shared/api/base-url.constant';
 
-interface SignupRequestBody {
-  nickname: string;
-  category: number[];
-}
-
 export const handlers = [
   http.get(`${BASE_URL}/api/category`, () => {
     return HttpResponse.json([
@@ -41,15 +36,5 @@ export const handlers = [
         image: '/images/category/category_heal.png',
       },
     ]);
-  }),
-
-  http.post(`${BASE_URL}/auth/register`, async ({ request }) => {
-    const { nickname } = (await request.json()) as SignupRequestBody;
-    return HttpResponse.json({
-      userId: 1,
-      image: null,
-      nickname,
-      intro: null,
-    });
   }),
 ];

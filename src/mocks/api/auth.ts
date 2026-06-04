@@ -1,0 +1,79 @@
+import { http, HttpResponse } from 'msw';
+
+import { BASE_URL } from '@/shared/api/base-url.constant';
+import { COOKIES } from '@/shared/config/cookies';
+import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
+
+const MOCK_ACCESS_TOKEN = 'mock-access-token';
+
+const MOCK_REFRESH_TOKEN = 'mock-refresh-token';
+
+const withAuthCookie = (data: object) =>
+  HttpResponse.json(data, {
+    headers: [
+      ['Set-Cookie', `${COOKIES.ACCESS_TOKEN}=${MOCK_ACCESS_TOKEN}; Path=/`],
+      ['Set-Cookie', `${COOKIES.REFRESH_TOKEN}=${MOCK_REFRESH_TOKEN}; Path=/`],
+    ],
+  });
+
+interface SocialLoginRequestBody {
+  type: string;
+  token: string;
+  remember: boolean;
+}
+
+interface SignupRequestBody {
+  nickname: string;
+  category: number[];
+}
+
+export const handlers = [
+  http.post(`${BASE_URL}/auth/social/token`, () => {
+    return HttpResponse.json({ type: 'google', token: 'mock-social-token' });
+  }),
+
+  http.post(`${BASE_URL}/auth/social`, async ({ request }) => {
+    const { type } = (await request.json()) as SocialLoginRequestBody;
+    if (
+      type === 'google' &&
+      process.env.NEXT_PUBLIC_ENABLE_GOOGLE_MOCK === 'true'
+    ) {
+      return HttpResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+    return withAuthCookie({
+      id: 1,
+      accessToken: MOCK_ACCESS_TOKEN,
+      expiresIn: 3600,
+      refreshToken: MOCK_REFRESH_TOKEN,
+      type,
+    });
+  }),
+
+  http.post(`${BASE_URL}/auth`, () => {
+    return withAuthCookie({
+      id: 1,
+      accessToken: MOCK_ACCESS_TOKEN,
+      expiresIn: 3600,
+      refreshToken: MOCK_REFRESH_TOKEN,
+    });
+  }),
+
+  http.post(`${BASE_URL}${AUTH_ENDPOINTS.REFRESH_TOKEN}`, () => {
+    return withAuthCookie({
+      id: 1,
+      accessToken: MOCK_ACCESS_TOKEN,
+      expiresIn: 3600,
+      refreshToken: MOCK_REFRESH_TOKEN,
+    });
+  }),
+
+  http.post(`${BASE_URL}/auth/register`, async ({ request }) => {
+    const { nickname } = (await request.json()) as SignupRequestBody;
+    return withAuthCookie({
+      userId: 1,
+      image: null,
+      nickname,
+      intro: null,
+    });
+  }),
+];

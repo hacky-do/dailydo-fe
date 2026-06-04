@@ -1,3 +1,8 @@
+import { COOKIES } from '@/shared/config/cookies';
+import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
+import { ROUTES } from '@/shared/config/routes';
+
+import { API_ERRORS, ApiError } from './api-error.type';
 import { BASE_URL } from './base-url.constant';
 import {
   buildHeaders,
@@ -9,17 +14,61 @@ import {
   QueryOptionsWithoutMethod,
 } from './fetch-helpers';
 
+const getCookie = (name: string): string | null => {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+};
+
+let refreshing: Promise<boolean> | null = null;
+
+const tryRefresh = (): Promise<boolean> => {
+  if (refreshing) return refreshing;
+
+  const refreshToken = getCookie(COOKIES.REFRESH_TOKEN);
+  if (!refreshToken) return Promise.resolve(false);
+
+  refreshing = fetch(`${BASE_URL}${AUTH_ENDPOINTS.REFRESH_TOKEN}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  })
+    .then((res) => res.ok)
+    .catch(() => false)
+    .finally(() => {
+      refreshing = null;
+    });
+
+  return refreshing;
+};
+
+const executeWithRetry = async (
+  url: string,
+  init: RequestInit,
+): Promise<Response> => {
+  const res = await fetch(url, init);
+
+  if (res.status !== 401) return res;
+
+  const refreshed = await tryRefresh();
+  if (refreshed) return fetch(url, init);
+
+  window.location.href = ROUTES.LOGIN;
+  throw new ApiError(API_ERRORS.UNAUTHORIZED);
+};
+
 // GET 요청용 — 반환 타입 T (null 없음)
 export const fetchClientQuery = async <T>(
   endpoint: string,
   options?: QueryOptions,
 ): Promise<T> => {
-  const res = await fetch(BASE_URL + endpoint, {
+  const init: RequestInit = {
     ...options,
     method: options?.method ?? 'GET',
     credentials: 'include',
     headers: buildHeaders(options),
-  });
+  };
+  const res = await executeWithRetry(BASE_URL + endpoint, init);
   return parseResponseStrict<T>(res);
 };
 
@@ -28,12 +77,13 @@ export const fetchClientMutation = async <T = unknown>(
   endpoint: string,
   options?: MutationOptions,
 ): Promise<T | null> => {
-  const res = await fetch(BASE_URL + endpoint, {
+  const init: RequestInit = {
     ...options,
     method: options?.method ?? 'POST',
     credentials: 'include',
     headers: buildHeaders(options),
-  });
+  };
+  const res = await executeWithRetry(BASE_URL + endpoint, init);
   return parseResponse<T>(res);
 };
 
