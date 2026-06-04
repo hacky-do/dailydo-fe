@@ -1,7 +1,7 @@
+import { MissionPageProps } from '@/entities/missions/model/mission.types';
 import { MyMissionList } from '@/features/missions/my-mission-list';
 import { TodayMissionList } from '@/features/missions/today-mission-list';
 import MissionHeader from '@/widgets/mission/mission-header';
-import { MissionPageProps } from '@/entities/missions/model/mission.types';
 
 export const MyMissionListPage = () => {
   return (
