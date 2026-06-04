@@ -1,0 +1,39 @@
+name: Sync Fork with Upstream
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *' # 매일 자정(UTC 기준) 자동 실행
+  workflow_dispatch: # 필요하면 수동 실행도 가능
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "rondido"
+          git config --global user.email "rppr001@naver.com"
+
+      - name: Add upstream repository
+        run: git remote add upstream https://github.com/hacky-do/dailydo-fe.git
+
+      - name: Fetch upstream changes
+        run: git fetch upstream
+
+      - name: Merge upstream changes into main
+        run: |
+          git checkout main
+          git merge upstream/main --allow-unrelated-histories || true
+
+      - name: Push changes to forked repository
+        run: git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} main
