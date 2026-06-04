@@ -20,7 +20,7 @@ export const CategoryStep = ({ children }: CategoryStepProps) => {
           최소 2개 이상 선택이 필요해요.
         </p>
       </div>
-      <div className="mt-9 flex-1 overflow-y-auto">{children}</div>
+      <div className="mt-9 flex-1">{children}</div>
     </div>
   );
 };

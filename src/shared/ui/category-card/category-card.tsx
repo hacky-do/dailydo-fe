@@ -24,7 +24,7 @@ export const CategoryCard = ({
   return (
     <label
       className={cn(
-        'flex aspect-square flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl bg-slate-50 p-4 shadow transition-all',
+        'flex h-40 max-h-[15vh] min-h-30 flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl bg-slate-50 p-4 shadow transition-all',
         checked
           ? 'border-2 border-green-500 bg-white'
           : 'border-2 border-transparent',
@@ -37,7 +37,7 @@ export const CategoryCard = ({
         className="sr-only"
         {...props}
       />
-      <div className="relative size-20">
+      <div className="relative h-full w-full">
         <Image
           src={image}
           alt=""

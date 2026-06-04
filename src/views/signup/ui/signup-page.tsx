@@ -82,9 +82,9 @@ export const SignupPage = () => {
   const isNicknameValid = !!nickname && !errors.nickname;
 
   return (
-    <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden">
-      <div className="min-h-10 flex-1" aria-hidden="true" />
-      <div className="flex h-full flex-col">
+    <div className="bg-gradient-100 relative flex h-full min-h-dvh flex-col">
+      <div className="h-10" aria-hidden="true" />
+      <div className="flex h-full flex-1 flex-col gap-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -93,7 +93,7 @@ export const SignupPage = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="flex flex-1 flex-col overflow-hidden"
+            className="flex flex-1 flex-col"
           >
             {step === 'nickname' && <NicknameStep control={control} />}
             {step === 'category' && (
