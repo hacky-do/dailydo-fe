@@ -7,7 +7,7 @@ import MissionHeader from '@/widgets/mission/mission-header';
 export const MyMissionListPage = () => {
   return (
     <div className="flex h-full w-full flex-col items-center">
-      <MissionHeader />
+      <MissionHeader type="mymission" />
       <MyMissionList />
     </div>
   );

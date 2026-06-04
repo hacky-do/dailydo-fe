@@ -4,6 +4,7 @@ import { missionQueryKeys } from '../model/mission.constants';
 import {
   getMyMissions,
   getTodayMissions,
+  postCompleteMission,
   postTodayMissions,
 } from './mission.api';
 
@@ -29,6 +30,16 @@ export const usePostTodayMissions = (options?: { onSuccess?: () => void }) => {
       });
       queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
       options?.onSuccess?.();
+    },
+  });
+};
+
+export const usePostCompleteMission = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (missionId: number) => postCompleteMission(missionId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
     },
   });
 };
