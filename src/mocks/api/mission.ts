@@ -80,10 +80,10 @@ export const handlers = [
   http.get(`${BASE_URL}/api/missions/new`, () => {
     return HttpResponse.json({
       status: 'ARRIVED',
-      isGuest: false,
+      isGuest: true,
       missionDate: new Date().toISOString().split('T')[0],
       minSelectableCount: 1,
-      maxSelectableCount: 3,
+      maxSelectableCount: 5,
       items: mockMissionItems,
     });
   }),
@@ -100,8 +100,8 @@ export const handlers = [
       isGuest: false,
       missionDate: new Date().toISOString().split('T')[0],
       minSelectableCount: 1,
-      maxSelectableCount: 3,
-      items: mockMissionItems.slice(0, 3),
+      maxSelectableCount: 5,
+      items: mockMissionItems.slice(0, 5),
     });
   }),
 ];

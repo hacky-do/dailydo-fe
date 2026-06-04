@@ -20,7 +20,6 @@ import {
 } from '@/features/missions/mission-card.styles';
 import { MissionCardFront } from '@/features/missions/mission-card-front';
 import { Button } from '@/shared/ui/button';
-import { Loader } from '@/shared/ui/loader';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
 import { useCard } from '@/widgets/card/card-context';
@@ -265,15 +264,11 @@ export const TodayMissionList = () => {
           isLoading={isPending}
           type="button"
         >
-          {isPending ? (
-            <Loader />
-          ) : selectedMissionIds.length === 0 ? (
-            '미션을 선택해주세요'
-          ) : selectedMissionIds.length === maxSelectableCount ? (
-            '이대로 선택할게요'
-          ) : (
-            `${selectedMissionIds.length}개 선택했어요`
-          )}
+          {selectedMissionIds.length === 0
+            ? '미션을 선택해주세요'
+            : selectedMissionIds.length === maxSelectableCount
+              ? '이대로 선택할게요'
+              : `${selectedMissionIds.length}개 선택했어요`}
         </Button>
       </div>
     </>

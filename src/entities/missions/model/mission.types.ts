@@ -17,3 +17,7 @@ export interface Mission {
   maxSelectableCount: number;
   items: MissionItem[];
 }
+
+export interface MissionPageProps {
+  maxSelectableCount: number;
+}
