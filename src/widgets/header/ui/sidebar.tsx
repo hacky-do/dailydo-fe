@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Drawer } from 'vaul';
 
+import { COOKIES } from '@/shared/config/cookies';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
 import Delete from '@/shared/ui/icons/common/delete.svg';
@@ -71,7 +72,10 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   };
 
   const handleLogout = () => {
-    // TODO: 로그아웃 구현
+    document.cookie = `${COOKIES.ACCESS_TOKEN}=; Path=/; Max-Age=0`;
+    document.cookie = `${COOKIES.REFRESH_TOKEN}=; Path=/; Max-Age=0`;
+    router.push(ROUTES.HOME);
+    setOpen(false);
   };
 
   return (
