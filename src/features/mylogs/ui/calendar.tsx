@@ -34,6 +34,10 @@ const COUNT_BG_COLORS = [
   'bg-green-500',
 ] as const;
 
+function getCountBgColor(count: number) {
+  return COUNT_BG_COLORS[Math.min(count, COUNT_BG_COLORS.length - 1)];
+}
+
 interface CalendarProps {
   month: Date;
   logs?: DailyCount[];
@@ -73,7 +77,7 @@ export const Calendar = ({ month, logs = [] }: CalendarProps) => {
               prefetch={false}
               className={cn(
                 'flex aspect-square items-center justify-center text-xl',
-                count === undefined ? 'text-gray-600' : COUNT_BG_COLORS[count],
+                count === undefined ? 'text-gray-600' : getCountBgColor(count),
                 index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
               )}
             >
