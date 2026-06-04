@@ -38,11 +38,10 @@ export const SignupPage = () => {
   const {
     control,
     trigger,
-    getValues,
     formState: { errors },
   } = useForm<SignupFormValues>({
     mode: 'onChange',
-    defaultValues: { nickname: '', categoryIds: [] },
+    defaultValues: { nickname: '', categoryIds: [], agreeMarketing: false },
   });
 
   const nickname = useWatch({ control, name: 'nickname', defaultValue: '' });
@@ -52,8 +51,21 @@ export const SignupPage = () => {
     defaultValue: [],
   });
 
-  const { step, socialToken, type, goToCategory, goToPrev, goToWelcome } =
-    useSignupFlow({ nickname, categoryIds });
+  const agreeMarketing = useWatch({
+    control,
+    name: 'agreeMarketing',
+    defaultValue: false,
+  });
+
+  const {
+    step,
+    socialToken,
+    email,
+    type,
+    goToCategory,
+    goToPrev,
+    goToWelcome,
+  } = useSignupFlow({ nickname, categoryIds });
 
   const handleNicknameNext = async () => {
     const valid = await trigger('nickname');
@@ -61,9 +73,8 @@ export const SignupPage = () => {
   };
 
   const handleStart = () => {
-    const { nickname: name, categoryIds: ids } = getValues();
     signup(
-      { nickname: name, category: ids, type, socialToken },
+      { email, name: nickname, agreeMarketing, type, socialToken },
       {
         onSuccess: () => {
           toast({
