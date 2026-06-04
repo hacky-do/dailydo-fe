@@ -1,4 +1,3 @@
-import { COOKIES } from '@/shared/config/cookies';
 import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 import { ROUTES } from '@/shared/config/routes';
 
@@ -14,24 +13,14 @@ import {
   QueryOptionsWithoutMethod,
 } from './fetch-helpers';
 
-const getCookie = (name: string): string | null => {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
-  return match ? decodeURIComponent(match[1]) : null;
-};
-
 let refreshing: Promise<boolean> | null = null;
 
 const tryRefresh = (): Promise<boolean> => {
   if (refreshing) return refreshing;
 
-  const refreshToken = getCookie(COOKIES.REFRESH_TOKEN);
-  if (!refreshToken) return Promise.resolve(false);
-
   refreshing = fetch(`${BASE_URL}${AUTH_ENDPOINTS.REFRESH_TOKEN}`, {
     method: 'POST',
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refreshToken }),
   })
     .then((res) => res.ok)
     .catch(() => false)
