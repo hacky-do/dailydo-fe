@@ -19,5 +19,5 @@ export interface Mission {
 }
 
 export interface MissionPageProps {
-  maxSelectableCount: number;
+  maxSelectableCount: number | undefined;
 }
