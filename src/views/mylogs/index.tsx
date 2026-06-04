@@ -1,1 +1,1 @@
-export { Mylogs } from './ui/mylogs';
+export { Mylogs } from './ui/mylogs-page';
