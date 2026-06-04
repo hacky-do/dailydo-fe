@@ -9,6 +9,8 @@ import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
 import { cn } from '@/shared/utils/cn';
 
+import { emailLogin } from '../api/auth.api';
+
 type LoginType = SocialLoginType | 'guest';
 
 interface LoginButtonProps {
@@ -41,8 +43,13 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
   const router = useRouter();
   const { label, icon: Icon, width, style } = BUTTON_CONFIG[type];
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (type === 'guest') {
+      await emailLogin(
+        process.env.NEXT_PUBLIC_GUEST_EMAIL!,
+        process.env.NEXT_PUBLIC_GUEST_PASSWORD!,
+        true,
+      );
       router.push(ROUTES.MISSIONS);
       return;
     }
