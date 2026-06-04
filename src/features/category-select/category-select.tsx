@@ -1,11 +1,24 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-
 import { Category } from '@/entities/category';
-import { clientApi } from '@/shared/api/fetch-client';
 import { CategoryCard } from '@/shared/ui/category-card';
-import { Skeleton } from '@/shared/ui/skeleton/skeleton';
+
+const CATEGORIES: Category[] = [
+  { id: 1, name: '취미/창작', image: '/images/category/category_hobby.png' },
+  { id: 2, name: '스터디/성장', image: '/images/category/category_study.png' },
+  {
+    id: 3,
+    name: '도전/탐험',
+    image: '/images/category/category_challenge.png',
+  },
+  { id: 4, name: '운동/건강', image: '/images/category/category_exercise.png' },
+  {
+    id: 5,
+    name: '관계/휴식',
+    image: '/images/category/category_relationship.png',
+  },
+  { id: 6, name: '자연/힐링', image: '/images/category/category_heal.png' },
+];
 
 interface CategorySelectProps {
   value: number[];
@@ -13,11 +26,6 @@ interface CategorySelectProps {
 }
 
 export const CategorySelect = ({ value, onChange }: CategorySelectProps) => {
-  const { data: categories = [], isLoading } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => clientApi.get<Category[]>('/api/category'),
-  });
-
   const handleToggle = (id: number) => {
     const next = value.includes(id)
       ? value.filter((v) => v !== id)
@@ -25,19 +33,9 @@ export const CategorySelect = ({ value, onChange }: CategorySelectProps) => {
     onChange(next);
   };
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-2 gap-5">
-        {Array.from({ length: categories.length || 6 }).map((_, i) => (
-          <Skeleton key={i} className="aspect-square size-34" />
-        ))}
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-2 gap-5">
-      {categories.map((category) => (
+      {CATEGORIES.map((category) => (
         <CategoryCard
           key={category.id}
           id={String(category.id)}
