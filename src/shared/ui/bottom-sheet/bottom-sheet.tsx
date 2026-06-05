@@ -21,7 +21,7 @@ const Overlay = ({
   ...props
 }: ComponentProps<typeof Drawer.Overlay>) => (
   <Drawer.Overlay
-    className={cn('fixed inset-0 z-40 bg-black/40', className)}
+    className={cn('fixed inset-0 z-150 bg-black/40', className)}
     {...props}
   />
 );
@@ -51,7 +51,7 @@ const Content = ({
     <Overlay />
     <Drawer.Content
       className={cn(
-        'fixed bottom-0 left-1/2 z-50 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white outline-none',
+        'fixed bottom-0 left-1/2 z-200 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white outline-none',
         className,
       )}
       {...props}

@@ -2,13 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Drawer } from 'vaul';
 
-import {
-  useGetMyMissions,
-  useGetTodayMissions,
-} from '@/entities/missions/api/mission.queries';
 import { COOKIES } from '@/shared/config/cookies';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
@@ -17,6 +13,8 @@ import Hamburger from '@/shared/ui/icons/common/hamburger.svg';
 import Lock from '@/shared/ui/icons/common/lock.svg';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
+
+import { MissionBadge } from './mission-badge';
 
 interface SidebarNavItemProps {
   name: string;
@@ -61,17 +59,6 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   const { toast } = useToast();
 
   const isLoggedIn = true;
-
-  const { data: todayMissions, isPending: isTodayMissionsPending } =
-    useGetTodayMissions();
-  const { data: myMissions, isPending: isMyMissionsPending } =
-    useGetMyMissions();
-
-  // 미션에 배지에 표시할 값
-  const missionStatus =
-    todayMissions?.status === 'ARRIVED'
-      ? 'N'
-      : myMissions?.items.filter((item) => !item.completed).length;
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -125,11 +112,9 @@ export const Sidebar = ({ variant }: SidebarProps) => {
                   isActive={pathname === ROUTES.MISSIONS}
                   onClick={() => handleClickLink(ROUTES.MISSIONS)}
                   badge={
-                    !isTodayMissionsPending && !isMyMissionsPending ? (
-                      <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
-                        {missionStatus}
-                      </span>
-                    ) : undefined
+                    <Suspense fallback={null}>
+                      <MissionBadge />
+                    </Suspense>
                   }
                 />
                 <SidebarNavItem
