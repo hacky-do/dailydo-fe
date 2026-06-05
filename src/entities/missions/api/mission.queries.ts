@@ -30,7 +30,9 @@ export const usePostTodayMissions = (options?: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: (missionId: number[]) => postTodayMissions(missionId),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
+      await queryClient.invalidateQueries({
+        queryKey: missionQueryKeys.myMissions,
+      });
       queryClient.setQueryData(
         missionQueryKeys.todayMissions,
         (prev: Mission) => ({ ...prev, status: 'CONFIRMED' as const }),
