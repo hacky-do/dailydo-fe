@@ -22,8 +22,15 @@ export const CardBack = ({ children, selected = false }: CardBackProps) => {
   return (
     <div
       className={cn(
-        'shadow-card absolute inset-0 flex transform-[rotateY(180deg)] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl bg-white px-6 backface-hidden',
-        getCardBorderStyle(selected, isSpecial),
+        'shadow-card absolute inset-0 flex transform-[rotateY(180deg)] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl px-6 backface-hidden',
+        isCompleted
+          ? cn(
+              'border-3',
+              isSpecial
+                ? 'border-special-complete-gradient'
+                : 'border-complete-gradient',
+            )
+          : cn('bg-white', getCardBorderStyle(selected, isSpecial)),
       )}
     >
       {isCompleted && (

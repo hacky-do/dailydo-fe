@@ -250,14 +250,6 @@
   }
 }
 
-@utility bg-complete-card-pattern {
-  background: linear-gradient(
-    to top,
-    var(--color-green-500),
-    var(--color-green-400)
-  );
-}
-
 @utility bg-special-mission-card-pattern {
   background: linear-gradient(
     to top,
@@ -280,7 +272,7 @@
 
 @utility bg-complete-card-pattern {
   background: linear-gradient(
-    to top,
+    to right,
     var(--color-gradient-500-start),
     var(--color-gradient-500-end)
   );
@@ -292,4 +284,22 @@
     var(--color-special-gradient-start),
     var(--color-special-gradient-end)
   );
+}
+
+@utility border-complete-gradient {
+  border-color: transparent;
+  background-image:
+    linear-gradient(white, white),
+    linear-gradient(to right, var(--color-gradient-600-start), var(--color-gradient-600-end));
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+}
+
+@utility border-special-complete-gradient {
+  border-color: transparent;
+  background-image:
+    linear-gradient(white, white),
+    linear-gradient(to top, var(--color-special-gradient-start), var(--color-special-gradient-end));
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
 }

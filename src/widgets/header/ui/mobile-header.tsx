@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { ROUTE_META, ROUTES } from '@/shared/config/routes';
+import { getRouteMeta, ROUTES } from '@/shared/config/routes';
 import ChevronLeft from '@/shared/ui/icons/common/chevron_left.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { cn } from '@/shared/utils/cn';
@@ -46,7 +46,7 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
               <ChevronLeft className="w-7.5 text-white" />
             </button>
             <h1 className="text-lg font-semibold text-white">
-              {ROUTE_META[pathname as keyof typeof ROUTE_META]?.name}
+              {getRouteMeta(pathname)?.name}
             </h1>
           </>
         ) : (
