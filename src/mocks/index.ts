@@ -1,5 +1,8 @@
 export async function initMocks() {
-  if (process.env.NODE_ENV !== 'development' && process.env.MSW_ENV !== 'true')
+  if (
+    process.env.NODE_ENV !== 'development' &&
+    process.env.NEXT_PUBLIC_MSW_ENV !== 'true'
+  )
     return;
   if (typeof window === 'undefined') {
     // 서버 사이드
