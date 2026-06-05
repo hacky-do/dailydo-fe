@@ -32,3 +32,20 @@ export const ROUTE_META: Partial<
   [ROUTES.COLLECTIONS]: { name: ROUTES_NAME.COLLECTIONS },
   [ROUTES.AUTH_CALLBACK]: { name: ROUTES_NAME.AUTH_CALLBACK },
 };
+
+/**
+ * 정확히 일치하는 경로가 없으면 상위 경로의 메타를 반환
+ * (예: /mylogs/2026-06-05 → /mylogs)
+ */
+export const getRouteMeta = (pathname: string) => {
+  if (ROUTE_META[pathname as keyof typeof ROUTE_META]) {
+    return ROUTE_META[pathname as keyof typeof ROUTE_META];
+  }
+  // '/' 제외
+  const baseRoute = Object.keys(ROUTE_META).find(
+    (route) => route !== '/' && pathname.startsWith(route + '/'),
+  );
+  return baseRoute
+    ? ROUTE_META[baseRoute as keyof typeof ROUTE_META]
+    : undefined;
+};
