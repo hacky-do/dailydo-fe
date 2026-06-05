@@ -1,27 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import type { ComponentProps } from 'react';
 
 import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
 
 import { Calendar } from './calendar';
 
-type StoryArgs = Omit<ComponentProps<typeof Calendar>, 'month'> & {
-  month: number;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta: Meta<typeof Calendar> = {
   title: 'Features/Calendar',
+  component: Calendar,
   argTypes: {
-    month: { table: { disable: true } },
     logs: { table: { disable: true } },
   },
-  render: ({ month, ...args }) => (
-    <Calendar {...args} month={new Date(month)} />
-  ),
 };
 
 export default meta;
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<typeof Calendar>;
 
 const mockLogs: DailyCount[] = [
   { date: '2026-06-01', count: 1 },
@@ -53,18 +45,17 @@ const mockLogs: DailyCount[] = [
 ];
 
 export const Default: Story = {
-  argTypes: {
-    month: { control: 'date' },
-  },
   args: {
-    month: new Date(2026, 5, 1).getTime(),
+    year: 2026,
+    month: 6,
     logs: [],
   },
 };
 
 export const WithData: Story = {
   args: {
-    month: new Date(2026, 5, 1).getTime(),
+    year: 2026,
+    month: 6,
     logs: mockLogs,
   },
 };
