@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+import { DayLogList } from '@/features/mylogs/ui/daylog-list';
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/button';
 import LogsIcon from '@/shared/ui/icons/mylogs/logs.svg';
@@ -22,7 +23,8 @@ export const DayLog = ({ formattedDate }: { formattedDate: string }) => {
         </p>
         <p>그날의 기록을 살펴봐요.</p>
       </div>
-
+      {/* 완료한 카드 목록 */}
+      <DayLogList />
       <div className="mt-auto w-full px-8">
         <Button
           onClick={handleBackToCalendar}
