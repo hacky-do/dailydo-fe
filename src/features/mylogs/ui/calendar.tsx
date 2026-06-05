@@ -64,14 +64,14 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
       <ul className="mb-4 grid grid-cols-7 text-center">
         {WEEKDAYS.map((day) => (
           <li key={day}>
-            <span className="bg-[#ffe5e5] px-1 text-sm font-semibold text-gray-500">
+            <span className="px-1 text-sm font-semibold text-gray-500">
               {day}
             </span>
           </li>
         ))}
       </ul>
 
-      <div role="grid" className="grid grid-cols-7">
+      <div className="grid grid-cols-7">
         {days.map((day, index) => {
           const dateStr = format(day, 'yyyy-MM-dd');
           const count = countByDate[dateStr];
