@@ -47,5 +47,6 @@ export interface MyMissionComplete {
 }
 
 export interface MissionPageProps {
+  missions: Mission;
   maxSelectableCount: number | undefined;
 }
