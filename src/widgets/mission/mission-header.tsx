@@ -47,7 +47,7 @@ const MissionHeader = ({
           <span className="text-base">
             {type === 'today'
               ? `최대 ${maxSelectableCount}개의 미션을 선택할 수 있어요.`
-              : '기벼운 마음으로 시작해봐요.'}
+              : '가벼운 마음으로 시작해봐요.'}
           </span>
         </div>
       </div>
