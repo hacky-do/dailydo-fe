@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 
 import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
+import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/utils/cn';
 
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -39,26 +40,31 @@ function getCountBgColor(count: number) {
 }
 
 interface CalendarProps {
-  month: Date;
+  year: number;
+  month: number;
   logs?: DailyCount[];
 }
 
-export const Calendar = ({ month, logs = [] }: CalendarProps) => {
-  const firstDay = startOfMonth(month);
-  const days = eachDayOfInterval({ start: firstDay, end: endOfMonth(month) });
+export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
+  const firstDay = startOfMonth(new Date(year, month - 1));
+  const days = eachDayOfInterval({
+    start: firstDay,
+    end: endOfMonth(firstDay),
+  });
 
-  // date -> count 조회용 맵
   const countByDate = Object.fromEntries(
     logs.map(({ date, count }) => [date, count]),
   );
 
   return (
     <div className="w-full">
-      <h2 className="mb-5 text-4xl text-gray-600">{format(month, 'M')}</h2>
+      <h2 className="mb-5 text-4xl text-gray-600">
+        <span aria-label={`${year}년 ${month}월`}>{month}</span>
+      </h2>
       <ul className="mb-4 grid grid-cols-7 text-center">
         {WEEKDAYS.map((day) => (
           <li key={day}>
-            <span className="bg-[#ffe5e5] px-1 text-sm font-semibold text-gray-500">
+            <span className="px-1 text-sm font-semibold text-gray-500">
               {day}
             </span>
           </li>
@@ -69,17 +75,27 @@ export const Calendar = ({ month, logs = [] }: CalendarProps) => {
         {days.map((day, index) => {
           const dateStr = format(day, 'yyyy-MM-dd');
           const count = countByDate[dateStr];
+          const baseClassName = cn(
+            'flex aspect-square items-center justify-center text-xl',
+            index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
+          );
+
+          // 데이터 없는 날짜는 Link가 아닌 div
+          if (count === undefined) {
+            return (
+              <div key={dateStr} className={cn(baseClassName, 'text-gray-600')}>
+                {format(day, 'd')}
+              </div>
+            );
+          }
 
           return (
             <Link
               key={dateStr}
-              href={`?date=${dateStr}`}
+              href={`${ROUTES.MYLOG}/${dateStr}`}
               prefetch={false}
-              className={cn(
-                'flex aspect-square items-center justify-center text-xl',
-                count === undefined ? 'text-gray-600' : getCountBgColor(count),
-                index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
-              )}
+              aria-label={`${format(day, 'yyyy년 M월 d일')}, 완료 ${count}개`}
+              className={cn(baseClassName, getCountBgColor(count))}
             >
               {format(day, 'd')}
             </Link>

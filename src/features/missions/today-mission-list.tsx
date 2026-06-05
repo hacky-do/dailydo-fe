@@ -7,10 +7,7 @@ import { useRef, useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import {
-  useGetTodayMissions,
-  usePostTodayMissions,
-} from '@/entities/missions/api/mission.queries';
+import { usePostTodayMissions } from '@/entities/missions/api/mission.queries';
 import { MissionItem } from '@/entities/missions/model/mission.types';
 import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
 import {
@@ -173,18 +170,23 @@ const applySlideEffects = (swiper: SwiperClass) => {
   });
 };
 
-export const TodayMissionList = () => {
-  const { data } = useGetTodayMissions();
+interface TodayMissionListProps {
+  missions: MissionItem[];
+  maxSelectableCount: number | undefined;
+}
+
+export const TodayMissionList = ({
+  missions,
+  maxSelectableCount,
+}: TodayMissionListProps) => {
   const { mutate: postTodayMissions, isPending } = usePostTodayMissions();
   const swiperRef = useRef<SwiperClass | null>(null);
   const [activeRealIndex, setActiveRealIndex] = useState(0);
 
-  const missions = data?.items ?? [];
-  const maxSelectableCount = data?.maxSelectableCount ?? 5;
-
   const [selectedMissionIds, setSelectedMissionIds] = useState<number[]>([]);
 
   const handleSelect = (id: number) => {
+    if (maxSelectableCount === undefined) return;
     if (selectedMissionIds.length >= maxSelectableCount) return;
     setSelectedMissionIds((prev) => [...prev, id]);
   };
