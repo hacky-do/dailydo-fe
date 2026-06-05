@@ -36,6 +36,7 @@ const MyMissionBackContent = ({
   open,
   setIsOpen,
 }: MyMissionBackContentProps) => {
+  console.log(mission);
   return (
     <>
       <span
@@ -207,7 +208,7 @@ export const MyMissionList = () => {
   const { data } = useGetMyMissions();
   const swiperRef = useRef<SwiperClass | null>(null);
 
-  const missions = data?.items ?? [];
+  const missions = data.items;
 
   const handleSlideChangeStart = (swiper: SwiperClass) => {
     swiper.slides.forEach((slide) => {

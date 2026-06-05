@@ -75,6 +75,8 @@ const mockMissionItems = [
   },
 ];
 
+let confirmedMissionIds: number[] = [];
+
 export const handlers = [
   // 오늘의 미션 목록 조회
   http.get(`${BASE_URL}/api/missions/new`, () => {
@@ -89,19 +91,20 @@ export const handlers = [
   }),
 
   // 오늘의 미션 선택 확정
-  http.post(`${BASE_URL}/api/missions/new`, () => {
+  http.post(`${BASE_URL}/api/missions/new`, async ({ request }) => {
+    const body = await request.json() as { missionId: number[] };
+    confirmedMissionIds = body.missionId ?? [];
     return HttpResponse.json(null, { status: 204 });
   }),
 
   // 내 미션 목록 조회
   http.get(`${BASE_URL}/api/missions`, () => {
+    const items = mockMissionItems.filter((m) =>
+      confirmedMissionIds.includes(m.missionId),
+    );
     return HttpResponse.json({
-      status: 'CONFIRMED',
       isGuest: false,
-      missionDate: new Date().toISOString().split('T')[0],
-      minSelectableCount: 1,
-      maxSelectableCount: 5,
-      items: mockMissionItems.slice(0, 5),
+      items,
     });
   }),
 ];
