@@ -2,15 +2,14 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 
-import {
-  useGetMyMissions,
-  useGetTodayMissions,
-} from '@/entities/missions/api/mission.queries';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
+
+import { MissionBadge } from './mission-badge';
 
 interface PcNavItemProps {
   name: string;
@@ -36,17 +35,6 @@ export const PcHeader = ({ className }: { className?: string }) => {
   const { toast } = useToast();
 
   const isLoggedIn = true;
-
-  const { data: todayMissions, isPending: isTodayMissionsPending } =
-    useGetTodayMissions();
-  const { data: myMissions, isPending: isMyMissionsPending } =
-    useGetMyMissions();
-
-  // 미션에 배지에 표시할 값
-  const missionStatus =
-    todayMissions?.status === 'ARRIVED'
-      ? 'N'
-      : myMissions?.items.filter((item) => !item.completed).length;
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -82,11 +70,9 @@ export const PcHeader = ({ className }: { className?: string }) => {
               name={ROUTES_NAME.MISSIONS}
               onClick={() => handleClickLink(ROUTES.MISSIONS)}
               badge={
-                !isTodayMissionsPending && !isMyMissionsPending ? (
-                  <span className="h-4 rounded-full bg-green-500 px-1.75 text-xs font-semibold text-white">
-                    {missionStatus}
-                  </span>
-                ) : undefined
+                <Suspense fallback={null}>
+                  <MissionBadge />
+                </Suspense>
               }
             />
             <PcNavItem
