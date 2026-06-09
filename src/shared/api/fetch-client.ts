@@ -16,10 +16,12 @@ import {
 let refreshing: Promise<boolean> | null = null;
 let redirecting = false;
 
-const hasRefreshTokenCookie = () =>
-  document.cookie
+const hasRefreshTokenCookie = () => {
+  if (typeof document === 'undefined') return false;
+  return document.cookie
     .split(';')
     .some((c) => c.trim().startsWith(COOKIES.REFRESH_TOKEN + '='));
+};
 
 const tryRefresh = (): Promise<boolean> => {
   if (refreshing) return refreshing;
@@ -29,7 +31,6 @@ const tryRefresh = (): Promise<boolean> => {
     credentials: 'include',
   })
     .then((res) => {
-      console.log('[tryRefresh] status:', res.status, 'ok:', res.ok);
       return res.ok;
     })
     .catch(() => false)
