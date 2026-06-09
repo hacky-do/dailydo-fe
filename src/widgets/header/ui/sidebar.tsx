@@ -5,8 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { Drawer } from 'vaul';
 
-import { useAuth } from '@/features/auth';
-import { COOKIES } from '@/shared/config/cookies';
+import { useAuth, useLogout } from '@/features/auth';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
 import Delete from '@/shared/ui/icons/common/delete.svg';
@@ -58,6 +57,7 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const { toast } = useToast();
+  const { mutate: logout } = useLogout();
 
   const { data: session } = useAuth();
   const isLoggedIn = !!session;
@@ -72,13 +72,6 @@ export const Sidebar = ({ variant }: SidebarProps) => {
       type: 'warning',
       message: '해당 기능은 로그인 사용자만 이용 가능해요',
     });
-  };
-
-  const handleLogout = () => {
-    document.cookie = `${COOKIES.ACCESS_TOKEN}=; Path=/; Max-Age=0`;
-    document.cookie = `${COOKIES.REFRESH_TOKEN}=; Path=/; Max-Age=0`;
-    router.push(ROUTES.HOME);
-    setOpen(false);
   };
 
   return (
@@ -147,7 +140,7 @@ export const Sidebar = ({ variant }: SidebarProps) => {
                     </Link>
                   ) : (
                     <button
-                      onClick={handleLogout}
+                      onClick={() => logout()}
                       type="button"
                       className="p-4"
                     >
