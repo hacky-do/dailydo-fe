@@ -14,6 +14,7 @@ import {
 } from './fetch-helpers';
 
 let refreshing: Promise<boolean> | null = null;
+let redirecting = false;
 
 const tryRefresh = (): Promise<boolean> => {
   if (refreshing) return refreshing;
@@ -40,9 +41,19 @@ const executeWithRetry = async (
   if (res.status !== 401) return res;
 
   const refreshed = await tryRefresh();
-  if (refreshed) return fetch(url, init);
+  if (refreshed) {
+    const retried = await fetch(url, init);
+    if (retried.status !== 401) return retried;
+  }
 
-  window.location.href = ROUTES.LOGIN;
+  if (!redirecting) {
+    redirecting = true;
+    await fetch(`${BASE_URL}/auth`, {
+      method: 'DELETE',
+      credentials: 'include',
+    }).catch(() => {});
+    window.location.href = ROUTES.LOGIN;
+  }
   throw new ApiError(API_ERRORS.UNAUTHORIZED);
 };
 
