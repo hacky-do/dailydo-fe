@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
+import { useAuth } from '@/features/auth';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { useToast } from '@/shared/ui/toast';
@@ -34,7 +35,8 @@ export const PcHeader = ({ className }: { className?: string }) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const isLoggedIn = true;
+  const { data: session } = useAuth();
+  const isLoggedIn = !!session;
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {

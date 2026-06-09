@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { Drawer } from 'vaul';
 
+import { useAuth } from '@/features/auth';
 import { COOKIES } from '@/shared/config/cookies';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
@@ -58,7 +59,8 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   const pathname = usePathname();
   const { toast } = useToast();
 
-  const isLoggedIn = true;
+  const { data: session } = useAuth();
+  const isLoggedIn = !!session;
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
