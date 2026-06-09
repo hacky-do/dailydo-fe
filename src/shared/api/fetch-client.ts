@@ -1,5 +1,6 @@
 import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 import { ROUTES } from '@/shared/config/routes';
+import { COOKIES } from '@/shared/config/cookies';
 
 import { API_ERRORS, ApiError } from './api-error.type';
 import { BASE_URL } from './base-url.constant';
@@ -23,7 +24,10 @@ const tryRefresh = (): Promise<boolean> => {
     method: 'POST',
     credentials: 'include',
   })
-    .then((res) => res.ok)
+    .then((res) => {
+      console.log('[tryRefresh] status:', res.status, 'ok:', res.ok);
+      return res.ok;
+    })
     .catch(() => false)
     .finally(() => {
       refreshing = null;
@@ -52,6 +56,8 @@ const executeWithRetry = async (
       method: 'DELETE',
       credentials: 'include',
     }).catch(() => {});
+    document.cookie = `${COOKIES.ACCESS_TOKEN}=; Max-Age=0; Path=/`;
+    document.cookie = `${COOKIES.REFRESH_TOKEN}=; Max-Age=0; Path=/`;
     window.location.href = ROUTES.LOGIN;
   }
   throw new ApiError(API_ERRORS.UNAUTHORIZED);
