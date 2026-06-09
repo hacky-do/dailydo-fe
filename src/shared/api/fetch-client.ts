@@ -1,6 +1,5 @@
-import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
-import { ROUTES } from '@/shared/config/routes';
 import { COOKIES } from '@/shared/config/cookies';
+import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 
 import { API_ERRORS, ApiError } from './api-error.type';
 import { BASE_URL } from './base-url.constant';
@@ -16,6 +15,11 @@ import {
 
 let refreshing: Promise<boolean> | null = null;
 let redirecting = false;
+
+const hasRefreshTokenCookie = () =>
+  document.cookie
+    .split(';')
+    .some((c) => c.trim().startsWith(COOKIES.REFRESH_TOKEN + '='));
 
 const tryRefresh = (): Promise<boolean> => {
   if (refreshing) return refreshing;
@@ -40,6 +44,10 @@ const executeWithRetry = async (
   url: string,
   init: RequestInit,
 ): Promise<Response> => {
+  if (!hasRefreshTokenCookie()) {
+    await tryRefresh();
+  }
+
   const res = await fetch(url, init);
 
   if (res.status !== 401) return res;
@@ -56,9 +64,6 @@ const executeWithRetry = async (
       method: 'DELETE',
       credentials: 'include',
     }).catch(() => {});
-    document.cookie = `${COOKIES.ACCESS_TOKEN}=; Max-Age=0; Path=/`;
-    document.cookie = `${COOKIES.REFRESH_TOKEN}=; Max-Age=0; Path=/`;
-    window.location.href = ROUTES.LOGIN;
   }
   throw new ApiError(API_ERRORS.UNAUTHORIZED);
 };
