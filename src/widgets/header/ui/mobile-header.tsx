@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Suspense } from 'react';
 
 import { getRouteMeta, ROUTES } from '@/shared/config/routes';
 import ChevronLeft from '@/shared/ui/icons/common/chevron_left.svg';
@@ -59,9 +58,7 @@ export const MobileHeader = ({ variant, className }: MobileHeaderProps) => {
           </h1>
         )}
 
-        <Suspense>
-          <Sidebar variant={variant} />
-        </Suspense>
+        <Sidebar variant={variant} />
       </div>
     </header>
   );
