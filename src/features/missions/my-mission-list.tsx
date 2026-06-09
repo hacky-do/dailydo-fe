@@ -107,7 +107,7 @@ export const MyLogBottomSheet = ({
   return (
     <>
       <BottomSheet.Root open={open} onOpenChange={setOpen}>
-        <BottomSheet.Content>
+        <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
           <BottomSheet.Header>
             <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
           </BottomSheet.Header>

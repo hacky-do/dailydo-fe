@@ -10,8 +10,8 @@ export const getMyMissions = () => clientApi.get<MyMission>('/api/missions');
 export const getTodayMissions = () =>
   clientApi.get<Mission>('/api/missions/new');
 
-export const postTodayMissions = (missionId: number[]) =>
-  clientApi.post('/api/missions/new', { body: JSON.stringify({ missionId }) });
+export const postTodayMissions = (missionIds: number[]) =>
+  clientApi.post('/api/missions/new', { body: JSON.stringify({ missionIds }) });
 
 export const postCompleteMission = (missionId: number) =>
   clientApi.post<MyMissionItem>(`/api/missions/${missionId}`);

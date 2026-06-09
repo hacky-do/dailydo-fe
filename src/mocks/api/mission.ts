@@ -92,8 +92,8 @@ export const handlers = [
 
   // 오늘의 미션 선택 확정
   http.post(`${BASE_URL}/api/missions/new`, async ({ request }) => {
-    const body = (await request.json()) as { missionId: number[] };
-    confirmedMissionIds = body.missionId ?? [];
+    const body = (await request.json()) as { missionIds: number[] };
+    confirmedMissionIds = body.missionIds ?? [];
     return HttpResponse.json(null, { status: 204 });
   }),
 
