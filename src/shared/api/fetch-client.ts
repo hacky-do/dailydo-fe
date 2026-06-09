@@ -34,6 +34,7 @@ const tryRefresh = (): Promise<boolean> => {
     })
     .catch(() => false)
     .finally(() => {
+      redirecting = false;
       refreshing = null;
     });
 
