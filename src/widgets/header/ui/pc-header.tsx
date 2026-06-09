@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { useAuth } from '@/features/auth';
+import { useAuth, useLogout } from '@/features/auth';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { useToast } from '@/shared/ui/toast';
@@ -34,6 +34,7 @@ const PcNavItem = ({ name, onClick, badge }: PcNavItemProps) => (
 export const PcHeader = ({ className }: { className?: string }) => {
   const router = useRouter();
   const { toast } = useToast();
+  const { mutate: logout } = useLogout();
 
   const { data: session } = useAuth();
   const isLoggedIn = !!session;
@@ -47,10 +48,6 @@ export const PcHeader = ({ className }: { className?: string }) => {
       type: 'warning',
       message: '해당 기능은 로그인 사용자만 이용 가능해요',
     });
-  };
-
-  const handleLogout = () => {
-    // TODO: 로그아웃 구현
   };
 
   return (
@@ -97,7 +94,7 @@ export const PcHeader = ({ className }: { className?: string }) => {
                   {ROUTES_NAME.LOGIN}
                 </Link>
               ) : (
-                <button onClick={handleLogout} type="button" className="p-4">
+                <button onClick={() => logout()} type="button" className="p-4">
                   로그아웃
                 </button>
               )}

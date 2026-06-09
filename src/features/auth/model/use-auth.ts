@@ -1,6 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
-import { getSession } from '../api/auth.api';
+import { ROUTES } from '@/shared/config/routes';
+
+import { emailLogout, getSession } from '../api/auth.api';
 import { authQueryKeys } from './auth.constants';
 
 export const useAuth = () =>
@@ -10,3 +13,16 @@ export const useAuth = () =>
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: emailLogout,
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: authQueryKeys.session });
+      router.push(ROUTES.HOME);
+    },
+  });
+};
