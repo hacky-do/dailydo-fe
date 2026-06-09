@@ -1,4 +1,5 @@
 import {
+  AuthResponse,
   SocialLoginResponse,
   SocialLoginType,
   SocialTokenResponse,
@@ -39,3 +40,5 @@ export const emailLogin = (
   });
 
 export const emailLogout = () => clientApi.delete<SocialLoginResponse>('/auth');
+
+export const getSession = () => clientApi.get<AuthResponse>('/auth');

@@ -11,3 +11,8 @@ export interface SocialLoginResponse {
   expiresIn: number;
   refreshToken: string;
 }
+
+export interface AuthResponse {
+  id: number;
+  name: string;
+}

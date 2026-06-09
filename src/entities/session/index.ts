@@ -1,5 +1,6 @@
 export { useSessionStore } from './model/session.store';
 export type {
+  AuthResponse,
   SocialLoginResponse,
   SocialLoginType,
   SocialTokenResponse,
