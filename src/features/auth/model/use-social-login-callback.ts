@@ -8,10 +8,12 @@ import {
 } from '@/entities/session';
 import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
+import { useToast } from '@/shared/ui/toast';
 
 import { useSocialLogin } from './use-social-login';
 
 export const useSocialLoginCallback = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setLastLogin } = useSessionStore.getState();
@@ -44,6 +46,7 @@ export const useSocialLoginCallback = () => {
       {
         onSuccess: () => {
           setLastLogin(type);
+          toast({ message: '다시 돌아오신 것을 환영해요!', type: 'success' });
           router.replace(ROUTES.MISSIONS);
         },
         onError: (err: unknown) => {
@@ -58,5 +61,5 @@ export const useSocialLoginCallback = () => {
         },
       },
     );
-  }, [error, login, router, setLastLogin, token, type, user]);
+  }, [error, login, router, setLastLogin, token, type, user, toast]);
 };
