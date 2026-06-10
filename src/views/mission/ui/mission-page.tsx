@@ -39,7 +39,15 @@ export const TodayMissionListPage = ({
 };
 
 export const MissionPage = () => {
-  const { data } = useGetTodayMissions();
+  const { data, isFetching } = useGetTodayMissions();
+
+  if (isFetching || !data.status)
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <Loader size={'lg'} color="primary" />
+      </div>
+    );
+
   return data.status === 'CONFIRMED' ? (
     <MyMissionListPage />
   ) : (
