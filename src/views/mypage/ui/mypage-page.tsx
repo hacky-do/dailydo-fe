@@ -12,6 +12,17 @@ import {
 } from '@/features/mypage';
 import { Button } from '@/shared/ui/button';
 
+const MypageSkeleton = () => (
+  <>
+    <ProfileSectionSkeleton />
+    <div className="flex flex-col gap-6">
+      <MissionStatusSectionSkeleton />
+      <MyStatusSectionSkeleton />
+      <CategorySectionSkeleton />
+    </div>
+  </>
+);
+
 export const Mypage = () => (
   <div className="relative h-full w-full pt-20">
     <div className="h-full w-full bg-green-100">
@@ -23,20 +34,14 @@ export const Mypage = () => (
       </div>
 
       <div className="absolute inset-x-0 top-0 flex flex-col gap-5 p-5">
-        <Suspense fallback={<ProfileSectionSkeleton />}>
+        <Suspense fallback={<MypageSkeleton />}>
           <ProfileSection />
-        </Suspense>
-        <div className="flex flex-col gap-6">
-          <Suspense fallback={<MissionStatusSectionSkeleton />}>
+          <div className="flex flex-col gap-6">
             <MissionStatusSection />
-          </Suspense>
-          <Suspense fallback={<MyStatusSectionSkeleton />}>
             <MyStatusSection />
-          </Suspense>
-          <Suspense fallback={<CategorySectionSkeleton />}>
             <CategorySection />
-          </Suspense>
-        </div>
+          </div>
+        </Suspense>
       </div>
     </div>
   </div>

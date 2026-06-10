@@ -3,19 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { useGetMe } from '@/entities/user';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
-
-interface Profile {
-  nickname: string;
-  bio: string;
-  avatarUrl: string;
-}
-
-const profile: Profile = {
-  nickname: '닉네임은여덟글자',
-  bio: '슬퍼하는 불현듯 꽃잎을 노래, 있으랴 실어 연인들의 별이 다시는 바다로',
-  avatarUrl: '/common/avatar.png',
-};
 
 export const ProfileSectionSkeleton = () => (
   <section className="flex flex-col gap-4">
@@ -36,7 +25,7 @@ export const ProfileSectionSkeleton = () => (
 
 export const ProfileSection = () => {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  // TODO: 프로필 정보 호출
+  const { data } = useGetMe();
 
   return (
     <section className="flex flex-col gap-4">
@@ -44,17 +33,17 @@ export const ProfileSection = () => {
         <div className="relative size-28.5 overflow-hidden rounded-full border-2 border-green-100 bg-green-100">
           {isImageLoading && <Skeleton className="h-full w-full" />}
           <Image
-            src={profile.avatarUrl}
+            src={data.profileImage ?? '/common/avatar.png'}
             fill
-            alt={`${profile.nickname}의 프로필 이미지`}
+            alt={`${data.name}의 프로필 이미지`}
             className={`object-cover ${isImageLoading ? 'invisible' : 'visible'}`}
             onLoad={() => setIsImageLoading(false)}
           />
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h3 className="text-lg leading-7 font-semibold">{profile.nickname}</h3>
-        <p className="min-h-10 text-sm">{profile.bio}</p>
+        <h3 className="text-lg leading-7 font-semibold">{data.name}</h3>
+        <p className="min-h-10 text-sm">{data.description}</p>
       </div>
     </section>
   );

@@ -1,13 +1,11 @@
 'use client';
 
+import { useGetMe } from '@/entities/user';
 import CheckCircle from '@/shared/ui/icons/mypage/check_circle.svg';
 import { ProgressBar } from '@/shared/ui/progress-bar';
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
-
-const completedCount = 4;
-const totalCount = 6;
 
 export const MissionStatusSectionSkeleton = () => (
   <section className="flex flex-col gap-2">
@@ -22,19 +20,23 @@ export const MissionStatusSectionSkeleton = () => (
   </section>
 );
 
-export const MissionStatusSection = () => (
-  // TODO: 미션 목록 호출
+export const MissionStatusSection = () => {
+  const { data } = useGetMe();
+  const { completedCount, totalCount } = data.todayMissionCompletion;
 
-  <section className="flex flex-col gap-2">
-    <h4 className={sectionLabelClass}>오늘의 완료율</h4>
-    <div className="rounded-2xl bg-white px-3 py-3">
-      <div className="flex items-center justify-between gap-2">
-        <CheckCircle width={24} aria-hidden="true" />
-        <ProgressBar value={completedCount / totalCount} />
-        <div className="flex min-w-6 shrink-0 text-center text-sm font-semibold text-gray-600">
-          <span className="text-green-500">{completedCount}</span>/{totalCount}
+  return (
+    <section className="flex flex-col gap-2">
+      <h4 className={sectionLabelClass}>오늘의 완료율</h4>
+      <div className="rounded-2xl bg-white px-3 py-3">
+        <div className="flex items-center justify-between gap-2">
+          <CheckCircle width={24} aria-hidden="true" />
+          <ProgressBar value={completedCount / totalCount} />
+          <div className="flex min-w-6 shrink-0 text-center text-sm font-semibold text-gray-600">
+            <span className="text-green-500">{completedCount}</span>/
+            {totalCount}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
