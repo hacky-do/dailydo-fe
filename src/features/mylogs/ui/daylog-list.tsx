@@ -54,10 +54,11 @@ const DayLogCardContent = ({ record }: DayLogCardContentProps) => {
             자세히보기
           </Button>
         </BottomSheet.Trigger>
-        <BottomSheet.Content className="flex flex-col p-8">
+        <BottomSheet.Content className="flex flex-col py-8">
           <BottomSheet.Title className="sr-only">
             마이로그 상세
           </BottomSheet.Title>
+          <BottomSheet.CloseButton className="absolute top-1.5 right-4" />
           <span className="w-fit rounded-2xl bg-gray-100 px-2 py-1 text-sm text-gray-600">
             {record.categoryName}
           </span>

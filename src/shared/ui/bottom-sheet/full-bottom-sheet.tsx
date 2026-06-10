@@ -33,6 +33,7 @@ export const FullBottomSheet = {
   Overlay: BottomSheet.Overlay,
   Handle: BottomSheet.Handle,
   Content,
+  CloseButton: BottomSheet.CloseButton,
   Header: BottomSheet.Header,
   Title: BottomSheet.Title,
   Description: BottomSheet.Description,

@@ -35,7 +35,7 @@ export const AlertBottomSheet = ({
 
   return (
     <BottomSheet.Root open={open} onOpenChange={onOpenChange}>
-      <BottomSheet.Content showCloseButton={false}>
+      <BottomSheet.Content>
         <div className="px-5 pt-6 pb-2 text-center">
           <Drawer.Title className="text-base font-semibold text-gray-900">
             {title}

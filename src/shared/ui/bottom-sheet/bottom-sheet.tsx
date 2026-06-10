@@ -37,38 +37,58 @@ const Handle = ({ className, ...props }: ComponentProps<'div'>) => (
   />
 );
 
-interface ContentProps extends ComponentProps<typeof Drawer.Content> {
-  showCloseButton?: boolean;
-}
+const CloseButton = ({
+  className,
+  ...props
+}: ComponentProps<typeof Drawer.Close>) => (
+  <Drawer.Close
+    className={cn(
+      'flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none',
+      className,
+    )}
+    {...props}
+  >
+    <DeleteIcon aria-hidden width={20} height={20} />
+    <span className="sr-only">닫기</span>
+  </Drawer.Close>
+);
 
 const Content = ({
   children,
   className,
-  showCloseButton = true,
   ...props
-}: ContentProps) => (
+}: ComponentProps<typeof Drawer.Content>) => (
   <Drawer.Portal>
     <Overlay />
     <Drawer.Content
       className={cn(
-        'fixed bottom-0 left-1/2 z-200 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white outline-none',
+        'fixed bottom-0 left-1/2 z-200 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white px-6 outline-none',
         className,
       )}
       {...props}
     >
       {children}
-      {showCloseButton && (
-        <Drawer.Close className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none">
-          <DeleteIcon aria-hidden width={20} height={20} />
-          <span className="sr-only">닫기</span>
-        </Drawer.Close>
-      )}
     </Drawer.Content>
   </Drawer.Portal>
 );
 
-const Header = ({ className, ...props }: ComponentProps<'div'>) => (
-  <div className={cn('shrink-0 px-5 pt-2 pb-4', className)} {...props} />
+interface HeaderProps extends ComponentProps<'div'> {
+  showCloseButton?: boolean;
+}
+
+const Header = ({
+  className,
+  showCloseButton = true,
+  children,
+  ...props
+}: HeaderProps) => (
+  <div
+    className={cn('flex shrink-0 items-center pt-4 pb-4', className)}
+    {...props}
+  >
+    <div className="flex-1">{children}</div>
+    {showCloseButton && <CloseButton />}
+  </div>
 );
 
 const Title = ({
@@ -92,11 +112,11 @@ const Description = ({
 );
 
 const Body = ({ className, ...props }: ComponentProps<'div'>) => (
-  <div className={cn('px-5', className)} {...props} />
+  <div className={cn('', className)} {...props} />
 );
 
 const Footer = ({ className, ...props }: ComponentProps<'div'>) => (
-  <div className={cn('shrink-0 px-5 pt-2 pb-6', className)} {...props} />
+  <div className={cn('shrink-0 pt-2 pb-6', className)} {...props} />
 );
 
 const Close = ({
@@ -112,6 +132,7 @@ export const BottomSheet = {
   Overlay,
   Handle,
   Content,
+  CloseButton,
   Header,
   Title,
   Description,

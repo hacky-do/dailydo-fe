@@ -107,29 +107,25 @@ export const MyLogBottomSheet = ({
     <>
       <BottomSheet.Root open={open} onOpenChange={setOpen}>
         <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
-          <BottomSheet.Header>
+          <BottomSheet.Header className="pt-6">
             <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
           </BottomSheet.Header>
-          <BottomSheet.Body>
-            <span className="mt-8 mb-1 text-sm font-medium">
+          <BottomSheet.Body className="flex flex-col gap-3 pt-6 pb-8">
+            <span className="text-sm font-medium">
               기억하고 싶은 순간이 있나요?
             </span>
-            <div className="mb-12">
-              <FileInput />
-            </div>
-            <div className="pb-8">
-              <Textarea
-                id="mylog"
-                label="오늘을 한줄로 남겨 볼까요?"
-                placeholder="최대 100자까지 입력 가능해요."
-                description="0/100자"
-              />
-            </div>
+            <FileInput />
+            <Textarea
+              id="mylog"
+              label="오늘을 한줄로 남겨 볼까요?"
+              placeholder="최대 100자까지 입력 가능해요."
+              description="0/100자"
+            />
           </BottomSheet.Body>
-          <BottomSheet.Footer>
+          <BottomSheet.Footer className="pt-0 pb-8">
             <div className="flex gap-2">
               <BottomSheet.Close>
-                <Button variant="secondary">건너뛰기</Button>
+                <Button variant="tertiary">건너뛰기</Button>
               </BottomSheet.Close>
               <Button variant="primary" onClick={handleAlertOpenConfirm}>
                 완료하기
@@ -260,7 +256,6 @@ export const MyMissionList = () => {
           ))}
         </Swiper>
       </div>
-      {/* <div className="mt-auto w-full shrink-0 px-8 pb-9.5"></div> */}
     </>
   );
 };
