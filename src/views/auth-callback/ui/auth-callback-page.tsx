@@ -9,7 +9,7 @@ const AuthCallbackHandler = () => {
   useSocialLoginCallback();
 
   return (
-    <div className="bg-gradient-100 flex h-screen items-center justify-center">
+    <div className="bg-gradient-100 flex h-dvh items-center justify-center">
       <Loader />
     </div>
   );

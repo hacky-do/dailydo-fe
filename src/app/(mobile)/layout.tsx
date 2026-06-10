@@ -1,6 +1,6 @@
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex h-full min-h-[667px] max-w-107.5 min-w-90 flex-col">
+    <div className="content-container flex flex-col">
       {children}
       <div
         id="mobile-portal-root"
