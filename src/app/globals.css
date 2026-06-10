@@ -102,7 +102,7 @@
   height: 100%;
   min-height: var(--min-content-height);
   margin-inline: auto;
-  mask-origin: content;
+  mask-origin: content-box;
 }
 
 @utility bg-gradient-100 {
