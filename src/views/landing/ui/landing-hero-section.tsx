@@ -1,14 +1,14 @@
-import { FadeIn } from '@/shared/ui/fade-in';
-
-import { StartButton } from './start-button';
 import Image from 'next/image';
 
+import { FadeIn } from '@/shared/ui/fade-in';
 import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
 import DecoCoffee from '@/shared/ui/icons/login/deco_coffee.svg';
 import DecoGraph from '@/shared/ui/icons/login/deco_graph.svg';
 import DecoLight from '@/shared/ui/icons/login/deco_light.svg';
 import DecoLocation from '@/shared/ui/icons/login/deco_location.svg';
 import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
+
+import { StartButton } from './start-button';
 
 const ScrollChevron = () => (
   <svg
