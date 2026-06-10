@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
-      <body className="h-full">
+      <body className="h-dvh bg-gray-50">
         <Providers>{children}</Providers>
       </body>
     </html>
