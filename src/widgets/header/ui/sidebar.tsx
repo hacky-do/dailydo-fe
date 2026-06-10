@@ -54,6 +54,10 @@ interface SidebarProps {
 
 export const Sidebar = ({ variant }: SidebarProps) => {
   const [open, setOpen] = useState(false);
+  const portalContainer =
+    typeof window !== 'undefined'
+      ? document.getElementById('mobile-portal-root')
+      : null;
   const router = useRouter();
   const pathname = usePathname();
   const { toast } = useToast();
@@ -84,13 +88,7 @@ export const Sidebar = ({ variant }: SidebarProps) => {
           )}
         />
       </Drawer.Trigger>
-      <Drawer.Portal
-        container={
-          typeof window !== 'undefined'
-            ? document.getElementById('mobile-portal-root')
-            : undefined
-        }
-      >
+      <Drawer.Portal container={portalContainer ?? undefined}>
         <Drawer.Overlay className="pointer-events-auto absolute inset-0 bg-black/20" />
         <Drawer.Content className="pointer-events-auto absolute inset-y-0 right-0 flex w-78.5 flex-col rounded-tl-3xl bg-white shadow outline-none">
           <Drawer.Title className="sr-only">메뉴</Drawer.Title>
