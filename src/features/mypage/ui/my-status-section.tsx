@@ -1,19 +1,9 @@
 'use client';
 
 import type { User } from '@/entities/user';
-
-interface MyStatusSectionProps {
-  footprint: User['footprint'];
-}
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
-
-interface StatusItemProps {
-  label: string;
-  value: string;
-  valueClassName?: string;
-}
 
 const StatusItemSkeleton = ({ label }: { label: string }) => (
   <li className="flex flex-1 flex-col items-center justify-center gap-2 px-1.5">
@@ -33,12 +23,22 @@ export const MyStatusSectionSkeleton = () => (
   </section>
 );
 
+interface StatusItemProps {
+  label: string;
+  value: string;
+  valueClassName?: string;
+}
+
 const StatusItem = ({ label, value, valueClassName }: StatusItemProps) => (
   <li className="flex flex-1 flex-col items-center justify-center gap-2 px-1.5">
     <div className="text-sm">{label}</div>
     <div className={`text-2xl font-bold ${valueClassName}`}>{value}</div>
   </li>
 );
+
+interface MyStatusSectionProps {
+  footprint: User['footprint'];
+}
 
 export const MyStatusSection = ({ footprint }: MyStatusSectionProps) => {
   const { daysSinceSignup, maxConsecutiveUseDays, completedMissionCount } =
