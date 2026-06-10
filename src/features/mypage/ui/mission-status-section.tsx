@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetMe } from '@/entities/user';
+import type { User } from '@/entities/user';
 import CheckCircle from '@/shared/ui/icons/mypage/check_circle.svg';
 import { ProgressBar } from '@/shared/ui/progress-bar';
 import { TextSkeleton } from '@/shared/ui/skeleton';
@@ -20,9 +20,14 @@ export const MissionStatusSectionSkeleton = () => (
   </section>
 );
 
-export const MissionStatusSection = () => {
-  const { data } = useGetMe();
-  const { completedCount, totalCount } = data.todayMissionCompletion;
+interface MissionStatusSectionProps {
+  todayMissionCompletion: User['todayMissionCompletion'];
+}
+
+export const MissionStatusSection = ({
+  todayMissionCompletion,
+}: MissionStatusSectionProps) => {
+  const { completedCount, totalCount } = todayMissionCompletion;
 
   return (
     <section className="flex flex-col gap-2">

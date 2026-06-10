@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { useGetMe } from '@/entities/user';
+import type { User } from '@/entities/user';
 import ChevronRight from '@/shared/ui/icons/mypage/chevron_right.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
 
-const SKELETON_COUNT = 4;
+const SKELETON_COUNT = 3;
 
 const CategoryItemSkeleton = () => (
   <li className="flex w-22 shrink-0 flex-col items-center gap-1 rounded-2xl bg-white py-2 text-sm font-semibold">
@@ -56,29 +56,29 @@ const CategoryItem = ({ src, label }: { src: string; label: string }) => {
   );
 };
 
-export const CategorySection = () => {
-  const { data } = useGetMe();
+interface CategorySectionProps {
+  categories: User['categories'];
+}
 
-  return (
-    <section className="flex flex-col gap-2">
-      <h4>
-        <button
-          type="button"
-          className={`flex items-center gap-1 ${sectionLabelClass}`}
-        >
-          나의 카테고리
-          <ChevronRight height={16} aria-hidden="true" />
-        </button>
-      </h4>
-      <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
-        {data.categories.data.map((category) => (
-          <CategoryItem
-            key={category.id}
-            src={category.image}
-            label={category.name}
-          />
-        ))}
-      </ul>
-    </section>
-  );
-};
+export const CategorySection = ({ categories }: CategorySectionProps) => (
+  <section className="flex flex-col gap-2">
+    <h4>
+      <button
+        type="button"
+        className={`flex items-center gap-1 ${sectionLabelClass}`}
+      >
+        나의 카테고리
+        <ChevronRight height={16} aria-hidden="true" />
+      </button>
+    </h4>
+    <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
+      {categories.data.map((category) => (
+        <CategoryItem
+          key={category.id}
+          src={category.image}
+          label={category.name}
+        />
+      ))}
+    </ul>
+  </section>
+);
