@@ -6,12 +6,12 @@ import { LandingMylogSection } from './landing-mylog-section';
 
 export const LandingPage = () => {
   return (
-    <div className="mx-auto w-full max-w-107.5">
+    <>
       <LandingHeroSection />
       <LandingMissionSection />
       <LandingMylogSection />
       <LandingCollectionSection />
       <LandingCtaSection />
-    </div>
+    </>
   );
 };

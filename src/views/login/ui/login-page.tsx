@@ -70,33 +70,27 @@ export const LoginPage = () => {
         >
           <DecoLocation
             width={40}
-            className="animate-float-slow absolute"
-            style={{ right: '100px', top: '30px' }}
+            className="animate-float-slow absolute top-7.5 right-25"
           />
           <DecoGraph
             width={40}
-            className="animate-float-slow absolute"
-            style={{ left: '40px', top: '160px' }}
+            className="animate-float-slow absolute top-40 left-10"
           />
           <DecoLight
             width={40}
-            className="animate-float absolute"
-            style={{ left: '60px', top: '56px' }}
+            className="animate-float absolute top-14 left-15"
           />
           <DecoStar
             width={10}
-            className="animate-orbit-circle-reverse absolute"
-            style={{ left: '130px', top: '121px' }}
+            className="animate-orbit-circle-reverse absolute top-30 left-32"
           />
           <DecoCircle
             width={10}
-            className="animate-orbit-circle absolute"
-            style={{ right: '80px', top: '105px' }}
+            className="animate-orbit-circle absolute top-26 right-20"
           />
           <DecoCoffee
             width={40}
-            className="animate-float absolute"
-            style={{ right: '37px', top: '190px' }}
+            className="animate-float absolute top-48 right-9"
           />
         </div>
         {/* App icon */}
