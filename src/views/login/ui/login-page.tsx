@@ -114,7 +114,7 @@ export const LoginPage = () => {
           <div className="absolute top-1 aspect-square w-[95%] animate-pulse rounded-full bg-green-200" />
           <div className="absolute top-6 aspect-square w-[80%] animate-pulse rounded-full bg-green-300" />
           <Image
-            src="/images/login/mainIllust.png"
+            src="/login/mainIllust.png"
             alt=""
             className="mt-6 object-contain"
             aria-hidden="true"
