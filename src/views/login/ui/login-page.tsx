@@ -58,7 +58,7 @@ export const LoginPage = () => {
   }, [authError, router, toast]);
 
   return (
-    <div className="bg-gradient-100 relative flex h-dvh flex-col overflow-hidden pb-17.5">
+    <div className="bg-gradient-100 relative flex min-h-dvh flex-col overflow-hidden pb-17.5">
       <div className="min-h-10 flex-1" aria-hidden="true" />
 
       {/* section: 메인 컨텐츠 */}
