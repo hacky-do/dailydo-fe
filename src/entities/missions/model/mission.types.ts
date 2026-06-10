@@ -33,7 +33,7 @@ export interface Mission {
 }
 
 export interface MyLog {
-  id: number;
+  id?: number;
   photo: string;
   memo: string;
 }

@@ -5,36 +5,32 @@ import { useRef, useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useGetMyMissions } from '@/entities/missions/api/mission.queries';
-import { MissionItem, MyLog } from '@/entities/missions/model/mission.types';
-import { AlertBottomSheet } from '@/shared/ui/bottom-sheet';
+import {
+  useGetMyMissions,
+  usePostCompleteMission,
+} from '@/entities/missions/api/mission.queries';
+import {
+  MissionItem,
+  MyMissionItem,
+} from '@/entities/missions/model/mission.types';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button/button';
 import { Textarea } from '@/shared/ui/input';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
 import { FileInput } from '@/widgets/file-input';
+import { useFileInput } from '@/widgets/file-input/model/use-file-input';
 
 interface MyMissionBackContentProps {
   mission: MissionItem;
   isCompleted: boolean;
   onCompleteClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  open: boolean;
-  setIsOpen: (open: boolean) => void;
-  onMyLogForm: {
-    id: number;
-    memo: string;
-    photo: string;
-  };
-  onSetMyLogForm: (value: MyLog) => void;
 }
 
 const MyMissionBackContent = ({
   mission,
   isCompleted,
   onCompleteClick,
-  open,
-  setIsOpen,
 }: MyMissionBackContentProps) => {
   return (
     <>
@@ -74,7 +70,6 @@ const MyMissionBackContent = ({
           조각구름이 흩어지기 전에 순간포착!
         </span>
       )}
-
       {!isCompleted && (
         <Button
           variant="primary"
@@ -85,85 +80,95 @@ const MyMissionBackContent = ({
           완료하기
         </Button>
       )}
-      {open && <MyLogBottomSheet open={open} setOpen={setIsOpen} />}
     </>
   );
 };
+
+interface MyLogBottomSheetProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onSubmit: (photo: string, memo: string) => void;
+  isPending?: boolean;
+}
 
 export const MyLogBottomSheet = ({
   open,
   setOpen,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}) => {
-  const [alertOpen, setAlertOpen] = useState(false);
+  onSubmit,
+  isPending = false,
+}: MyLogBottomSheetProps) => {
+  const { file, handleChange } = useFileInput();
+  const [memo, setMemo] = useState('');
 
-  const handleAlertOpenConfirm = () => {
-    setOpen(false);
-    setAlertOpen(true);
+  const handleSubmit = () => {
+    onSubmit(file?.name ?? '', memo);
   };
+
   return (
-    <>
-      <BottomSheet.Root open={open} onOpenChange={setOpen}>
-        <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
-          <BottomSheet.Header className="pt-6">
-            <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
-          </BottomSheet.Header>
-          <BottomSheet.Body className="flex flex-col pt-4 pb-8">
-            <span className="mb-1 text-sm font-medium">
-              기억하고 싶은 순간이 있나요?
-            </span>
-            <div className="flex flex-col gap-12">
-              <FileInput />
-              <Textarea
-                id="mylog"
-                label="오늘을 한줄로 남겨 볼까요?"
-                placeholder="최대 100자까지 입력 가능해요."
-                description="0/100자"
-              />
-            </div>
-          </BottomSheet.Body>
-          <BottomSheet.Footer className="pt-0 pb-8">
-            <div className="flex gap-2">
-              <BottomSheet.Close>
-                <Button variant="tertiary">건너뛰기</Button>
-              </BottomSheet.Close>
-              <Button variant="primary" onClick={handleAlertOpenConfirm}>
-                완료하기
-              </Button>
-            </div>
-          </BottomSheet.Footer>
-        </BottomSheet.Content>
-      </BottomSheet.Root>
-      <AlertBottomSheet
-        open={alertOpen}
-        onOpenChange={setAlertOpen}
-        title="정말 취소하시겠어요?"
-        description="완료를 취소하면 연결된 로그도 같이 삭제돼요."
-        confirmLabel="네"
-        cancelLabel="아니오"
-        onConfirm={() => {
-          setOpen(false);
-          setAlertOpen(false);
-        }}
-      />
-    </>
+    <BottomSheet.Root open={open} onOpenChange={setOpen}>
+      <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
+        <BottomSheet.Header>
+          <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
+        </BottomSheet.Header>
+        <BottomSheet.Body>
+          <span className="mt-8 mb-1 text-sm font-medium">
+            기억하고 싶은 순간이 있나요?
+          </span>
+          <div className="mb-12">
+            <FileInput onChange={handleChange} />
+          </div>
+          <div className="pb-8">
+            <Textarea
+              id="mylog"
+              label="오늘을 한줄로 남겨 볼까요?"
+              placeholder="최대 100자까지 입력 가능해요."
+              description={`${memo.length}/100자`}
+              value={memo}
+              onChange={(e) => setMemo(e.target.value)}
+              maxLength={100}
+            />
+          </div>
+        </BottomSheet.Body>
+        <BottomSheet.Footer>
+          <div className="flex gap-2">
+            <BottomSheet.Close>
+              <Button variant="secondary">건너뛰기</Button>
+            </BottomSheet.Close>
+            <Button
+              variant="primary"
+              onClick={handleSubmit}
+              isLoading={isPending}
+              type="button"
+            >
+              완료하기
+            </Button>
+          </div>
+        </BottomSheet.Footer>
+      </BottomSheet.Content>
+    </BottomSheet.Root>
   );
 };
 
-export const MyMissionCard = ({ mission }: { mission: MissionItem }) => {
-  const [isCompleted] = useState(false);
+export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
+  const [isCompleted, setIsCompleted] = useState(mission.completed);
   const [isOpen, setIsOpen] = useState(false);
-  const [myLogForm, setMyLogForm] = useState<MyLog>({
-    id: 0,
-    photo: '',
-    memo: '',
-  });
-  // const { mutate: postMyMissions, isPending } = usePostCompleteMission();
+  const { mutate, isPending } = usePostCompleteMission();
+
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(true);
+  };
+
+  const handleSubmit = (photo: string, memo: string) => {
+    mutate(
+      { missionId: mission.missionId, mylog: { photo, memo } },
+      {
+        onSuccess: () => {
+          setIsCompleted(true);
+          setIsOpen(false);
+        },
+      },
+    );
   };
 
   return (
@@ -178,13 +183,15 @@ export const MyMissionCard = ({ mission }: { mission: MissionItem }) => {
             mission={mission}
             isCompleted={isCompleted}
             onCompleteClick={handleCompleteClick}
-            open={isOpen}
-            setIsOpen={setIsOpen}
-            onMyLogForm={myLogForm}
-            onSetMyLogForm={setMyLogForm}
           />
         </Card.Back>
       </Card>
+      <MyLogBottomSheet
+        open={isOpen}
+        setOpen={setIsOpen}
+        onSubmit={handleSubmit}
+        isPending={isPending}
+      />
     </>
   );
 };
@@ -229,6 +236,7 @@ export const MyMissionList = () => {
       if (wrapper) wrapper.style.transition = '';
     });
   };
+
   return (
     <>
       <div className="w-full overflow-x-clip overflow-y-visible">

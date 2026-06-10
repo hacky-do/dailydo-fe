@@ -1,5 +1,6 @@
 import {
   Mission,
+  MyLog,
   MyMission,
   MyMissionItem,
 } from '@/entities/missions/model/mission.types';
@@ -13,5 +14,7 @@ export const getTodayMissions = () =>
 export const postTodayMissions = (missionIds: number[]) =>
   clientApi.post('/api/missions/new', { body: JSON.stringify({ missionIds }) });
 
-export const postCompleteMission = (missionId: number) =>
-  clientApi.post<MyMissionItem>(`/api/missions/${missionId}`);
+export const postCompleteMission = (missionId: number, mylog: MyLog) =>
+  clientApi.post<MyMissionItem>(`/api/missions/${missionId}`, {
+    body: JSON.stringify({ mylog }),
+  });

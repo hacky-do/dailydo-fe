@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 
 import { missionQueryKeys } from '../model/mission.constants';
-import { Mission } from '../model/mission.types';
+import { Mission, MyLog } from '../model/mission.types';
 import {
   getMyMissions,
   getTodayMissions,
@@ -48,7 +48,8 @@ export const usePostTodayMissions = (options?: { onSuccess?: () => void }) => {
 export const usePostCompleteMission = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (missionId: number) => postCompleteMission(missionId),
+    mutationFn: ({ missionId, mylog }: { missionId: number; mylog: MyLog }) =>
+      postCompleteMission(missionId, mylog),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
     },
