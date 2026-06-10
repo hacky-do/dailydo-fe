@@ -29,10 +29,7 @@ export function proxy(request: NextRequest) {
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 
-  if (
-    (isHomeRoute && !hasAccessToken) ||
-    (isProtectedRoute && !hasAccessToken)
-  ) {
+  if (isProtectedRoute && !hasAccessToken) {
     return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
   }
 
