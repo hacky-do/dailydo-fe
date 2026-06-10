@@ -1,3 +1,5 @@
+import { FadeIn } from '@/shared/ui/fade-in';
+
 import { StartButton } from './start-button';
 
 export const LandingCtaSection = () => {
@@ -11,11 +13,15 @@ export const LandingCtaSection = () => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-10">
-        <h2 className="text-center text-2xl font-bold tracking-tight">
-          <span className="block text-black">혼자 시작하기 어려웠던 일들,</span>
-          <span className="block text-green-600">데일리두에서 함께 해요</span>
-        </h2>
-        <StartButton>미션 시작하기</StartButton>
+        <FadeIn>
+          <h2 className="text-center text-2xl font-bold tracking-tight">
+            <span className="block text-black">혼자 시작하기 어려웠던 일들,</span>
+            <span className="block text-green-600">데일리두에서 함께 해요</span>
+          </h2>
+        </FadeIn>
+        <FadeIn delay={150}>
+          <StartButton>미션 시작하기</StartButton>
+        </FadeIn>
       </div>
     </section>
   );
