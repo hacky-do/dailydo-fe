@@ -3,6 +3,7 @@
 import 'swiper/css';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -11,6 +12,7 @@ import {
   titleStyles,
 } from '@/features/missions/mission-card.styles';
 import QuestionBackIcon from '@/shared/ui/icons/mission/question_back.svg';
+import { Loader } from '@/shared/ui/loader';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
 
@@ -22,7 +24,6 @@ interface LandingMission {
   image: string;
 }
 
-// 랜딩 데모용 하드코딩 미션. 실제 API 연동 전까지 카드 뒷면을 채우기 위한 정적 데이터.
 const LANDING_MISSIONS: LandingMission[] = [
   {
     categoryName: '취미',
@@ -111,46 +112,63 @@ const setWrapperTransition = (swiper: SwiperClass, value: string) => {
 };
 
 export const MissionCarousel = () => {
+  const [ready, setReady] = useState(false);
+
   return (
-    <div className="w-full overflow-x-clip overflow-y-visible">
-      <Swiper
-        slidesPerView="auto"
-        centeredSlides
-        spaceBetween={24}
-        loop
-        grabCursor
-        watchSlidesProgress
-        speed={SLIDE_SPEED}
-        style={{ overflow: 'visible' }}
-        onInit={applySlideEffects}
-        onSetTranslate={applySlideEffects}
-        onTouchStart={(swiper) => setWrapperTransition(swiper, '')}
-        onSlideChangeTransitionStart={(swiper) => {
-          setWrapperTransition(
-            swiper,
-            `transform ${swiper.params.speed}ms ease, opacity ${swiper.params.speed}ms ease`,
-          );
-          applySlideEffects(swiper);
-        }}
-        onSlideChangeTransitionEnd={(swiper) =>
-          setWrapperTransition(swiper, '')
-        }
+    <div className="relative min-h-82 w-full overflow-x-clip overflow-y-visible">
+      {!ready && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
+          <Loader />
+        </div>
+      )}
+      <div
+        className={cn(
+          'transition-opacity duration-300',
+          ready ? 'opacity-100' : 'opacity-0',
+        )}
       >
-        {LANDING_MISSIONS.map((mission) => (
-          <SwiperSlide key={mission.title} className="!w-[225px]">
-            <div data-card-wrapper>
-              <Card>
-                <Card.Front>
-                  <LandingMissionCardFront />
-                </Card.Front>
-                <Card.Back>
-                  <LandingMissionCardBack mission={mission} />
-                </Card.Back>
-              </Card>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Swiper
+          slidesPerView="auto"
+          centeredSlides
+          spaceBetween={24}
+          loop
+          grabCursor
+          watchSlidesProgress
+          speed={SLIDE_SPEED}
+          style={{ overflow: 'visible' }}
+          onSwiper={(swiper) => {
+            setReady(true);
+            applySlideEffects(swiper);
+          }}
+          onSetTranslate={applySlideEffects}
+          onTouchStart={(swiper) => setWrapperTransition(swiper, '')}
+          onSlideChangeTransitionStart={(swiper) => {
+            setWrapperTransition(
+              swiper,
+              `transform ${swiper.params.speed}ms ease, opacity ${swiper.params.speed}ms ease`,
+            );
+            applySlideEffects(swiper);
+          }}
+          onSlideChangeTransitionEnd={(swiper) =>
+            setWrapperTransition(swiper, '')
+          }
+        >
+          {LANDING_MISSIONS.map((mission) => (
+            <SwiperSlide key={mission.title} className="w-56.25!">
+              <div data-card-wrapper>
+                <Card>
+                  <Card.Front>
+                    <LandingMissionCardFront />
+                  </Card.Front>
+                  <Card.Back>
+                    <LandingMissionCardBack mission={mission} />
+                  </Card.Back>
+                </Card>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };
