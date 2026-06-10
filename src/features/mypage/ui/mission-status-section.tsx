@@ -35,7 +35,9 @@ export const MissionStatusSection = ({
       <div className="rounded-2xl bg-white px-3 py-3">
         <div className="flex items-center justify-between gap-2">
           <CheckCircle width={24} aria-hidden="true" />
-          <ProgressBar value={completedCount / totalCount} />
+          <ProgressBar
+            value={totalCount === 0 ? 0 : completedCount / totalCount}
+          />
           <div className="flex min-w-6 shrink-0 text-center text-sm font-semibold text-gray-600">
             <span className="text-green-500">{completedCount}</span>/
             {totalCount}
