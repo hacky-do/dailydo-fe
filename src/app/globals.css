@@ -100,7 +100,6 @@
 
 @utility content-container {
   width: min(max(var(--min-content-width), 100%), var(--max-content-width));
-  height: 100%;
   min-height: var(--min-content-height);
   margin-inline: auto;
   mask-origin: content-box;
