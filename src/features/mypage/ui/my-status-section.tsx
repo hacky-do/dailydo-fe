@@ -1,6 +1,10 @@
 'use client';
 
-import { useGetMe } from '@/entities/user';
+import type { User } from '@/entities/user';
+
+interface MyStatusSectionProps {
+  footprint: User['footprint'];
+}
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
@@ -36,10 +40,9 @@ const StatusItem = ({ label, value, valueClassName }: StatusItemProps) => (
   </li>
 );
 
-export const MyStatusSection = () => {
-  const { data } = useGetMe();
+export const MyStatusSection = ({ footprint }: MyStatusSectionProps) => {
   const { daysSinceSignup, maxConsecutiveUseDays, completedMissionCount } =
-    data.footprint;
+    footprint;
 
   return (
     <section className="flex flex-col gap-2">
