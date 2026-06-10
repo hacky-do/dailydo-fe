@@ -42,7 +42,7 @@ export const Mypage = () => {
               <Button size="sm">공유하기</Button>
             </div>
 
-            <div className="inset-x-0 top-0 flex flex-col gap-5 p-5">
+            <div className="flex flex-col gap-5 p-5">
               {isPending || !data ? (
                 <MypageSkeleton />
               ) : (
