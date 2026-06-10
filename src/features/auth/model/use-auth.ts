@@ -21,7 +21,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: emailLogout,
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: authQueryKeys.session });
+      queryClient.clear();
       router.push(ROUTES.HOME);
     },
   });
