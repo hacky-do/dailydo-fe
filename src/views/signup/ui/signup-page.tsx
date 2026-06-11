@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { CategorySelect } from '@/features/category-select';
-import { ErrorBoundary } from '@/shared/ui/error-boundary';
 import {
   CategoryStep,
   MIN_CATEGORY_COUNT,
@@ -18,6 +17,7 @@ import {
 import { useCompleteSignup } from '@/features/signup/model/use-complete-signup';
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/button';
+import { ErrorBoundary } from '@/shared/ui/error-boundary';
 import { useToast } from '@/shared/ui/toast/use-toast';
 
 const contentVariants = {
