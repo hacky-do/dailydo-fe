@@ -38,14 +38,16 @@ export const CategoryCard = ({
         {...props}
       />
       <div className="relative h-full w-full">
-        <Image
-          src={image}
-          alt=""
-          aria-hidden="true"
-          fill
-          className="object-contain"
-          sizes="(max-width: 768px) 100vw, 70vw"
-        />
+        {image && (
+          <Image
+            src={image}
+            alt=""
+            aria-hidden="true"
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 70vw"
+          />
+        )}
       </div>
       <span className="text-sm font-medium text-gray-800">{label}</span>
     </label>
