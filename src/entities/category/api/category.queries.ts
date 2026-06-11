@@ -6,5 +6,5 @@ import { getMissionCategories } from './category.api';
 export const useGetMissionCategories = () =>
   useSuspenseQuery({
     queryKey: categoryQueryKeys.missionCategories,
-    queryFn: getMissionCategories,
+    queryFn: () => getMissionCategories(0, 10),
   });
