@@ -2,9 +2,11 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { CategorySelect } from '@/features/category-select';
+import { ErrorBoundary } from '@/shared/ui/error-boundary';
 import {
   CategoryStep,
   MIN_CATEGORY_COUNT,
@@ -13,7 +15,7 @@ import {
   useSignupFlow,
   WelcomeStep,
 } from '@/features/signup';
-import { useSignup } from '@/features/signup/model/use-signup';
+import { useCompleteSignup } from '@/features/signup/model/use-complete-signup';
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/button';
 import { useToast } from '@/shared/ui/toast/use-toast';
@@ -33,7 +35,7 @@ const actionVariants = {
 export const SignupPage = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { mutate: signup, isPending } = useSignup();
+  const { mutate: completeSignup, isPending } = useCompleteSignup();
 
   const {
     control,
@@ -57,15 +59,10 @@ export const SignupPage = () => {
     defaultValue: false,
   });
 
-  const {
-    step,
-    socialToken,
-    email,
-    type,
-    goToCategory,
-    goToPrev,
-    goToWelcome,
-  } = useSignupFlow({ nickname, categoryIds });
+  const { step, goToCategory, goToPrev, goToWelcome } = useSignupFlow({
+    nickname,
+    categoryIds,
+  });
 
   const handleNicknameNext = async () => {
     const valid = await trigger('nickname');
@@ -73,8 +70,8 @@ export const SignupPage = () => {
   };
 
   const handleStart = () => {
-    signup(
-      { email, name: nickname, agreeMarketing, type, socialToken },
+    completeSignup(
+      { name: nickname, agreeMarketing, categoryIds },
       {
         onSuccess: () => {
           toast({
@@ -109,16 +106,20 @@ export const SignupPage = () => {
             {step === 'nickname' && <NicknameStep control={control} />}
             {step === 'category' && (
               <CategoryStep>
-                <Controller
-                  name="categoryIds"
-                  control={control}
-                  render={({ field }) => (
-                    <CategorySelect
-                      value={field.value}
-                      onChange={field.onChange}
+                <ErrorBoundary>
+                  <Suspense fallback={null}>
+                    <Controller
+                      name="categoryIds"
+                      control={control}
+                      render={({ field }) => (
+                        <CategorySelect
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      )}
                     />
-                  )}
-                />
+                  </Suspense>
+                </ErrorBoundary>
               </CategoryStep>
             )}
             {step === 'welcome' && <WelcomeStep nickname={nickname} />}

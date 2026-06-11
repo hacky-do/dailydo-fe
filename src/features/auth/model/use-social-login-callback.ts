@@ -10,7 +10,18 @@ import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/toast';
 
+import { useRegister } from './use-register';
 import { useSocialLogin } from './use-social-login';
+
+const parseSocialUser = (raw: string | null) => {
+  if (!raw) return { email: '', name: '' };
+  try {
+    const parsed = JSON.parse(raw) as { email?: string; name?: string };
+    return { email: parsed.email ?? '', name: parsed.name ?? '' };
+  } catch {
+    return { email: '', name: '' };
+  }
+};
 
 export const useSocialLoginCallback = () => {
   const { toast } = useToast();
@@ -29,6 +40,7 @@ export const useSocialLoginCallback = () => {
   const error = searchParams.get('error');
 
   const { mutate: login } = useSocialLogin();
+  const { mutate: register } = useRegister();
 
   useEffect(() => {
     if (error) {
@@ -51,15 +63,25 @@ export const useSocialLoginCallback = () => {
         },
         onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
-            sessionStorage.setItem('signup_socialToken', token);
-            sessionStorage.setItem('signup_type', type);
-            if (user) sessionStorage.setItem('signup_user', user);
-            router.replace(ROUTES.SIGNUP);
+            // 미가입 사용자는 소셜 인증 정보로 즉시 가입시키고, 회원정보 입력 단계로 보낸다
+            const { email, name } = parseSocialUser(user);
+            register(
+              { email, name, type, socialToken: token },
+              {
+                onSuccess: () => {
+                  setLastLogin(type);
+                  router.replace(ROUTES.SIGNUP);
+                },
+                onError: () => {
+                  router.replace(`${ROUTES.LOGIN}?auth_error`);
+                },
+              },
+            );
             return;
           }
           router.replace(`${ROUTES.LOGIN}?auth_error`);
         },
       },
     );
-  }, [error, login, router, setLastLogin, token, type, user, toast]);
+  }, [error, login, register, router, setLastLogin, token, type, user, toast]);
 };

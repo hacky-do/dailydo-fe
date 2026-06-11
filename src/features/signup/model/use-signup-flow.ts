@@ -1,9 +1,8 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { SOCIAL_LOGIN_TYPES, SocialLoginType } from '@/entities/session';
 import { ROUTES } from '@/shared/config/routes';
 
 export type SignupStep = 'nickname' | 'category' | 'welcome';
@@ -19,26 +18,6 @@ interface SignupFlowValues {
 export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const [socialUser] = useState(() => {
-    try {
-      const raw = sessionStorage.getItem('signup_user');
-      if (!raw) return { email: '', name: '' };
-      const parsed = JSON.parse(raw) as { email?: string; name?: string };
-      return { email: parsed.email ?? '', name: parsed.name ?? '' };
-    } catch {
-      return { email: '', name: '' };
-    }
-  });
-  const [socialToken] = useState(
-    () => sessionStorage.getItem('signup_socialToken') ?? '',
-  );
-  const [type] = useState<SocialLoginType>(() => {
-    const stored = sessionStorage.getItem('signup_type');
-    return stored && SOCIAL_LOGIN_TYPES.includes(stored as SocialLoginType)
-      ? (stored as SocialLoginType)
-      : 'google';
-  });
 
   const rawStep = searchParams.get('step') as SignupStep | null;
   const urlStep: SignupStep =
@@ -93,9 +72,6 @@ export const useSignupFlow = ({ nickname, categoryIds }: SignupFlowValues) => {
 
   return {
     step,
-    email: socialUser.email,
-    socialToken,
-    type,
     goToCategory: () => navigateTo('category'),
     goToPrev: () => navigateTo('nickname'),
     goToWelcome: () => navigateTo('welcome'),
