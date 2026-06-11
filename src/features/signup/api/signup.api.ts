@@ -14,7 +14,6 @@ export const updateUserProfile = (params: UpdateUserProfileParams) =>
 
 export interface AddUserCategoryParams {
   categoryId: number;
-  sortOrder: number;
 }
 
 export const addUserCategory = (params: AddUserCategoryParams) =>
