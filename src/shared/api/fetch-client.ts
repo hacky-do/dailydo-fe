@@ -1,4 +1,3 @@
-import { COOKIES } from '@/shared/config/cookies';
 import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 
 import { API_ERRORS, ApiError } from './api-error.type';
@@ -15,13 +14,6 @@ import {
 
 let refreshing: Promise<boolean> | null = null;
 let redirecting = false;
-
-const hasRefreshTokenCookie = () => {
-  if (typeof document === 'undefined') return false;
-  return document.cookie
-    .split(';')
-    .some((c) => c.trim().startsWith(COOKIES.REFRESH_TOKEN + '='));
-};
 
 const tryRefresh = (): Promise<boolean> => {
   if (refreshing) return refreshing;
@@ -46,10 +38,6 @@ const executeWithRetry = async (
   url: string,
   init: RequestInit,
 ): Promise<Response> => {
-  if (!hasRefreshTokenCookie()) {
-    await tryRefresh();
-  }
-
   const res = await fetch(url, init);
 
   if (res.status !== 401) return res;
