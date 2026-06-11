@@ -39,12 +39,12 @@ export const TodayMissionListPage = ({
 };
 
 export const MissionPage = () => {
-  const { data, isFetching } = useGetTodayMissions();
+  const { data } = useGetTodayMissions();
 
-  if (isFetching || !data.status)
+  if (!data.status)
     return (
       <div className="flex h-full w-full items-center justify-center">
-        <Loader size={'lg'} color="primary" />
+        <Loader size="lg" color="primary" />
       </div>
     );
 

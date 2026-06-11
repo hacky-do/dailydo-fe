@@ -34,7 +34,8 @@ export const usePostTodayMissions = (options?: { onSuccess?: () => void }) => {
     onSuccess: async () => {
       queryClient.setQueryData(
         missionQueryKeys.todayMissions,
-        (prev: Mission) => ({ ...prev, status: 'CONFIRMED' as const }),
+        (prev: Mission | undefined) =>
+          prev ? { ...prev, status: 'CONFIRMED' as const } : prev,
       );
       await queryClient.invalidateQueries({
         queryKey: missionQueryKeys.myMissions,

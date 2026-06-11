@@ -36,7 +36,6 @@ const MyMissionBackContent = ({
   open,
   setIsOpen,
 }: MyMissionBackContentProps) => {
-  console.log(mission);
   return (
     <>
       <span
