@@ -22,9 +22,11 @@ interface SocialLoginRequestBody {
   remember: boolean;
 }
 
-interface SignupRequestBody {
-  nickname: string;
-  category: number[];
+interface RegisterRequestBody {
+  email: string;
+  name: string;
+  type: string;
+  socialToken: string;
 }
 
 export const handlers = [
@@ -68,11 +70,11 @@ export const handlers = [
   }),
 
   http.post(`${BASE_URL}/auth/register`, async ({ request }) => {
-    const { nickname } = (await request.json()) as SignupRequestBody;
+    const { name } = (await request.json()) as RegisterRequestBody;
     return withAuthCookie({
       userId: 1,
       image: null,
-      nickname,
+      nickname: name,
       intro: null,
     });
   }),

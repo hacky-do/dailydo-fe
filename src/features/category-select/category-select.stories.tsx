@@ -42,9 +42,12 @@ export const Default: Story = {
     const originalFetch = globalThis.fetch;
     globalThis.fetch = () =>
       Promise.resolve(
-        new Response(JSON.stringify(mockCategories), {
-          headers: { 'Content-Type': 'application/json' },
-        }),
+        new Response(
+          JSON.stringify({ data: mockCategories, total: mockCategories.length }),
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        ),
       );
     return () => {
       globalThis.fetch = originalFetch;

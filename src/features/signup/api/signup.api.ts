@@ -1,15 +1,23 @@
-import { SocialLoginType } from '@/entities/session';
 import { clientApi } from '@/shared/api/fetch-client';
 
-export interface SignupParams {
-  email: string;
+export interface UpdateUserProfileParams {
   name: string;
   agreeMarketing: boolean;
-  type: SocialLoginType;
-  socialToken: string;
+  description?: string;
+  profileImage?: string;
 }
 
-export const signup = (params: SignupParams) =>
-  clientApi.post('/auth/register', {
+export const updateUserProfile = (params: UpdateUserProfileParams) =>
+  clientApi.patch('/users', {
+    body: JSON.stringify(params),
+  });
+
+export interface AddUserCategoryParams {
+  categoryId: number;
+  sortOrder: number;
+}
+
+export const addUserCategory = (params: AddUserCategoryParams) =>
+  clientApi.post('/users/categories', {
     body: JSON.stringify(params),
   });

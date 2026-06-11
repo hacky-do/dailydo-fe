@@ -3,8 +3,8 @@ import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '@/shared/api/base-url.constant';
 
 export const handlers = [
-  http.get(`${BASE_URL}/api/category`, () => {
-    return HttpResponse.json([
+  http.get(`${BASE_URL}/mission-categories`, () => {
+    const data = [
       {
         id: 1,
         name: '취미/창작',
@@ -35,6 +35,7 @@ export const handlers = [
         name: '자연/힐링',
         image: '/images/category/category_heal.png',
       },
-    ]);
+    ];
+    return HttpResponse.json({ data, total: data.length });
   }),
 ];
