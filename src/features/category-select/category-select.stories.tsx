@@ -43,7 +43,10 @@ export const Default: Story = {
     globalThis.fetch = () =>
       Promise.resolve(
         new Response(
-          JSON.stringify({ data: mockCategories, total: mockCategories.length }),
+          JSON.stringify({
+            data: mockCategories,
+            total: mockCategories.length,
+          }),
           {
             headers: { 'Content-Type': 'application/json' },
           },
