@@ -2,7 +2,9 @@ import { FileType } from '@/entities/file/model/file.types';
 import { clientApi } from '@/shared/api/fetch-client';
 
 const getPresignedUrl = (mimeType: string) =>
-  clientApi.get<FileType>(`/files/upload?mimeType=${encodeURIComponent(mimeType)}`);
+  clientApi.get<FileType>(
+    `/files/upload?mimeType=${encodeURIComponent(mimeType)}`,
+  );
 
 export const uploadFile = async (file: File): Promise<string> => {
   const { url, path, fields } = await getPresignedUrl(file.type);
