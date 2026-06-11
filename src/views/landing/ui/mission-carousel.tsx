@@ -60,7 +60,7 @@ const LandingMissionCardFront = () => (
     <div className="rounded-3xl bg-green-100 px-3 py-1">
       <span className="text-xl font-semibold text-green-500">오늘의 미션</span>
     </div>
-    <span className="text-sm text-white">함께 확인해봐요</span>
+    <span className="text-sm text-white">탭해서 확인하기</span>
   </div>
 );
 
@@ -113,6 +113,7 @@ const setWrapperTransition = (swiper: SwiperClass, value: string) => {
 
 export const MissionCarousel = () => {
   const [ready, setReady] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <div className="relative min-h-82 w-full overflow-x-clip overflow-y-visible">
@@ -138,8 +139,10 @@ export const MissionCarousel = () => {
           style={{ overflow: 'visible' }}
           onSwiper={(swiper) => {
             setReady(true);
+            setActiveIndex(swiper.activeIndex);
             applySlideEffects(swiper);
           }}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           onSetTranslate={applySlideEffects}
           onTouchStart={(swiper) => setWrapperTransition(swiper, '')}
           onSlideChangeTransitionStart={(swiper) => {
@@ -153,10 +156,10 @@ export const MissionCarousel = () => {
             setWrapperTransition(swiper, '')
           }
         >
-          {LANDING_MISSIONS.map((mission) => (
+          {LANDING_MISSIONS.map((mission, index) => (
             <SwiperSlide key={mission.title} className="w-56.25!">
               <div data-card-wrapper>
-                <Card>
+                <Card disabled={index !== activeIndex}>
                   <Card.Front>
                     <LandingMissionCardFront />
                   </Card.Front>
