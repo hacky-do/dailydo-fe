@@ -110,17 +110,19 @@ export const MyLogBottomSheet = ({
           <BottomSheet.Header className="pt-6">
             <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
           </BottomSheet.Header>
-          <BottomSheet.Body className="flex flex-col gap-3 pt-6 pb-8">
-            <span className="text-sm font-medium">
+          <BottomSheet.Body className="flex flex-col pt-4 pb-8">
+            <span className="mb-1 text-sm font-medium">
               기억하고 싶은 순간이 있나요?
             </span>
-            <FileInput />
-            <Textarea
-              id="mylog"
-              label="오늘을 한줄로 남겨 볼까요?"
-              placeholder="최대 100자까지 입력 가능해요."
-              description="0/100자"
-            />
+            <div className="flex flex-col gap-12">
+              <FileInput />
+              <Textarea
+                id="mylog"
+                label="오늘을 한줄로 남겨 볼까요?"
+                placeholder="최대 100자까지 입력 가능해요."
+                description="0/100자"
+              />
+            </div>
           </BottomSheet.Body>
           <BottomSheet.Footer className="pt-0 pb-8">
             <div className="flex gap-2">
