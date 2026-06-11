@@ -66,7 +66,7 @@ export const useSocialLoginCallback = () => {
             // 미가입 사용자는 소셜 인증 정보로 즉시 가입시키고, 회원정보 입력 단계로 보낸다
             const { email, name } = parseSocialUser(user);
             register(
-              { email, name, type, socialToken: token },
+              { email, name, type, socialToken: token, agreeMarketing: true },
               {
                 onSuccess: () => {
                   setLastLogin(type);
