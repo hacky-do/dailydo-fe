@@ -28,27 +28,27 @@ const LANDING_MISSIONS: LandingMission[] = [
   {
     categoryName: '취미',
     title: '마음에 드는 노래 한 곡 찾아 듣기',
-    image: '/images/category/category_hobby.png',
+    image: '/category/hobby.png',
   },
   {
     categoryName: '운동',
     title: '동네 한 바퀴 가볍게 걷기',
-    image: '/images/category/category_exercise.png',
+    image: '/category/exercise.png',
   },
   {
     categoryName: '힐링',
     title: '따뜻한 차 한 잔 천천히 마시기',
-    image: '/images/category/category_heal.png',
+    image: '/category/heal.png',
   },
   {
     categoryName: '공부',
     title: '궁금했던 단어 하나 찾아보기',
-    image: '/images/category/category_study.png',
+    image: '/category/study.png',
   },
   {
     categoryName: '관계',
     title: '고마운 사람에게 안부 한 줄 보내기',
-    image: '/images/category/category_relationship.png',
+    image: '/category/relationship.png',
   },
 ];
 
@@ -131,7 +131,7 @@ export const MissionCarousel = () => {
           slidesPerView="auto"
           centeredSlides
           spaceBetween={24}
-          loop
+          loop={false}
           grabCursor
           watchSlidesProgress
           speed={SLIDE_SPEED}
