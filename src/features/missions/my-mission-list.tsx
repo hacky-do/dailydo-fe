@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { useFileUpload } from '@/entities/file/api/file.queries';
 import {
   useGetMyMissions,
   usePostCompleteMission,
@@ -16,6 +17,7 @@ import {
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button/button';
 import { Textarea } from '@/shared/ui/input';
+import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
 import { Card } from '@/widgets/card';
 import { FileInput } from '@/widgets/file-input';
@@ -99,10 +101,14 @@ export const MyLogBottomSheet = ({
 }: MyLogBottomSheetProps) => {
   const { file, handleChange } = useFileInput();
   const [memo, setMemo] = useState('');
+  const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
 
-  const handleSubmit = () => {
-    onSubmit(file?.name ?? '', memo);
+  const handleSubmit = async () => {
+    const photo = file ? await upload(file) : '';
+    onSubmit(photo, memo);
   };
+
+  const isLoading = isUploading || isPending;
 
   return (
     <BottomSheet.Root open={open} onOpenChange={setOpen}>
@@ -132,12 +138,14 @@ export const MyLogBottomSheet = ({
         <BottomSheet.Footer>
           <div className="flex gap-2">
             <BottomSheet.Close>
-              <Button variant="secondary">건너뛰기</Button>
+              <Button variant="secondary" disabled={isLoading}>
+                건너뛰기
+              </Button>
             </BottomSheet.Close>
             <Button
               variant="primary"
               onClick={handleSubmit}
-              isLoading={isPending}
+              isLoading={isLoading}
               type="button"
             >
               완료하기
@@ -152,7 +160,10 @@ export const MyLogBottomSheet = ({
 export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
   const [isCompleted, setIsCompleted] = useState(mission.completed);
   const [isOpen, setIsOpen] = useState(false);
-  const { mutate, isPending } = usePostCompleteMission();
+  const { toast } = useToast();
+  const { mutate, isPending } = usePostCompleteMission({
+    onError: (message) => toast({ type: 'error', message }),
+  });
 
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
