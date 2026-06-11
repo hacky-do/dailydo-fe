@@ -27,4 +27,9 @@ export const API_ERRORS = {
     error: 'EMPTY_RESPONSE',
     message: '응답 본문이 없습니다.',
   },
+  INVALID_MYLOG_PHOTO: {
+    code: 400,
+    error: 'invalid_mylog_photo',
+    message: '사진 형식이 올바르지 않습니다.',
+  },
 } as const satisfies Record<string, ApiErrorData>;
