@@ -35,6 +35,7 @@ export interface RegisterParams {
   name: string;
   type: SocialLoginType;
   socialToken: string;
+  agreeMarketing: boolean;
 }
 
 // 소셜 인증 후 미가입 사용자를 소셜에서 받은 이메일/닉네임으로 즉시 가입시킨다
