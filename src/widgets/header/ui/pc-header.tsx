@@ -82,11 +82,10 @@ export const PcHeader = ({ className }: { className?: string }) => {
               name={ROUTES_NAME.MYPAGE}
               onClick={() => handleClickLink(ROUTES.MYPAGE)}
             />
-            {/* TODO: 컬렉션 페이지 구현 후 활성화 */}
-            {/* <PcNavItem
+            <PcNavItem
               name={ROUTES_NAME.COLLECTIONS}
               onClick={() => handleClickLink(ROUTES.COLLECTIONS)}
-            /> */}
+            />
             {/* 로그인, 로그아웃 버튼 */}
             <li className="mt-auto ml-auto">
               {!isLoggedIn ? (
