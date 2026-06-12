@@ -63,6 +63,7 @@
   --color-gradient-100-end: #e9fcfc;
   --color-gradient-200-start: #def8ea;
   --color-gradient-200-end: #d9f6f4;
+
   --color-gradient-500-start: #17da71;
   --color-gradient-500-end: #08ddf0;
   --color-gradient-600-start: #00d361;
@@ -106,27 +107,43 @@
 }
 
 @utility bg-gradient-100 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-100-start),
-      var(--color-gradient-100-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-100-start),
+    var(--color-gradient-100-end)
+  );
 }
 
 @utility bg-gradient-200 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-200-start),
-      var(--color-gradient-200-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-200-start),
+    var(--color-gradient-200-end)
+  );
+}
+
+@utility border-gradient-400 {
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-400-start),
+    var(--color-gradient-4oo-end)
+  );
 }
 
 @utility bg-gradient-500 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 }
 
 @utility bg-gradient-600 {
-  background: linear-gradient(var(--gradient-dir, to top),
-      var(--color-gradient-600-start),
-      var(--color-gradient-600-end));
+  background: linear-gradient(
+    var(--gradient-dir, to top),
+    var(--color-gradient-600-start),
+    var(--color-gradient-600-end)
+  );
 }
 
 @keyframes slide-up-fade-in {
@@ -226,19 +243,23 @@
     left: -100%;
     width: 100%;
     height: 200%;
-    background: linear-gradient(0deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent);
+    background: linear-gradient(
+      0deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
     opacity: 0.6;
     animation: shimmer 1s infinite linear;
   }
 }
 
 @utility bg-basic-mission-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    to top,
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 
   &::before {
     content: '';
@@ -253,9 +274,11 @@
 }
 
 @utility bg-special-mission-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-special-gradient-start),
-      var(--color-special-gradient-end));
+  background: linear-gradient(
+    to top,
+    var(--color-special-gradient-start),
+    var(--color-special-gradient-end)
+  );
   border: 3px solid var(--color-special-border);
 
   &::before {
@@ -271,22 +294,30 @@
 }
 
 @utility bg-complete-card-pattern {
-  background: linear-gradient(to right,
-      var(--color-gradient-500-start),
-      var(--color-gradient-500-end));
+  background: linear-gradient(
+    to right,
+    var(--color-gradient-500-start),
+    var(--color-gradient-500-end)
+  );
 }
 
 @utility bg-special-complete-card-pattern {
-  background: linear-gradient(to top,
-      var(--color-special-gradient-start),
-      var(--color-special-gradient-end));
+  background: linear-gradient(
+    to top,
+    var(--color-special-gradient-start),
+    var(--color-special-gradient-end)
+  );
 }
 
 @utility border-complete-gradient {
   border-color: transparent;
   background-image:
     linear-gradient(white, white),
-    linear-gradient(to right, var(--color-gradient-600-start), var(--color-gradient-600-end));
+    linear-gradient(
+      to right,
+      var(--color-gradient-600-start),
+      var(--color-gradient-600-end)
+    );
   background-clip: padding-box, border-box;
   background-origin: border-box;
 }
@@ -295,7 +326,11 @@
   border-color: transparent;
   background-image:
     linear-gradient(white, white),
-    linear-gradient(to top, var(--color-special-gradient-start), var(--color-special-gradient-end));
+    linear-gradient(
+      to top,
+      var(--color-special-gradient-start),
+      var(--color-special-gradient-end)
+    );
   background-clip: padding-box, border-box;
   background-origin: border-box;
 }
