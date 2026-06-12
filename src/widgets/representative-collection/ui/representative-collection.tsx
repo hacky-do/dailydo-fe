@@ -2,7 +2,9 @@ interface RepresentativeCollectionProps {
   title: string;
 }
 
-export const RepresentativeCollection = ({ title }: RepresentativeCollectionProps) => {
+export const RepresentativeCollection = ({
+  title,
+}: RepresentativeCollectionProps) => {
   return (
     <div className="flex flex-col items-center">
       <span className="z-10 rounded-xl bg-white px-2 py-1 text-sm font-bold text-green-600">

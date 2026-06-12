@@ -1,7 +1,11 @@
 'use client';
 
 import { MOCK_COLLECTIONS } from '@/entities/collection';
-import { CollectionGrid, CollectionTabs, useCollectionTab } from '@/features/collections';
+import {
+  CollectionGrid,
+  CollectionTabs,
+  useCollectionTab,
+} from '@/features/collections';
 import { RepresentativeCollection } from '@/widgets/representative-collection';
 
 export default function CollectionPage() {
