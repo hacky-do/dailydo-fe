@@ -66,7 +66,7 @@ const MyMissionBackContent = ({
         height={147}
         className={cn(
           'rounded-full object-cover transition-all duration-500 ease-out',
-          isCompleted ? 'h-[147px] w-[147px]' : 'h-20 w-20',
+          isCompleted ? 'h-36.75 w-36.75' : 'h-20 w-20',
         )}
       />
       {isCompleted && (
