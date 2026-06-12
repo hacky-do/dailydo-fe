@@ -14,12 +14,20 @@ import { useRegister } from './use-register';
 import { useSocialLogin } from './use-social-login';
 
 const parseSocialUser = (raw: string | null) => {
-  if (!raw) return { email: '', name: '' };
+  if (!raw) return { email: '', name: '', profileImage: '' };
   try {
-    const parsed = JSON.parse(raw) as { email?: string; name?: string };
-    return { email: parsed.email ?? '', name: parsed.name ?? '' };
+    const parsed = JSON.parse(raw) as {
+      email?: string;
+      name?: string;
+      profileImage?: string;
+    };
+    return {
+      email: parsed.email ?? '',
+      name: parsed.name ?? '',
+      profileImage: parsed.profileImage ?? '',
+    };
   } catch {
-    return { email: '', name: '' };
+    return { email: '', name: '', profileImage: '' };
   }
 };
 
@@ -63,14 +71,20 @@ export const useSocialLoginCallback = () => {
         },
         onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
-            // 미가입 사용자는 소셜 인증 정보로 즉시 가입시키고, 회원정보 입력 단계로 보낸다
-            const { email, name } = parseSocialUser(user);
+            const { email, name, profileImage } = parseSocialUser(user);
             register(
-              { email, name, type, socialToken: token, agreeMarketing: true },
+              {
+                email,
+                name,
+                profileImage,
+                type,
+                socialToken: token,
+                agreeMarketing: true,
+              },
               {
                 onSuccess: () => {
                   setLastLogin(type);
-                  router.replace(ROUTES.SIGNUP);
+                  router.replace(ROUTES.MISSIONS);
                 },
                 onError: () => {
                   router.replace(`${ROUTES.LOGIN}?auth_error`);

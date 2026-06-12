@@ -33,6 +33,7 @@ export const socialLogin = (
 export interface RegisterParams {
   email: string;
   name: string;
+  profileImage: string;
   type: SocialLoginType;
   socialToken: string;
   agreeMarketing: boolean;
