@@ -9,7 +9,7 @@ import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
 
-const SKELETON_COUNT = 3;
+const SKELETON_COUNT = 4;
 
 const CategoryItemSkeleton = () => (
   <li className="flex w-22 shrink-0 flex-col items-center gap-1 rounded-2xl bg-white py-2 text-sm font-semibold">
@@ -46,6 +46,7 @@ const CategoryItem = ({ src, label }: { src: string; label: string }) => {
         <Image
           src={src}
           fill
+          sizes="40px"
           alt=""
           className={`object-cover ${isImageLoading ? 'invisible' : 'visible'}`}
           onLoad={() => setIsImageLoading(false)}
