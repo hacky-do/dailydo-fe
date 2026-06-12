@@ -5,7 +5,7 @@ import { SectionHeading } from '@/shared/ui/section-heading';
 
 export const LandingMylogSection = () => {
   return (
-    <section className="bg-white px-5 py-16">
+    <section className="bg-white px-5 pt-16 pb-50">
       <FadeIn>
         <SectionHeading
           align="left"
@@ -27,8 +27,8 @@ export const LandingMylogSection = () => {
         />
       </FadeIn>
 
-      <div className="mt-10 flex flex-col gap-5">
-        <FadeIn delay={150} className="items-centergap-3 flex">
+      <div className="relative mt-30 flex flex-col">
+        <FadeIn delay={150} className="absolute -top-20">
           <Image
             src="/landing/decoration-1.png"
             alt=""
@@ -36,13 +36,16 @@ export const LandingMylogSection = () => {
             height={120}
           />
         </FadeIn>
-        <FadeIn delay={200} className="flex items-center justify-between gap-3">
-          <Image src="/landing/bubble-2.png" alt="" width={120} height={120} />
+        <FadeIn delay={200} className="flex items-center justify-end">
+          <Image src="/landing/bubble-1.png" alt="" width={180} height={120} />
         </FadeIn>
-        <FadeIn delay={250} className="flex items-center justify-end gap-3">
-          <Image src="/landing/bubble-1.png" alt="" width={120} height={120} />
+        <FadeIn delay={250} className="flex items-center">
+          <Image src="/landing/bubble-2.png" alt="" width={220} height={120} />
         </FadeIn>
-        <FadeIn delay={300} className="flex items-center justify-between gap-3">
+      </div>
+
+      <div className="relative mt-10 h-80 w-80 rounded-2xl bg-gray-50">
+        <FadeIn delay={300} className="absolute -top-10 -right-17.5">
           <Image
             src="/landing/decoration-2.png"
             alt=""
@@ -50,9 +53,19 @@ export const LandingMylogSection = () => {
             height={120}
           />
         </FadeIn>
+        <FadeIn
+          delay={350}
+          className="relative top-10 h-100 w-[80%] justify-self-center"
+        >
+          <Image
+            src="/landing/mylog.png"
+            alt=""
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 80vw"
+          />
+        </FadeIn>
       </div>
-
-      <div className="mt-8 flex justify-center"></div>
     </section>
   );
 };
