@@ -35,6 +35,7 @@ const tryRefresh = (): Promise<boolean> => {
 
 const tryLogout = (): Promise<void> => {
   if (loggingOut) return loggingOut;
+  if (loggedOut) return Promise.resolve();
 
   loggedOut = true;
 
