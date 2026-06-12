@@ -13,7 +13,7 @@ export const CardFront = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div
       className={cn(
-        'absolute inset-0 overflow-hidden rounded-2xl transition-all duration-500 backface-hidden',
+        'absolute inset-0 z-1 overflow-hidden rounded-2xl transition-all duration-500 backface-hidden',
         cardBgStyles[variant],
         flipped && 'pointer-events-none',
       )}
