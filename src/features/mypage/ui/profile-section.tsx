@@ -53,7 +53,7 @@ export const ProfileSection = ({
             {email}
           </span>
         </div>
-        <p className="min-h-10 text-sm">{description}</p>
+        <p className="min-h-10 text-sm break-all">{description}</p>
       </div>
     </section>
   );
