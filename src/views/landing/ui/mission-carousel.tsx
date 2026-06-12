@@ -31,7 +31,7 @@ const LANDING_MISSIONS: LandingMission[] = [
     image: '/category/hobby.png',
   },
   {
-    categoryName: '운동',
+    categoryName: '건강',
     title: '동네 한 바퀴 가볍게 걷기',
     image: '/category/exercise.png',
   },
@@ -41,7 +41,7 @@ const LANDING_MISSIONS: LandingMission[] = [
     image: '/category/heal.png',
   },
   {
-    categoryName: '공부',
+    categoryName: '성장',
     title: '궁금했던 단어 하나 찾아보기',
     image: '/category/study.png',
   },
