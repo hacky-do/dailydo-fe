@@ -236,7 +236,7 @@ export const MyMissionList = () => {
           slidesPerView="auto"
           centeredSlides
           spaceBetween={24}
-          loop
+          loop={false}
           grabCursor
           watchSlidesProgress
           style={{ overflow: 'visible' }}
