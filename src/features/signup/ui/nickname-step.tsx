@@ -2,12 +2,12 @@
 
 import { Control, useController } from 'react-hook-form';
 
-import { Input } from '@/shared/ui/input';
-
 import {
   NICKNAME_HELPER_TEXT,
   validateNickname,
-} from '../lib/validate-nickname';
+} from '@/entities/user/lib/validate-nickname';
+import { Input } from '@/shared/ui/input';
+
 import { SignupFormValues } from '../model/signup-form-values';
 
 interface NicknameStepProps {
