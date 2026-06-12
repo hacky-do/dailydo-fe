@@ -6,11 +6,12 @@ import ImagePlus from '@/shared/ui/icons/common/image_plus.svg';
 import { useToast } from '@/shared/ui/toast';
 
 interface FileInputProps {
+  initialSrc?: string | null;
   onChange?: (file: File | null) => void;
 }
 
-export const FileInput = ({ onChange }: FileInputProps) => {
-  const [preview, setPreview] = useState<string | null>(null);
+export const FileInput = ({ initialSrc, onChange }: FileInputProps) => {
+  const [preview, setPreview] = useState<string | null>(initialSrc ?? null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -64,7 +65,7 @@ export const FileInput = ({ onChange }: FileInputProps) => {
   return (
     <div className="relative size-28.5 rounded-xl">
       <label
-        aria-label="파일 첨부"
+        aria-label="사진 첨부"
         className="relative flex size-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl bg-gray-50 p-3 text-gray-500"
       >
         {previewImage ?? (
