@@ -1,6 +1,8 @@
 'use client';
 
-import { useGetMe } from '@/entities/user';
+import { useState } from 'react';
+
+import { useGetMe, usePatchMe } from '@/entities/user';
 import {
   CategorySection,
   CategorySectionSkeleton,
@@ -8,6 +10,7 @@ import {
   MissionStatusSectionSkeleton,
   MyStatusSection,
   MyStatusSectionSkeleton,
+  ProfileEditBottomSheet,
   ProfileSection,
   ProfileSectionSkeleton,
 } from '@/features/mypage';
@@ -27,6 +30,13 @@ const MypageSkeleton = () => (
 
 export const Mypage = () => {
   const { data, isPending, isError, refetch } = useGetMe();
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const { mutate: updateProfile, isPending: isPatchPending } = usePatchMe();
+
+  const handleEditOpen = () => {
+    if (isPending) return;
+    setIsEditOpen(true);
+  };
 
   return (
     <div className="h-full w-full pt-20">
@@ -36,11 +46,28 @@ export const Mypage = () => {
         ) : (
           <>
             <div className="ml-auto flex w-fit gap-1 px-5 pt-4">
-              <Button variant="secondary" size="sm">
+              <Button variant="secondary" size="sm" onClick={handleEditOpen}>
                 프로필 수정
               </Button>
-              <Button size="sm">공유하기</Button>
             </div>
+            {data && (
+              <ProfileEditBottomSheet
+                open={isEditOpen}
+                onOpenChange={setIsEditOpen}
+                defaultValues={{
+                  name: data.name,
+                  description: data.description,
+                  profileImage: data.profileImage,
+                }}
+                onSubmit={(values) =>
+                  updateProfile(
+                    { name: values.name, description: values.description },
+                    { onSuccess: () => setIsEditOpen(false) },
+                  )
+                }
+                isLoading={isPatchPending}
+              />
+            )}
 
             <div className="flex flex-col gap-5 p-5">
               {isPending || !data ? (
