@@ -96,6 +96,8 @@
   --animate-float-slow: float 6s linear infinite 0.7s alternate;
   --animate-orbit-circle: orbit-circle 4s linear infinite;
   --animate-orbit-circle-reverse: orbit-circle 4s linear infinite reverse;
+  --animate-marquee-left: marquee-left 20s linear infinite alternate;
+  --animate-marquee-right: marquee-right 20s linear infinite alternate;
 }
 
 @utility content-container {
@@ -199,6 +201,26 @@
 
   100% {
     transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
   }
 }
 
