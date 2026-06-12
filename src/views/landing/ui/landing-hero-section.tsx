@@ -3,6 +3,7 @@
 import Image from 'next/image';
 
 import { FadeIn } from '@/shared/ui/fade-in';
+import LogoFull from '@/shared/ui/icons/common/logo_full.svg';
 import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
 import DecoCoffee from '@/shared/ui/icons/login/deco_coffee.svg';
 import DecoGraph from '@/shared/ui/icons/login/deco_graph.svg';
@@ -52,7 +53,10 @@ const ScrollChevron = () => {
 
 export const LandingHeroSection = () => {
   return (
-    <section className="bg-gradient-100 relative overflow-hidden px-5 pt-12 pb-10">
+    <section className="bg-gradient-100 relative overflow-hidden px-5 pt-4 pb-10">
+      <h1 className="mb-10">
+        <LogoFull alt="Daily:DO" width={120} />
+      </h1>
       <div
         aria-hidden="true"
         className="absolute top-11 -left-6 h-24 w-24 rounded-full bg-green-200/60"
@@ -117,9 +121,9 @@ export const LandingHeroSection = () => {
         />
         <div className="relative top-18 aspect-square w-full max-w-[70%] items-center justify-center">
           <Image
-            src="/login/mainillust.png"
+            src="/login/mainIllust.png"
             alt=""
-            sizes="(max-width: 768px) 100vw, 70vw"
+            sizes="768px"
             fill
             className="object-contain"
           />
