@@ -250,7 +250,7 @@ export const MyMissionList = () => {
           onSlideChangeTransitionEnd={handleSlideChangeEnd}
         >
           {missions.map((mission) => (
-            <SwiperSlide key={mission.missionId} className="!w-[225px]">
+            <SwiperSlide key={mission.missionId} className="w-56.25!">
               <div data-card-wrapper>
                 <MyMissionCard mission={mission} />
               </div>

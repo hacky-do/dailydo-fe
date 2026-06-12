@@ -22,7 +22,7 @@ export const CollectionTabs = ({
             'flex-1 py-2 pb-2 text-sm font-semibold whitespace-nowrap transition-colors',
             selectedId === tab.id
               ? 'border-b-2 border-green-500 text-green-600'
-              : 'text-gray-400',
+              : 'text-gray-600',
           )}
         >
           {tab.title}

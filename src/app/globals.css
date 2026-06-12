@@ -122,14 +122,6 @@
   );
 }
 
-@utility border-gradient-400 {
-  background: linear-gradient(
-    var(--gradient-dir, to top),
-    var(--color-gradient-400-start),
-    var(--color-gradient-4oo-end)
-  );
-}
-
 @utility bg-gradient-500 {
   background: linear-gradient(
     var(--gradient-dir, to top),
