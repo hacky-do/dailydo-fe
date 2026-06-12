@@ -61,6 +61,7 @@ const Content = ({
   <Drawer.Portal>
     <Overlay />
     <Drawer.Content
+      aria-describedby={undefined}
       className={cn(
         'fixed bottom-0 left-1/2 z-200 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white px-6 outline-none',
         className,

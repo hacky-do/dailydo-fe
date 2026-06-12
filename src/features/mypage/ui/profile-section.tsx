@@ -8,7 +8,7 @@ import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
 export const ProfileSectionSkeleton = () => (
   <section className="flex flex-col gap-4">
-    <div className="absolute -top-[57px] left-5 size-28.5 overflow-hidden rounded-full border-2 border-green-100">
+    <div className="absolute -top-14.25 left-5 size-28.5 overflow-hidden rounded-full border-2 border-green-100">
       <Skeleton className="h-full w-full" />
     </div>
     <div className="flex flex-col gap-2">
@@ -36,7 +36,7 @@ export const ProfileSection = ({
 
   return (
     <section className="flex flex-col gap-4">
-      <div className="absolute -top-[57px] left-5 size-28.5 overflow-hidden rounded-full border-2 border-green-100 bg-green-100">
+      <div className="absolute -top-14.25 left-5 size-28.5 overflow-hidden rounded-full border-2 border-green-100 bg-green-100">
         {isImageLoading && <Skeleton className="h-full w-full" />}
         <Image
           src={profileImage ?? '/common/avatar.png'}
