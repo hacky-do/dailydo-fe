@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 import { FadeIn } from '@/shared/ui/fade-in';
@@ -10,31 +12,43 @@ import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
 
 import { StartButton } from './start-button';
 
-const ScrollChevron = () => (
-  <svg
-    width="41"
-    height="41"
-    viewBox="0 0 24 24"
-    fill="none"
-    aria-hidden="true"
-    className="animate-bounce text-green-500"
-  >
-    <path
-      d="M6 9l6 6 6-6"
-      stroke="#97E4CF"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M6 14l6 6 6-6"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+const ScrollChevron = () => {
+  const handleClick = () => {
+    document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      aria-label="다음 섹션으로 이동"
+      className="cursor-pointer"
+    >
+      <svg
+        width="41"
+        height="41"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="animate-bounce text-green-500"
+      >
+        <path
+          d="M6 9l6 6 6-6"
+          stroke="#97E4CF"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6 14l6 6 6-6"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+};
 
 export const LandingHeroSection = () => {
   return (
