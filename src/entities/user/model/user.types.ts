@@ -1,3 +1,11 @@
+export interface PatchMeRequest {
+  name?: string;
+  description?: string;
+  profileImage?: string | null;
+  phone?: string;
+  agreeMarketing?: boolean;
+}
+
 export interface UserCategory {
   id: number;
   categoryId: number;
