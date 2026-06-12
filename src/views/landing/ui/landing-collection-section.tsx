@@ -41,6 +41,7 @@ export const LandingCollectionSection = () => {
               alt=""
               fill
               className="object-contain"
+              sizes="120px"
             />
           </div>
         </div>
