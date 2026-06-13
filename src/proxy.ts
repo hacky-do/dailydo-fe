@@ -6,8 +6,6 @@ import { ROUTES } from '@/shared/config/routes';
 
 const ACCESS_TOKEN_COOKIE = COOKIES.ACCESS_TOKEN;
 
-const HOME_ROUTE = ROUTES.HOME;
-
 const PROTECTED_ROUTES = [
   ROUTES.MISSIONS,
   ROUTES.MYPAGE,
@@ -20,8 +18,6 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasAccessToken = request.cookies.has(ACCESS_TOKEN_COOKIE);
 
-  const isHomeRoute = pathname === HOME_ROUTE;
-
   const isProtectedRoute = PROTECTED_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
@@ -29,14 +25,11 @@ export function proxy(request: NextRequest) {
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 
-  if (
-    (isHomeRoute && !hasAccessToken) ||
-    (isProtectedRoute && !hasAccessToken)
-  ) {
+  if (isProtectedRoute && !hasAccessToken) {
     return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
   }
 
-  if ((isHomeRoute && hasAccessToken) || (isAuthRoute && hasAccessToken)) {
+  if (isAuthRoute && hasAccessToken) {
     return NextResponse.redirect(new URL(ROUTES.MISSIONS, request.url));
   }
 
@@ -45,12 +38,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/:path*',
-    '/missions/:path*',
-    '/mypage/:path*',
-    '/mylogs/:path*',
-    '/collections/:path*',
-    '/login',
-    '/signup',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|css|js|json)).*)',
   ],
 };
