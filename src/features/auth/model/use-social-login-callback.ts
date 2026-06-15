@@ -72,6 +72,10 @@ export const useSocialLoginCallback = () => {
               {
                 onSuccess: () => {
                   setLastLogin(type);
+                  toast({
+                    message: '데일리두에 오신 것을 환영해요!',
+                    type: 'success',
+                  });
                   router.replace(ROUTES.MISSIONS);
                 },
                 onError: () => {
