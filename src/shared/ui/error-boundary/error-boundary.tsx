@@ -32,13 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        this.props.fallback ?? (
-          <FallbackUI
-            onReset={this.props.onReset ? this.handleReset : undefined}
-          />
-        )
-      );
+      return this.props.fallback ?? <FallbackUI onReset={this.handleReset} />;
     }
     return this.props.children;
   }
