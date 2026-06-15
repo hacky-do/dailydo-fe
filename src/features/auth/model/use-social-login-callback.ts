@@ -10,32 +10,15 @@ import { ApiError } from '@/shared/api/api-error.type';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/toast';
 
+import { parseSocialUser } from '../lib/parse-social-user';
 import { useRegister } from './use-register';
 import { useSocialLogin } from './use-social-login';
-
-const parseSocialUser = (raw: string | null) => {
-  if (!raw) return { email: '', name: '', profileImage: '' };
-  try {
-    const parsed = JSON.parse(raw) as {
-      email?: string;
-      name?: string;
-      profileImage?: string;
-    };
-    return {
-      email: parsed.email ?? '',
-      name: parsed.name ?? '',
-      profileImage: parsed.profileImage ?? '',
-    };
-  } catch {
-    return { email: '', name: '', profileImage: '' };
-  }
-};
 
 export const useSocialLoginCallback = () => {
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setLastLogin } = useSessionStore.getState();
+  const setLastLogin = useSessionStore((s) => s.setLastLogin);
 
   const token = searchParams.get('token');
   const rawType = searchParams.get('type');
@@ -71,7 +54,12 @@ export const useSocialLoginCallback = () => {
         },
         onError: (err: unknown) => {
           if (err instanceof ApiError && err.code === 404) {
-            const { email, name, profileImage } = parseSocialUser(user);
+            const socialUser = parseSocialUser(user);
+            if (!socialUser) {
+              router.replace(`${ROUTES.LOGIN}?auth_error`);
+              return;
+            }
+            const { email, name, profileImage } = socialUser;
             register(
               {
                 email,
