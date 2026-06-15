@@ -7,4 +7,5 @@ export const useGetMissionCategories = () =>
   useSuspenseQuery({
     queryKey: categoryQueryKeys.missionCategories,
     queryFn: () => getMissionCategories(0, 10),
+    select: (res) => res.data,
   });
