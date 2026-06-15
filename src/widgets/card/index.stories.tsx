@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { userEvent, within } from 'storybook/test';
 
-import { MissionItem } from '@/entities/missions/model/mission.types';
+import {
+  MissionItem,
+  MyMissionItem,
+} from '@/entities/missions/model/mission.types';
 import { MyMissionCard } from '@/features/missions/my-mission-list';
 import { TodayMissionCard } from '@/features/missions/today-mission-list';
 
@@ -31,6 +34,42 @@ const specialMission: MissionItem = {
   image: '',
   totalCompletedCount: 5,
   isSpecial: true,
+};
+
+const normalMyMission: MyMissionItem = {
+  ...normalMission,
+  itemId: 101,
+  myCompletedCount: 3,
+  completed: false,
+  completedAt: '',
+  mylog: null,
+};
+
+const specialMyMission: MyMissionItem = {
+  ...specialMission,
+  itemId: 102,
+  myCompletedCount: 1,
+  completed: false,
+  completedAt: '',
+  mylog: null,
+};
+
+const completedMyMission: MyMissionItem = {
+  ...normalMission,
+  itemId: 103,
+  myCompletedCount: 4,
+  completed: true,
+  completedAt: '2026-06-15T10:00:00Z',
+  mylog: { photo: '', memo: '오늘 하늘이 너무 예뻤다' },
+};
+
+const completedSpecialMyMission: MyMissionItem = {
+  ...specialMission,
+  itemId: 104,
+  myCompletedCount: 2,
+  completed: true,
+  completedAt: '2026-06-15T22:00:00Z',
+  mylog: { photo: '', memo: '별이 쏟아지는 밤이었다' },
 };
 
 // ────────────────────────────────────────
@@ -114,19 +153,19 @@ export const TodaySpecialFlippedSelected: Story = {
 /** 일반 미션 — 완료 전 */
 export const MyMissionDefault: Story = {
   name: '나의 미션 — 완료 전 (일반)',
-  render: () => <MyMissionCard mission={normalMission} />,
+  render: () => <MyMissionCard mission={normalMyMission} />,
 };
 
 /** 히든 미션 — 완료 전 */
 export const MyMissionSpecial: Story = {
   name: '나의 미션 — 완료 전 (히든)',
-  render: () => <MyMissionCard mission={specialMission} />,
+  render: () => <MyMissionCard mission={specialMyMission} />,
 };
 
 /** 일반 미션 — 완료 확인 바텀 시트 열림 */
 export const MyMissionSheet: Story = {
   name: '나의 미션 — 완료 바텀 시트',
-  render: () => <MyMissionCard mission={normalMission} />,
+  render: () => <MyMissionCard mission={normalMyMission} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const completeBtn = await canvas.findByRole('button', { name: '완료하기' });
@@ -137,25 +176,11 @@ export const MyMissionSheet: Story = {
 /** 일반 미션 — 완료 후 배경 채움 애니메이션 */
 export const MyMissionCompleted: Story = {
   name: '나의 미션 — 완료 후 (일반)',
-  render: () => <MyMissionCard mission={normalMission} />,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const completeBtn = await canvas.findByRole('button', { name: '완료하기' });
-    await userEvent.click(completeBtn);
-    const confirmBtn = await canvas.findByRole('button', { name: '완료' });
-    await userEvent.click(confirmBtn);
-  },
+  render: () => <MyMissionCard mission={completedMyMission} />,
 };
 
 /** 히든 미션 — 완료 후 배경 채움 애니메이션 */
 export const MyMissionSpecialCompleted: Story = {
   name: '나의 미션 — 완료 후 (히든)',
-  render: () => <MyMissionCard mission={specialMission} />,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const completeBtn = await canvas.findByRole('button', { name: '완료하기' });
-    await userEvent.click(completeBtn);
-    const confirmBtn = await canvas.findByRole('button', { name: '완료' });
-    await userEvent.click(confirmBtn);
-  },
+  render: () => <MyMissionCard mission={completedSpecialMyMission} />,
 };
