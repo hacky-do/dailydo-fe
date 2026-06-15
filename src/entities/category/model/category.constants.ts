@@ -1,3 +1,3 @@
 export const categoryQueryKeys = {
-  missionCategories: ['mission-categories'],
+  all: ['mission-categories'],
 } as const;

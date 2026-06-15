@@ -4,7 +4,7 @@ export interface Category {
   image: string;
 }
 
-export interface MissionCategoriesResponse {
+export interface CategoryListResponse {
   data: Category[];
   total: number;
 }

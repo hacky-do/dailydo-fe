@@ -1,16 +1,14 @@
 import { clientApi } from '@/shared/api/fetch-client';
 
-import { MissionCategoriesResponse } from '../model/types';
+import { CategoryListResponse } from '../model/category.types';
 
 export const getMissionCategories = async (
   start: number,
   perPage: number,
-): Promise<MissionCategoriesResponse> => {
+): Promise<CategoryListResponse> => {
   const query = new URLSearchParams({
     start: String(start),
     perPage: String(perPage),
   });
-  return clientApi.get<MissionCategoriesResponse>(
-    `/mission-categories?${query}`,
-  );
+  return clientApi.get<CategoryListResponse>(`/mission-categories?${query}`);
 };
