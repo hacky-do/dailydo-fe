@@ -10,10 +10,12 @@ import MissionHeader from '@/widgets/mission/mission-header';
 export const MyMissionListPage = () => {
   return (
     <div className="flex h-full w-full flex-col items-center">
+      <div className="flex-1" />
       <MissionHeader type="mymission" />
       <Suspense fallback={<Loader />}>
         <MyMissionList />
       </Suspense>
+      <div className="flex-2" />
     </div>
   );
 };
@@ -29,11 +31,14 @@ export const TodayMissionListPage = ({
 }: TodayMissionListPageProps) => {
   return (
     <div className="flex h-full w-full flex-col items-center">
+      <div className="flex-1" />
+
       <MissionHeader maxSelectableCount={maxSelectableCount} />
       <TodayMissionList
         missions={missions}
         maxSelectableCount={maxSelectableCount}
       />
+      <div className="flex-2" />
     </div>
   );
 };

@@ -13,7 +13,12 @@ export const uploadFile = async (file: File): Promise<string> => {
   Object.entries(fields).forEach(([key, value]) => formData.append(key, value));
   formData.append('file', file);
 
-  await fetch(url, { method: 'POST', body: formData });
+  const res = await fetch(url, { method: 'POST', body: formData });
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('[S3 upload failed]', res.status, text);
+    throw new Error(`S3 upload failed: ${res.status}`);
+  }
 
-  return path;
+  return `${url.replace(/\/$/, '')}/${path}`;
 };

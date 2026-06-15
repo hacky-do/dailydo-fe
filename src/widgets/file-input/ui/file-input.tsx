@@ -22,7 +22,13 @@ export const FileInput = ({ initialSrc, onChange }: FileInputProps) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/webp'];
+    const allowedTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/heic',
+      'image/heif',
+    ];
     if (!allowedTypes.includes(selected.type)) {
       toast({ type: 'info', message: '지원되지 않는 파일 형식입니다.' });
       return;
