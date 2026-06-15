@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { FadeIn } from '@/shared/ui/fade-in';
 import LogoFull from '@/shared/ui/icons/common/logo_full.svg';
+import Chevron from '@/shared/ui/icons/landing/chevron.svg';
 import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
 import DecoCoffee from '@/shared/ui/icons/login/deco_coffee.svg';
 import DecoGraph from '@/shared/ui/icons/login/deco_graph.svg';
@@ -20,33 +21,12 @@ const ScrollChevron = () => {
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       aria-label="다음 섹션으로 이동"
       className="cursor-pointer"
     >
-      <svg
-        width="41"
-        height="41"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-        className="animate-bounce text-green-500"
-      >
-        <path
-          d="M6 9l6 6 6-6"
-          stroke="#97E4CF"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M6 14l6 6 6-6"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <Chevron width={41} className="animate-bounce" />
     </button>
   );
 };
