@@ -5,7 +5,7 @@ import { MissionCarousel } from './mission-carousel';
 
 export const LandingMissionSection = () => {
   return (
-    <section id="mission" className="relative bg-green-200 pt-30 pb-40">
+    <section id="mission" className="relative bg-green-200 pt-16 pb-30">
       <div className="px-5">
         <FadeIn>
           <SectionHeading
