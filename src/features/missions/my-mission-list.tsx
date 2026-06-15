@@ -10,10 +10,7 @@ import {
   useGetMyMissions,
   usePostCompleteMission,
 } from '@/entities/missions/api/mission.queries';
-import {
-  MissionItem,
-  MyMissionItem,
-} from '@/entities/missions/model/mission.types';
+import { MyMissionItem } from '@/entities/missions/model/mission.types';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button/button';
 import { Textarea } from '@/shared/ui/input';
@@ -24,14 +21,12 @@ import { FileInput } from '@/widgets/file-input';
 import { useFileInput } from '@/widgets/file-input/model/use-file-input';
 
 interface MyMissionBackContentProps {
-  mission: MissionItem;
-  isCompleted: boolean;
+  mission: MyMissionItem;
   onCompleteClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const MyMissionBackContent = ({
   mission,
-  isCompleted,
   onCompleteClick,
 }: MyMissionBackContentProps) => {
   return (
@@ -39,8 +34,8 @@ const MyMissionBackContent = ({
       <span
         className={cn(
           'rounded-2xl px-2 py-1 text-xs font-normal',
-          isCompleted ? 'bg-white' : 'bg-gray-100',
-          isCompleted
+          mission?.completed ? 'bg-white' : 'bg-gray-100',
+          mission?.completed
             ? mission.isSpecial
               ? 'text-special-text-color'
               : 'text-green-600'
@@ -51,28 +46,28 @@ const MyMissionBackContent = ({
       </span>
       <p
         className={cn(
-          'text-center text-xl font-semibold',
-          isCompleted ? 'text-white' : 'text-gray-800',
+          'text-center text-xl font-semibold break-keep',
+          mission?.completed ? 'text-white' : 'text-gray-800',
         )}
       >
         {mission.title}
       </p>
       <Image
-        src={mission.image || '/mocks/images/test_image.png'}
+        src={mission?.mylog?.photo || '/mocks/images/test_image.png'}
         alt={mission.title}
         width={147}
         height={147}
         className={cn(
-          'rounded-full object-cover transition-all duration-500 ease-out',
-          isCompleted ? 'h-36.75 w-36.75' : 'h-20 w-20',
+          'rounded-lg object-cover transition-all duration-500 ease-out',
+          mission?.completed ? 'aspect-4/3 w-36.75' : 'h-20 w-20',
         )}
       />
-      {isCompleted && (
-        <span className="animate-slide-up text-xs font-normal text-white">
-          조각구름이 흩어지기 전에 순간포착!
+      {mission?.completed && (
+        <span className="animate-slide-up w-full overflow-hidden text-center text-xs font-normal text-ellipsis whitespace-nowrap text-white">
+          {mission?.mylog?.memo}
         </span>
       )}
-      {!isCompleted && (
+      {!mission?.completed && (
         <Button
           variant="primary"
           size="md"
@@ -105,60 +100,58 @@ export const MyLogBottomSheet = ({
 
   const handleSubmit = async () => {
     const photo = file ? await upload(file) : '';
+
     onSubmit(photo, memo);
   };
 
   const isLoading = isUploading || isPending;
 
   return (
-    <BottomSheet.Root open={open} onOpenChange={setOpen}>
-      <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
-        <BottomSheet.Header>
-          <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
-        </BottomSheet.Header>
-        <BottomSheet.Body>
-          <span className="mt-8 mb-1 text-sm font-medium">
-            기억하고 싶은 순간이 있나요?
-          </span>
-          <div className="mb-12">
-            <FileInput onChange={handleChange} />
-          </div>
-          <div className="pb-8">
-            <Textarea
-              id="mylog"
-              label="오늘을 한줄로 남겨 볼까요?"
-              placeholder="최대 100자까지 입력 가능해요."
-              description={`${memo.length}/100자`}
-              value={memo}
-              onChange={(e) => setMemo(e.target.value)}
-              maxLength={100}
-            />
-          </div>
-        </BottomSheet.Body>
-        <BottomSheet.Footer>
-          <div className="flex gap-2">
-            <BottomSheet.Close>
-              <Button variant="secondary" disabled={isLoading}>
-                건너뛰기
+    <>
+      <BottomSheet.Root open={open} onOpenChange={setOpen}>
+        <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
+          <BottomSheet.Header className="pt-6">
+            <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
+          </BottomSheet.Header>
+          <BottomSheet.Body className="flex flex-col pt-4 pb-8">
+            <span className="mb-1 text-sm font-medium">
+              기억하고 싶은 순간이 있나요?
+            </span>
+            <div className="flex flex-col gap-12">
+              <FileInput onChange={handleChange} />
+              <Textarea
+                id="mylog"
+                label="오늘을 한줄로 남겨 볼까요?"
+                placeholder="최대 100자까지 입력 가능해요."
+                description={`${memo.length}/100자`}
+                value={memo}
+                onChange={(e) => setMemo(e.target.value)}
+                maxLength={100}
+              />
+            </div>
+          </BottomSheet.Body>
+          <BottomSheet.Footer className="pt-0 pb-8">
+            <div className="flex gap-2">
+              <BottomSheet.Close>
+                <Button variant="tertiary">건너뛰기</Button>
+              </BottomSheet.Close>
+              <Button
+                variant="primary"
+                onClick={handleSubmit}
+                isLoading={isLoading}
+                type="button"
+              >
+                완료하기
               </Button>
-            </BottomSheet.Close>
-            <Button
-              variant="primary"
-              onClick={handleSubmit}
-              isLoading={isLoading}
-              type="button"
-            >
-              완료하기
-            </Button>
-          </div>
-        </BottomSheet.Footer>
-      </BottomSheet.Content>
-    </BottomSheet.Root>
+            </div>
+          </BottomSheet.Footer>
+        </BottomSheet.Content>
+      </BottomSheet.Root>
+    </>
   );
 };
 
 export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
-  const [isCompleted, setIsCompleted] = useState(mission.completed);
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
   const { mutate, isPending } = usePostCompleteMission({
@@ -172,10 +165,11 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
 
   const handleSubmit = (photo: string, memo: string) => {
     mutate(
-      { missionId: mission.missionId, mylog: { photo, memo } },
+      { itemId: mission.itemId, mylog: { photo, memo } },
       {
         onSuccess: () => {
-          setIsCompleted(true);
+          toast({ message: '마이로그 작성이 완료되었어요!', type: 'success' });
+
           setIsOpen(false);
         },
       },
@@ -186,13 +180,12 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
     <>
       <Card
         isSpecial={mission.isSpecial}
-        isCompleted={isCompleted}
         defaultFlipped
+        isCompleted={mission.completed}
       >
         <Card.Back>
           <MyMissionBackContent
             mission={mission}
-            isCompleted={isCompleted}
             onCompleteClick={handleCompleteClick}
           />
         </Card.Back>
@@ -269,7 +262,7 @@ export const MyMissionList = () => {
           onSlideChangeTransitionEnd={handleSlideChangeEnd}
         >
           {missions.map((mission) => (
-            <SwiperSlide key={mission.missionId} className="w-56.25!">
+            <SwiperSlide key={mission.itemId} className="w-56.25!">
               <div data-card-wrapper>
                 <MyMissionCard mission={mission} />
               </div>

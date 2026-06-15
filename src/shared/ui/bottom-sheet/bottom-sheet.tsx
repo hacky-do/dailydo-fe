@@ -127,18 +127,6 @@ const Close = ({
   <Drawer.Close asChild={asChild} {...props} />
 );
 
-const CloseButton = ({ className }: { className?: string }) => (
-  <Drawer.Close
-    className={cn(
-      'flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none',
-      className,
-    )}
-  >
-    <DeleteIcon aria-hidden width={20} height={20} />
-    <span className="sr-only">닫기</span>
-  </Drawer.Close>
-);
-
 export const BottomSheet = {
   Root,
   Trigger,
@@ -152,5 +140,4 @@ export const BottomSheet = {
   Body,
   Footer,
   Close,
-  CloseButton,
 };

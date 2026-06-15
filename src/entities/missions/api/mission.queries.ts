@@ -57,8 +57,8 @@ export const usePostCompleteMission = (options?: {
 }) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ missionId, mylog }: { missionId: number; mylog: MyLog }) =>
-      postCompleteMission(missionId, mylog),
+    mutationFn: ({ itemId, mylog }: { itemId: number; mylog: MyLog }) =>
+      postCompleteMission(itemId, mylog),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
     },

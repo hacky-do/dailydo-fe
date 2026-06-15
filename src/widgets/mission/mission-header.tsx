@@ -32,7 +32,7 @@ const MissionHeader = ({
         ) : (
           <ImgHeadImage className="h-14.25 w-8" />
         )}
-        <div className="font-semi-bold bg-bg-timer flex w-41 items-center gap-1 rounded-lg px-2 text-sm">
+        <div className="font-semi-bold bg-bg-timer flex w-41.75 items-center gap-1 rounded-lg px-2 text-sm">
           <IcAlarmImage className="h-6 w-6" />
           <span className="text-timer-text">초기화까지 {timer}</span>
         </div>
