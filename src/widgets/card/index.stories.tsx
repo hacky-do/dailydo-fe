@@ -60,7 +60,7 @@ const completedMyMission: MyMissionItem = {
   myCompletedCount: 4,
   completed: true,
   completedAt: '2026-06-15T10:00:00Z',
-  mylog: { photo: '', memo: '오늘 하늘이 너무 예뻤다' },
+  mylog: { id: 1, photo: '', memo: '오늘 하늘이 너무 예뻤다' },
 };
 
 const completedSpecialMyMission: MyMissionItem = {
@@ -69,7 +69,7 @@ const completedSpecialMyMission: MyMissionItem = {
   myCompletedCount: 2,
   completed: true,
   completedAt: '2026-06-15T22:00:00Z',
-  mylog: { photo: '', memo: '별이 쏟아지는 밤이었다' },
+  mylog: { id: 1, photo: '', memo: '별이 쏟아지는 밤이었다' },
 };
 
 // ────────────────────────────────────────

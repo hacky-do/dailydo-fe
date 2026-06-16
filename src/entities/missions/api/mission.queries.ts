@@ -6,8 +6,11 @@ import {
 
 import { ApiError } from '@/shared/api/api-error.type';
 
-import { missionQueryKeys } from '../model/mission.constants';
-import { Mission, MyLog } from '../model/mission.types';
+import {
+  MISSION_TOAST_MESSAGES,
+  missionQueryKeys,
+} from '../model/mission.constants';
+import { Mission, MyLogRequest } from '../model/mission.types';
 import {
   getMyMissions,
   getTodayMissions,
@@ -57,17 +60,19 @@ export const usePostCompleteMission = (options?: {
 }) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ itemId, mylog }: { itemId: number; mylog: MyLog }) =>
+    mutationFn: ({ itemId, mylog }: { itemId: number; mylog: MyLogRequest }) =>
       postCompleteMission(itemId, mylog),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
     },
-    onError: (error) => {
+    onError: (error, variables) => {
+      const hasMyLog = Boolean(variables.mylog.photo || variables.mylog.memo);
       if (error instanceof ApiError) {
-        const message =
-          MYLOG_PHOTO_ERROR_MESSAGES[error.error] ??
-          MYLOG_PHOTO_ERROR_MESSAGES[error.message] ??
-          '사진 업로드에 실패했어요.';
+        const message = hasMyLog
+          ? (MYLOG_PHOTO_ERROR_MESSAGES[error.error] ??
+            MYLOG_PHOTO_ERROR_MESSAGES[error.message] ??
+            `${MISSION_TOAST_MESSAGES.mylogError}`)
+          : `${MISSION_TOAST_MESSAGES.completeError}`;
         options?.onError?.(message);
       }
     },
