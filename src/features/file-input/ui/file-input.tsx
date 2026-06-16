@@ -33,8 +33,8 @@ export const FileInput = ({ initialSrc, onChange }: FileInputProps) => {
       toast({ type: 'info', message: '지원되지 않는 파일 형식입니다.' });
       return;
     }
-    if (selected.size > 2 * 1024 * 1024) {
-      toast({ type: 'info', message: '사진 용량은 2MB를 넘을 수 없습니다.' });
+    if (selected.size > 10 * 1024 * 1024) {
+      toast({ type: 'info', message: '사진 용량은 10MB를 넘을 수 없습니다.' });
       return;
     }
 
