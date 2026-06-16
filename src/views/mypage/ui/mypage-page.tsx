@@ -3,6 +3,9 @@
 import { Suspense, useState } from 'react';
 
 import { useGetMe, usePatchMe } from '@/entities/user';
+import { Button } from '@/shared/ui/button';
+import { FallbackUI } from '@/shared/ui/fallback-ui';
+import { useToast } from '@/shared/ui/toast';
 import {
   CategorySection,
   CategorySectionSkeleton,
@@ -14,10 +17,7 @@ import {
   ProfileEditFormValues,
   ProfileSection,
   ProfileSectionSkeleton,
-} from '@/features/mypage';
-import { Button } from '@/shared/ui/button';
-import { FallbackUI } from '@/shared/ui/fallback-ui';
-import { useToast } from '@/shared/ui/toast';
+} from '@/widgets/mypage';
 
 const MypageSkeleton = () => (
   <>

@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { Drawer } from 'vaul';
 
-import { useAuth, useLogout } from '@/features/auth';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import ChevronLight from '@/shared/ui/icons/common/chevron_right.svg';
 import Delete from '@/shared/ui/icons/common/delete.svg';
@@ -13,6 +12,7 @@ import Hamburger from '@/shared/ui/icons/common/hamburger.svg';
 import Lock from '@/shared/ui/icons/common/lock.svg';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
+import { useAuth, useLogout } from '@/widgets/auth';
 
 import { MissionBadge } from './mission-badge';
 

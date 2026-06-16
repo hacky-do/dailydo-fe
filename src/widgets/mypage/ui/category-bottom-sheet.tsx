@@ -5,10 +5,10 @@ import { useState } from 'react';
 import type { Category } from '@/entities/category';
 import { usePutUserCategories } from '@/entities/category/api/category.queries';
 import type { UserCategories } from '@/entities/user';
+import { CategorySelect } from '@/features/category-select';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import { useToast } from '@/shared/ui/toast';
-import { CategorySelect } from '@/widgets/category-select';
 
 interface CategoryBottomSheetProps {
   open: boolean;

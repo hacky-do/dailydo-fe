@@ -2,10 +2,10 @@ import { Suspense } from 'react';
 
 import { useGetTodayMissions } from '@/entities/missions/api/mission.queries';
 import { MissionItem } from '@/entities/missions/model/mission.types';
-import { MyMissionList } from '@/features/missions/my-mission-list';
-import { TodayMissionList } from '@/features/missions/today-mission-list';
+import MissionHeader from '@/features/mission/mission-header';
 import { Loader } from '@/shared/ui/loader';
-import MissionHeader from '@/widgets/mission/mission-header';
+import { MyMissionList } from '@/widgets/missions/my-mission-list';
+import { TodayMissionList } from '@/widgets/missions/today-mission-list';
 
 export const MyMissionListPage = () => {
   return (

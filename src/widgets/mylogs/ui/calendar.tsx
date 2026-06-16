@@ -9,9 +9,9 @@ import {
 } from 'date-fns';
 import Link from 'next/link';
 
-import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
 import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/utils/cn';
+import type { DailyCount } from '@/widgets/mylogs/model/mylogs.types';
 
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 

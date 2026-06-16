@@ -5,8 +5,8 @@ import {
   MissionItem,
   MyMissionItem,
 } from '@/entities/missions/model/mission.types';
-import { MyMissionCard } from '@/features/missions/my-mission-list';
-import { TodayMissionCard } from '@/features/missions/today-mission-list';
+import { MyMissionCard } from '@/widgets/missions/my-mission-list';
+import { TodayMissionCard } from '@/widgets/missions/today-mission-list';
 
 import { Card } from './card';
 

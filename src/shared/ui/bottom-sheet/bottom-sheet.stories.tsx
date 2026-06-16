@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 
-import { FileInput } from '@/widgets/file-input';
+import { FileInput } from '@/features/file-input';
 
 import { Button } from '../button';
 import { Textarea } from '../input';

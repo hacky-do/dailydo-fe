@@ -3,8 +3,8 @@
 import { useState } from 'react';
 
 import { MOCK_COLLECTIONS } from '@/entities/collection';
-import { CollectionGrid, CollectionTabs } from '@/features/collections';
-import { RepresentativeCollection } from '@/widgets/representative-collection';
+import { RepresentativeCollection } from '@/features/representative-collection';
+import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
 
 export default function CollectionPage() {
   const [selectedId, setSelectedId] = useState(1);

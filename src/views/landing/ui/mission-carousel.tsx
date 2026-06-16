@@ -7,14 +7,14 @@ import { useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import {
-  categoryBadgeStyles,
-  titleStyles,
-} from '@/features/missions/mission-card.styles';
+import { Card } from '@/features/card';
 import QuestionBackIcon from '@/shared/ui/icons/mission/question_back.svg';
 import { Loader } from '@/shared/ui/loader';
 import { cn } from '@/shared/utils/cn';
-import { Card } from '@/widgets/card';
+import {
+  categoryBadgeStyles,
+  titleStyles,
+} from '@/widgets/missions/mission-card.styles';
 
 const SLIDE_SPEED = 500;
 

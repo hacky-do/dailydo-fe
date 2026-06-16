@@ -2,8 +2,8 @@
 
 import { Suspense } from 'react';
 
-import { useSocialLoginCallback } from '@/features/auth';
 import { Loader } from '@/shared/ui/loader/loader';
+import { useSocialLoginCallback } from '@/widgets/auth';
 
 const AuthCallbackHandler = () => {
   useSocialLoginCallback();

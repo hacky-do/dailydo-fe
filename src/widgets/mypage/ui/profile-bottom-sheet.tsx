@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { NICKNAME_HELPER_TEXT, type User } from '@/entities/user';
+import { FileInput, useFileInput } from '@/features/file-input';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input/input';
 import { Textarea } from '@/shared/ui/input/textarea';
-import { FileInput, useFileInput } from '@/widgets/file-input';
 
 import {
   ProfileEditFormValues,

@@ -10,16 +10,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { usePostTodayMissions } from '@/entities/missions/api/mission.queries';
 import { MissionItem } from '@/entities/missions/model/mission.types';
 import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
+import { Card } from '@/features/card';
+import { useCard } from '@/features/card/card-context';
+import { Button } from '@/shared/ui/button';
+import { cn } from '@/shared/utils/cn';
 import {
   categoryBadgeStyles,
   getMissionSelectionVariant,
   titleStyles,
-} from '@/features/missions/mission-card.styles';
-import { MissionCardFront } from '@/features/missions/mission-card-front';
-import { Button } from '@/shared/ui/button';
-import { cn } from '@/shared/utils/cn';
-import { Card } from '@/widgets/card';
-import { useCard } from '@/widgets/card/card-context';
+} from '@/widgets/missions/mission-card.styles';
+import { MissionCardFront } from '@/widgets/missions/mission-card-front';
 
 interface TodayMissionBackContentProps {
   mission: MissionItem;

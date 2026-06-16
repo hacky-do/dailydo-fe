@@ -6,12 +6,12 @@ import Image from 'next/image';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { MOCK_DAY_LOG_RECORDS } from '@/features/mylogs/model/mylogs.mock';
-import type { DayLogRecord } from '@/features/mylogs/model/mylogs.types';
+import { Card } from '@/features/card';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import CheckCircle from '@/shared/ui/icons/mypage/check_circle.svg';
-import { Card } from '@/widgets/card';
+import { MOCK_DAY_LOG_RECORDS } from '@/widgets/mylogs/model/mylogs.mock';
+import type { DayLogRecord } from '@/widgets/mylogs/model/mylogs.types';
 
 interface DayLogCardContentProps {
   record: DayLogRecord;

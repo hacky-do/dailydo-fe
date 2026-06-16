@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 
 import { useSessionStore } from '@/entities/session';
-import { LoginButton } from '@/features/auth';
 import { ROUTES } from '@/shared/config/routes';
 import DailyDoLogo from '@/shared/ui/icons/common/dailydo_logo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
@@ -16,6 +15,7 @@ import DecoLight from '@/shared/ui/icons/login/deco_light.svg';
 import DecoLocation from '@/shared/ui/icons/login/deco_location.svg';
 import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
 import { useToast } from '@/shared/ui/toast/use-toast';
+import { LoginButton } from '@/widgets/auth';
 
 const RecentLoginBadge = () => {
   return (

@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { useAuth, useLogout } from '@/features/auth';
 import { ROUTES, ROUTES_NAME } from '@/shared/config/routes';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
+import { useAuth, useLogout } from '@/widgets/auth';
 
 import { MissionBadge } from './mission-badge';
 

@@ -1,4 +1,4 @@
-import { MobileHeader } from '@/widgets/header';
+import { MobileHeader } from '@/features/header';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

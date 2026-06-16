@@ -2,9 +2,9 @@
 
 import { useLayoutEffect, useRef } from 'react';
 
-import { Calendar } from '@/features/mylogs';
-import { MOCK_LOG_RECORDS } from '@/features/mylogs/model/mylogs.mock';
 import { Loader } from '@/shared/ui/loader';
+import { Calendar } from '@/widgets/mylogs';
+import { MOCK_LOG_RECORDS } from '@/widgets/mylogs/model/mylogs.mock';
 
 export const Mylogs = () => {
   const containerRef = useRef<HTMLUListElement>(null);

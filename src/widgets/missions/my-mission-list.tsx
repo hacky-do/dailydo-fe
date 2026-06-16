@@ -12,14 +12,14 @@ import {
 } from '@/entities/missions/api/mission.queries';
 import { MISSION_TOAST_MESSAGES } from '@/entities/missions/model/mission.constants';
 import { MyMissionItem } from '@/entities/missions/model/mission.types';
+import { Card } from '@/features/card';
+import { FileInput } from '@/features/file-input';
+import { useFileInput } from '@/features/file-input/model/use-file-input';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button/button';
 import { Textarea } from '@/shared/ui/input';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
-import { Card } from '@/widgets/card';
-import { FileInput } from '@/widgets/file-input';
-import { useFileInput } from '@/widgets/file-input/model/use-file-input';
 
 interface MyMissionBackContentProps {
   mission: MyMissionItem;
