@@ -3,6 +3,7 @@
 import type { User } from '@/entities/user';
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
+import { daysSince } from '../lib/days-since';
 import { sectionLabelClass } from './mypage.styles';
 
 const StatusItemSkeleton = ({ label }: { label: string }) => (
@@ -38,11 +39,14 @@ const StatusItem = ({ label, value, valueClassName }: StatusItemProps) => (
 
 interface MyStatusSectionProps {
   footprint: User['footprint'];
+  createdAt: string;
 }
 
-export const MyStatusSection = ({ footprint }: MyStatusSectionProps) => {
-  const { daysSinceSignup, maxConsecutiveUseDays, completedMissionCount } =
-    footprint;
+export const MyStatusSection = ({
+  footprint,
+  createdAt,
+}: MyStatusSectionProps) => {
+  const { maxConsecutiveUseDays, completedMissionCount } = footprint;
 
   return (
     <section className="flex flex-col gap-2">
@@ -50,7 +54,7 @@ export const MyStatusSection = ({ footprint }: MyStatusSectionProps) => {
       <ul className="flex divide-x divide-gray-100 rounded-2xl bg-white py-3 shadow">
         <StatusItem
           label="만난 지"
-          value={`D+${daysSinceSignup}`}
+          value={`D+${daysSince(createdAt)}`}
           valueClassName="text-green-500"
         />
         <StatusItem

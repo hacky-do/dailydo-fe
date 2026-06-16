@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { useGetMe, usePatchMe } from '@/entities/user';
 import {
@@ -10,12 +10,14 @@ import {
   MissionStatusSectionSkeleton,
   MyStatusSection,
   MyStatusSectionSkeleton,
-  ProfileEditBottomSheet,
+  ProfileBottomSheet,
+  ProfileEditFormValues,
   ProfileSection,
   ProfileSectionSkeleton,
 } from '@/features/mypage';
 import { Button } from '@/shared/ui/button';
 import { FallbackUI } from '@/shared/ui/fallback-ui';
+import { useToast } from '@/shared/ui/toast';
 
 const MypageSkeleton = () => (
   <>
@@ -32,6 +34,25 @@ export const Mypage = () => {
   const { data, isPending, isError, refetch } = useGetMe();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { mutate: updateProfile, isPending: isPatchPending } = usePatchMe();
+  const { toast } = useToast();
+
+  const handleProfileSubmit = (values: ProfileEditFormValues) => {
+    updateProfile(
+      { name: values.name, description: values.description },
+      {
+        onSuccess: () => {
+          toast({ type: 'success', message: '내 정보 수정을 완료했어요.' });
+          setIsEditOpen(false);
+        },
+        onError: () => {
+          toast({
+            type: 'error',
+            message: '내 정보 수정에 실패했어요. 다시 시도해주세요.',
+          });
+        },
+      },
+    );
+  };
 
   const handleEditOpen = () => {
     if (isPending) return;
@@ -51,7 +72,7 @@ export const Mypage = () => {
               </Button>
             </div>
             {data && (
-              <ProfileEditBottomSheet
+              <ProfileBottomSheet
                 open={isEditOpen}
                 onOpenChange={setIsEditOpen}
                 defaultValues={{
@@ -59,12 +80,7 @@ export const Mypage = () => {
                   description: data.description,
                   profileImage: data.profileImage,
                 }}
-                onSubmit={(values) =>
-                  updateProfile(
-                    { name: values.name, description: values.description },
-                    { onSuccess: () => setIsEditOpen(false) },
-                  )
-                }
+                onSubmit={handleProfileSubmit}
                 isLoading={isPatchPending}
               />
             )}
@@ -81,10 +97,13 @@ export const Mypage = () => {
                     description={data.description}
                   />
                   <div className="flex flex-col gap-6">
-                    <MissionStatusSection
-                      todayMissionCompletion={data.todayMissionCompletion}
+                    <Suspense fallback={<MissionStatusSectionSkeleton />}>
+                      <MissionStatusSection />
+                    </Suspense>
+                    <MyStatusSection
+                      footprint={data.footprint}
+                      createdAt={data.createdAt}
                     />
-                    <MyStatusSection footprint={data.footprint} />
                     <CategorySection categories={data.categories} />
                   </div>
                 </>

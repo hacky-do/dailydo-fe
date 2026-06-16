@@ -24,7 +24,7 @@ export const CategoryCard = ({
   return (
     <label
       className={cn(
-        'flex h-40 max-h-[15vh] min-h-30 flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl bg-slate-50 p-4 shadow transition-all',
+        'flex h-40 max-h-[15vh] min-h-25 flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl bg-slate-50 p-4 shadow transition-all',
         checked
           ? 'border-complete-gradient border bg-white'
           : 'border border-transparent',

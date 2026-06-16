@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import type { User } from '@/entities/user';
+import { useGetMissionCategories } from '@/entities/category';
+import type { UserCategories } from '@/entities/user';
 import ChevronRight from '@/shared/ui/icons/mypage/chevron_right.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
+import { CategoryBottomSheet } from './category-bottom-sheet';
 import { sectionLabelClass } from './mypage.styles';
 
 const SKELETON_COUNT = 4;
@@ -58,28 +60,43 @@ const CategoryItem = ({ src, label }: { src: string; label: string }) => {
 };
 
 interface CategorySectionProps {
-  categories: User['categories'];
+  categories: UserCategories;
 }
 
-export const CategorySection = ({ categories }: CategorySectionProps) => (
-  <section className="flex flex-col gap-2">
-    <h4>
-      <button
-        type="button"
-        className={`flex items-center gap-1 ${sectionLabelClass}`}
-      >
-        나의 카테고리
-        <ChevronRight height={16} aria-hidden="true" />
-      </button>
-    </h4>
-    <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
-      {categories.data.map((category) => (
-        <CategoryItem
-          key={category.id}
-          src={category.image}
-          label={category.name}
+export const CategorySection = ({ categories }: CategorySectionProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { data: missionCategories, isPending } = useGetMissionCategories();
+
+  return (
+    <section className="flex flex-col gap-2">
+      <h4>
+        <button
+          type="button"
+          className={`flex items-center gap-1 ${sectionLabelClass}`}
+          onClick={() => setIsOpen(true)}
+          disabled={isPending || !missionCategories}
+        >
+          나의 카테고리
+          <ChevronRight height={16} aria-hidden="true" />
+        </button>
+      </h4>
+      <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
+        {categories.data.map((category) => (
+          <CategoryItem
+            key={category.id}
+            src={category.image}
+            label={category.name}
+          />
+        ))}
+      </ul>
+      {missionCategories && (
+        <CategoryBottomSheet
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          userCategories={categories}
+          categories={missionCategories}
         />
-      ))}
-    </ul>
-  </section>
-);
+      )}
+    </section>
+  );
+};

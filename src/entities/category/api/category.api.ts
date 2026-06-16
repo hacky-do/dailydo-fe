@@ -12,3 +12,6 @@ export const getMissionCategories = async (
   });
   return clientApi.get<CategoryListResponse>(`/mission-categories?${query}`);
 };
+
+export const putUserCategories = (body: { categoryIds: number[] }) =>
+  clientApi.put<void>('/users/categories', { body: JSON.stringify(body) });

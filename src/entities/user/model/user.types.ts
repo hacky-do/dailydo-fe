@@ -16,6 +16,11 @@ export interface UserCategory {
   updatedAt: string;
 }
 
+export interface UserCategories {
+  data: UserCategory[];
+  total: number;
+}
+
 export interface User {
   id: number;
   profileImage: string;
@@ -33,10 +38,7 @@ export interface User {
     maxConsecutiveUseDays: number;
     completedMissionCount: number;
   };
-  categories: {
-    data: UserCategory[];
-    total: number;
-  };
+  categories: UserCategories;
   setting: {
     agreeMarketing: boolean;
     agreeMarketingPhone: boolean;

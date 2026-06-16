@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '*.s3.ap-northeast-2.amazonaws.com',
       },
+      ...(process.env.NODE_ENV === 'development'
+        ? [{ protocol: 'http' as const, hostname: 'localhost', port: '4000' }]
+        : []),
     ],
+    dangerouslyAllowLocalIP: true,
   },
   turbopack: {
     rules: {

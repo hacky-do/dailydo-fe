@@ -16,7 +16,7 @@ import {
   profileEditSchema,
 } from '../lib/profile-edit-schema';
 
-interface ProfileEditBottomSheetProps {
+interface ProfileBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultValues: Pick<User, 'name' | 'description' | 'profileImage'>;
@@ -109,13 +109,13 @@ const ProfileEditFormContent = ({
   );
 };
 
-export const ProfileEditBottomSheet = ({
+export const ProfileBottomSheet = ({
   open,
   onOpenChange,
   defaultValues,
   onSubmit,
   isLoading = false,
-}: ProfileEditBottomSheetProps) => (
+}: ProfileBottomSheetProps) => (
   <BottomSheet.Root open={open} onOpenChange={onOpenChange}>
     <BottomSheet.Content>
       <BottomSheet.Header>

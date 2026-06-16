@@ -48,7 +48,7 @@ const CloseButton = ({
     )}
     {...props}
   >
-    <DeleteIcon aria-hidden width={20} height={20} />
+    <DeleteIcon aria-hidden width={24} height={24} />
     <span className="sr-only">닫기</span>
   </Drawer.Close>
 );
@@ -63,7 +63,7 @@ const Content = ({
     <Drawer.Content
       aria-describedby={undefined}
       className={cn(
-        'fixed bottom-0 left-1/2 z-200 flex max-h-[85dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-2xl bg-white px-6 outline-none',
+        'fixed bottom-0 left-1/2 z-200 flex max-h-[95dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-3xl bg-white px-6 outline-none',
         className,
       )}
       {...props}
@@ -84,7 +84,7 @@ const Header = ({
   ...props
 }: HeaderProps) => (
   <div
-    className={cn('flex shrink-0 items-center pt-4 pb-4', className)}
+    className={cn('flex shrink-0 items-center pt-8 pb-4', className)}
     {...props}
   >
     <div className="flex-1">{children}</div>
