@@ -5,10 +5,10 @@ import {
   MissionItem,
   MyMissionItem,
 } from '@/entities/missions/model/mission.types';
-import { MyMissionCard } from '@/widgets/missions/my-mission-list';
-import { TodayMissionCard } from '@/widgets/missions/today-mission-list';
+import { Card } from '@/features/card';
 
-import { Card } from './card';
+import { MyMissionCard } from './my-mission-list';
+import { TodayMissionCard } from './today-mission-list';
 
 // ────────────────────────────────────────
 // Mock data
