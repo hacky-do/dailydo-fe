@@ -1,4 +1,4 @@
-import { MobileHeader, PcHeader } from '@/features/header';
+import { MobileHeader, PcHeader } from '@/widgets/header';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
