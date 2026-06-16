@@ -10,7 +10,6 @@ const getPresignedUrl = (mimeType: string) =>
 
 export const uploadFile = async (file: File): Promise<string> => {
   let CompressionFile = file;
-  console.log(file);
   if (file.size > 2 * 1024 * 1024) {
     CompressionFile = await imageCompression(file, {
       maxSizeMB: 2,
@@ -19,8 +18,6 @@ export const uploadFile = async (file: File): Promise<string> => {
       fileType: 'image/webp',
     });
   }
-
-  console.log(CompressionFile);
 
   const { url, path, fields } = await getPresignedUrl(file.type);
 
