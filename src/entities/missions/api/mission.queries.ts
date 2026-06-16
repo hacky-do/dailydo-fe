@@ -50,11 +50,6 @@ export const usePostTodayMissions = (options?: { onSuccess?: () => void }) => {
   });
 };
 
-const MYLOG_PHOTO_ERROR_MESSAGES: Record<string, string> = {
-  invalid_mylog_photo: '지원하지 않는 사진 형식이에요.',
-  'mimeType must be MIME type format': '사진 형식이 올바르지 않아요.',
-};
-
 export const usePostCompleteMission = (options?: {
   onError?: (message: string) => void;
 }) => {
@@ -69,9 +64,7 @@ export const usePostCompleteMission = (options?: {
       const hasMyLog = Boolean(variables.mylog.photo || variables.mylog.memo);
       if (error instanceof ApiError) {
         const message = hasMyLog
-          ? (MYLOG_PHOTO_ERROR_MESSAGES[error.error] ??
-            MYLOG_PHOTO_ERROR_MESSAGES[error.message] ??
-            `${MISSION_TOAST_MESSAGES.mylogError}`)
+          ? `${MISSION_TOAST_MESSAGES.mylogError}`
           : `${MISSION_TOAST_MESSAGES.completeError}`;
         options?.onError?.(message);
       }
