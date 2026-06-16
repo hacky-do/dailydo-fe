@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 
-import { FileInput } from '@/features/file-input';
-
 import { Button } from '../button';
 import { Textarea } from '../input';
 import { ToastProvider } from '../toast/toast-provider';
@@ -34,12 +32,6 @@ export const Default: Story = {
               <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
             </BottomSheet.Header>
             <BottomSheet.Body>
-              <span className="mt-8 mb-1 text-sm font-medium">
-                기억하고 싶은 순간이 있나요?
-              </span>
-              <div className="mb-12">
-                <FileInput />
-              </div>
               <div className="pb-8">
                 <Textarea
                   id="mylog"
