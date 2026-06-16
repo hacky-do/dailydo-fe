@@ -5,7 +5,7 @@ import { ToastProvider } from '@/shared/ui/toast';
 import { FileInput } from './file-input';
 
 const meta: Meta<typeof FileInput> = {
-  title: 'Shared/FileInput',
+  title: 'Features/FileInput',
   component: FileInput,
   argTypes: {
     onChange: { table: { disable: true } },
