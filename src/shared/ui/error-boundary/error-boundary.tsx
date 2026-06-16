@@ -4,6 +4,22 @@ import { Component, ErrorInfo, ReactNode } from 'react';
 
 import { FallbackUI } from '../fallback-ui';
 
+/**
+ * @example 기본 사용
+ * <ErrorBoundary>
+ *   <SomeComponent />
+ * </ErrorBoundary>
+ *
+ * @example 커스텀 fallback UI
+ * <ErrorBoundary fallback={<p>오류가 발생했습니다.</p>}>
+ *   <SomeComponent />
+ * </ErrorBoundary>
+ *
+ * @example 에러 후 상태 초기화 콜백
+ * <ErrorBoundary onReset={() => refetch()}>
+ *   <SomeComponent />
+ * </ErrorBoundary>
+ */
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
