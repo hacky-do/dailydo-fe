@@ -6,8 +6,9 @@ export const parseSocialUser = (raw: string | null) => {
       name?: string;
       profileImage?: string;
     };
+    if (!parsed.email) return null;
     return {
-      email: parsed.email ?? '',
+      email: parsed.email,
       name: parsed.name ?? '',
       profileImage: parsed.profileImage ?? '',
     };
