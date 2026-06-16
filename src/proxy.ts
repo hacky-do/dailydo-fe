@@ -12,7 +12,7 @@ const PROTECTED_ROUTES = [
   ROUTES.MYLOG,
   ROUTES.COLLECTIONS,
 ];
-const AUTH_ROUTES = [ROUTES.LOGIN, ROUTES.SIGNUP];
+const AUTH_ROUTES = [ROUTES.LOGIN];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

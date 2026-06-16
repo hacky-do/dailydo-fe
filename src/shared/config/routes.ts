@@ -1,7 +1,6 @@
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
-  SIGNUP: '/signup',
   MISSIONS: '/missions',
   MYPAGE: '/mypage',
   MYLOG: '/mylogs',
@@ -12,7 +11,6 @@ export const ROUTES = {
 export const ROUTES_NAME: Record<keyof typeof ROUTES, string> = {
   HOME: '홈',
   LOGIN: '로그인',
-  SIGNUP: '회원가입',
   MISSIONS: '오늘의 미션',
   MYPAGE: '마이페이지',
   MYLOG: '마이로그',
@@ -25,7 +23,6 @@ export const ROUTE_META: Partial<
 > = {
   [ROUTES.HOME]: { name: ROUTES_NAME.HOME },
   [ROUTES.LOGIN]: { name: ROUTES_NAME.LOGIN },
-  [ROUTES.SIGNUP]: { name: ROUTES_NAME.SIGNUP },
   [ROUTES.MISSIONS]: { name: ROUTES_NAME.MISSIONS },
   [ROUTES.MYPAGE]: { name: ROUTES_NAME.MYPAGE },
   [ROUTES.MYLOG]: { name: ROUTES_NAME.MYLOG },
