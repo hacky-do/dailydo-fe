@@ -4,12 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import { useFileUpload } from '@/entities/file/api/file.queries';
 import { NICKNAME_HELPER_TEXT, type User } from '@/entities/user';
 import { FileInput, useFileInput } from '@/features/file-input';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input/input';
 import { Textarea } from '@/shared/ui/input/textarea';
+import { useToast } from '@/shared/ui/toast';
 
 import {
   ProfileEditFormValues,
@@ -20,13 +22,19 @@ interface ProfileBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultValues: Pick<User, 'name' | 'description' | 'profileImage'>;
-  onSubmit: (values: ProfileEditFormValues, file: File | null) => void;
+  onSubmit: (
+    values: ProfileEditFormValues,
+    profileImageUrl: string | null | undefined,
+  ) => void;
   isLoading?: boolean;
 }
 
 interface ProfileEditFormContentProps {
   defaultValues: Pick<User, 'name' | 'description' | 'profileImage'>;
-  onSubmit: (values: ProfileEditFormValues, file: File | null) => void;
+  onSubmit: (
+    values: ProfileEditFormValues,
+    profileImageUrl: string | null | undefined,
+  ) => void;
   onOpenChange: (open: boolean) => void;
   isLoading: boolean;
 }
@@ -57,10 +65,30 @@ const ProfileEditFormContent = ({
   const [profileImageChanged, setProfileImageChanged] = useState(false);
   const isFormDirty = isDirty || profileImageChanged;
 
+  const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
+  const { toast } = useToast();
+
   const handleImageChange = (f: File | null) => {
     handleChange(f);
     setProfileImageChanged(true);
   };
+
+  const handleFormSubmit = async (values: ProfileEditFormValues) => {
+    try {
+      let profileImageUrl: string | null | undefined = undefined;
+      if (profileImageChanged) {
+        profileImageUrl = file ? await upload(file) : null;
+      }
+      onSubmit(values, profileImageUrl);
+    } catch {
+      toast({
+        type: 'error',
+        message: '이미지 업로드에 실패했어요. 다시 시도해주세요.',
+      });
+    }
+  };
+
+  const isSubmitLoading = isUploading || isLoading;
 
   return (
     <>
@@ -98,8 +126,8 @@ const ProfileEditFormContent = ({
         <Button
           variant="primary"
           className="w-full"
-          onClick={handleSubmit((values) => onSubmit(values, file))}
-          isLoading={isLoading}
+          onClick={handleSubmit(handleFormSubmit)}
+          isLoading={isSubmitLoading}
           disabled={!isFormDirty || !!errors.name || !nameValue}
         >
           완료하기
