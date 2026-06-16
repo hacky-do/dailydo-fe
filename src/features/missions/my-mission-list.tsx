@@ -10,6 +10,7 @@ import {
   useGetMyMissions,
   usePostCompleteMission,
 } from '@/entities/missions/api/mission.queries';
+import { MISSION_TOAST_MESSAGES } from '@/entities/missions/model/mission.constants';
 import { MyMissionItem } from '@/entities/missions/model/mission.types';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button/button';
@@ -85,6 +86,7 @@ interface MyLogBottomSheetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   onSubmit: (photo: string, memo: string) => void;
+  onSkip: () => void;
   isPending?: boolean;
 }
 
@@ -92,16 +94,25 @@ export const MyLogBottomSheet = ({
   open,
   setOpen,
   onSubmit,
+  onSkip,
   isPending = false,
 }: MyLogBottomSheetProps) => {
   const { file, handleChange } = useFileInput();
   const [memo, setMemo] = useState('');
   const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
+  const { toast } = useToast();
 
   const handleSubmit = async () => {
-    const photo = file ? await upload(file) : '';
-
-    onSubmit(photo, memo);
+    try {
+      const photo = file ? await upload(file) : '';
+      onSubmit(photo, memo);
+    } catch (error) {
+      toast({
+        message: `${MISSION_TOAST_MESSAGES.uploadError}`,
+        type: 'error',
+      });
+      console.error(error);
+    }
   };
 
   const isLoading = isUploading || isPending;
@@ -133,7 +144,14 @@ export const MyLogBottomSheet = ({
           <BottomSheet.Footer className="pt-0 pb-8">
             <div className="flex gap-2">
               <BottomSheet.Close>
-                <Button variant="tertiary">건너뛰기</Button>
+                <Button
+                  variant="tertiary"
+                  onClick={onSkip}
+                  isLoading={isPending}
+                  type="button"
+                >
+                  건너뛰기
+                </Button>
               </BottomSheet.Close>
               <Button
                 variant="primary"
@@ -155,7 +173,10 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
   const { mutate, isPending } = usePostCompleteMission({
-    onError: (message) => toast({ type: 'error', message }),
+    onError: (message) => {
+      toast({ type: 'error', message });
+      setIsOpen(true);
+    },
   });
 
   const handleCompleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -168,8 +189,25 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
       { itemId: mission.itemId, mylog: { photo, memo } },
       {
         onSuccess: () => {
-          toast({ message: '마이로그 작성이 완료되었어요!', type: 'success' });
+          toast({
+            message: `${MISSION_TOAST_MESSAGES.completeSuccess}`,
+            type: 'success',
+          });
+          setIsOpen(false);
+        },
+      },
+    );
+  };
 
+  const handleSkip = () => {
+    mutate(
+      { itemId: mission.itemId, mylog: { photo: '', memo: '' } },
+      {
+        onSuccess: () => {
+          toast({
+            message: `${MISSION_TOAST_MESSAGES.skipSuccess}`,
+            type: 'success',
+          });
           setIsOpen(false);
         },
       },
@@ -194,6 +232,7 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
         open={isOpen}
         setOpen={setIsOpen}
         onSubmit={handleSubmit}
+        onSkip={handleSkip}
         isPending={isPending}
       />
     </>

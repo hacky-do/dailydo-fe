@@ -83,7 +83,7 @@ export const FileInput = ({ initialSrc, onChange }: FileInputProps) => {
         <input
           ref={inputRef}
           type="file"
-          accept="image/png,image/jpeg,image/webp"
+          accept="image/png,image/jpeg,image/webp,image/heic,image/heif"
           className="sr-only"
           onChange={handleChange}
         />
