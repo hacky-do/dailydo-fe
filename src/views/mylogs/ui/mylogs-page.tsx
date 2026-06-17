@@ -3,33 +3,41 @@
 import {
   addMonths,
   format,
-  getDay,
   isAfter,
   isSameMonth,
   startOfMonth,
   subMonths,
 } from 'date-fns';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 import { useGetMyLogs } from '@/entities/mylogs/api/mylogs.queries';
 import { useGetMe } from '@/entities/user';
 import { Calendar } from '@/features/mylogs';
-import { WEEKDAYS } from '@/features/mylogs/lib/calendar.constants';
-import ImgHeadImage from '@/shared/ui/icons/common/img_head.svg';
 import ArrowLeft from '@/shared/ui/icons/mylogs/arrow_left.svg';
 import ArrowRight from '@/shared/ui/icons/mylogs/arrow_right.svg';
 import Graph from '@/shared/ui/icons/mylogs/graph.svg';
 import LightBulb from '@/shared/ui/icons/mylogs/light-bulb.svg';
-import { StatItem, StatList } from '@/shared/ui/stat-item';
 import { cn } from '@/shared/utils/cn';
+import {
+  MylogsCharacterCard,
+  MylogsCharacterCardSkeleton,
+  MylogsStats,
+  MylogsStatsSkeleton,
+} from '@/widgets/mylogs';
 
 interface MylogsPageProps {
   month: string;
 }
 
 export const MylogsPage = ({ month }: MylogsPageProps) => {
-  const { data: mylogs } = useGetMyLogs(month);
-  const { data: user } = useGetMe();
+  const {
+    data: mylogs,
+    isSuccess: mylogsReady,
+    isPending: mylogsLoading,
+  } = useGetMyLogs(month);
+  const { data: user, isPending: userLoading } = useGetMe();
+
   const [year, monthNum] = month.split('-').map(Number);
 
   const currentDate = new Date(year, monthNum - 1);
@@ -43,7 +51,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
   const logs = mylogs?.records[0]?.logs ?? [];
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col overflow-hidden">
       <div className="w-full px-4">
         <nav className="flex items-center">
           <Link
@@ -65,50 +73,45 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
           </Link>
         </nav>
         <section className="mt-4 mb-5 flex flex-col gap-3">
+          {/* 리포트 뱃지 */}
           <span className="flex w-fit gap-1 rounded-md bg-green-500 px-2 py-1 text-sm font-semibold text-white">
-            <Graph width={16} /> {user?.name}님의 {monthNum}월 리포트
+            <Graph width={16} /> {monthNum}월 리포트
           </span>
 
-          <StatList>
-            <StatItem
-              label="미션 수행일수"
-              value={`${logs.length}일`}
-              valueClassName="text-green-600"
-            />
-            <StatItem
-              label="미션 완료 횟수"
-              value={`${logs.reduce((prev, log) => prev + log.count, 0)}개`}
-              valueClassName="text-green-700"
-            />
-            {/* TODO: 평균 미션 완료율 실제 값으로 수정 */}
-            <StatItem
-              label="평균 미션 완료율"
-              value="0%"
-              valueClassName="text-green-500"
-            />
-          </StatList>
+          {/* 통계 */}
+          {mylogsLoading ? (
+            <MylogsStatsSkeleton />
+          ) : (
+            <MylogsStats logs={logs} />
+          )}
 
-          <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow">
-            <ImgHeadImage height={57} />
-            <div className="flex flex-col gap-1">
-              <p className="text-base font-bold text-gray-900">
-                {WEEKDAYS[getDay(new Date())]}요일의 {user?.name}님은...
-              </p>
-              {/* TODO: 평균 미션 / 완료 미션 개수 실제 값으로 수정 */}
-              <p className="text-xs text-gray-700">
-                평균 0개의 미션을 받고 0개를 완료해요.
-              </p>
-            </div>
-          </div>
+          {/* 평균 확정/완료한 미션 */}
+          {userLoading || mylogsLoading ? (
+            <MylogsCharacterCardSkeleton />
+          ) : (
+            <MylogsCharacterCard userName={user?.name ?? ''} />
+          )}
         </section>
       </div>
-      <section className="flex w-full flex-1 flex-col gap-2 rounded-t-[40px] bg-white px-5 py-6">
+
+      {/* 달력 섹션 */}
+      <motion.section
+        initial={{ y: '100%' }}
+        animate={mylogsReady ? { y: 0 } : { y: '100%' }}
+        transition={{
+          type: 'spring',
+          damping: 28,
+          stiffness: 260,
+          delay: 0.08,
+        }}
+        className="flex w-full flex-1 flex-col gap-2 rounded-t-[40px] bg-white px-5 py-6"
+      >
         <Calendar key={month} year={year} month={monthNum} logs={logs} />
         <div className="mt-auto flex items-center gap-1 rounded-2xl bg-gray-100 px-3 py-1.5 text-sm text-gray-700 [@media(max-height:740px)]:hidden">
           <LightBulb width={20} />
           날짜를 눌러서 마이로그를 확인해보세요!
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };
