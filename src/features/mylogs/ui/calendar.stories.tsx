@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import type { DailyCount } from '@/widgets/mylogs';
-
+import type { DailyCount } from '../model/mylogs.types';
 import { Calendar } from './calendar';
 
 const meta: Meta<typeof Calendar> = {

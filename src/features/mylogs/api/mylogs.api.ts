@@ -1,5 +1,6 @@
 import { clientApi } from '@/shared/api/fetch-client';
-import type { LogsResponse } from '@/widgets/mylogs';
+
+import type { LogsResponse } from '../model/mylogs.types';
 
 export const getMyLogs = (cursor?: string): Promise<LogsResponse> => {
   const params = new URLSearchParams({ limit: '1' });

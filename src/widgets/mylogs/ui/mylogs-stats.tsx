@@ -1,6 +1,5 @@
+import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
 import { StatItem, StatItemSkeleton, StatList } from '@/shared/ui/stat-item';
-
-import type { DailyCount } from '../model/mylogs.types';
 
 interface MylogsStatsProps {
   logs: DailyCount[];

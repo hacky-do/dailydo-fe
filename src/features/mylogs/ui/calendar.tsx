@@ -11,9 +11,9 @@ import Link from 'next/link';
 
 import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/utils/cn';
-import type { DailyCount } from '@/widgets/mylogs';
 
 import { WEEKDAYS } from '../lib/calendar.constants';
+import type { DailyCount } from '../model/mylogs.types';
 
 const COL_START_CLASSES = [
   '',
