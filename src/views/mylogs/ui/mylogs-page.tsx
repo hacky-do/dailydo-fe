@@ -31,11 +31,7 @@ interface MylogsPageProps {
 }
 
 export const MylogsPage = ({ month }: MylogsPageProps) => {
-  const {
-    data: mylogs,
-    isSuccess: mylogsReady,
-    isPending: mylogsLoading,
-  } = useGetMyLogs(month);
+  const { data: mylogs, isPending: mylogsLoading } = useGetMyLogs(month);
   const { data: user, isPending: userLoading } = useGetMe();
 
   const [year, monthNum] = month.split('-').map(Number);
@@ -58,7 +54,10 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
             href={`/mylogs?month=${prevMonth}`}
             aria-label="이전 달로 이동"
             aria-disabled={isSignupMonth || userLoading}
-            className={cn(isSignupMonth && 'pointer-events-none opacity-50')}
+            className={cn(
+              isSignupMonth ||
+                (userLoading && 'pointer-events-none opacity-50'),
+            )}
           >
             <ArrowLeft width={24} className="text-white" aria-hidden />
           </Link>
@@ -69,7 +68,10 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
             href={`/mylogs?month=${nextMonth}`}
             aria-label="다음 달로 이동"
             aria-disabled={isCurrentMonth || userLoading}
-            className={cn(isCurrentMonth && 'pointer-events-none opacity-50')}
+            className={cn(
+              isCurrentMonth ||
+                (userLoading && 'pointer-events-none opacity-50'),
+            )}
           >
             <ArrowRight width={24} className="text-white" aria-hidden />
           </Link>
@@ -102,7 +104,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
       {/* 달력 섹션 */}
       <motion.section
         initial={{ y: '100%' }}
-        animate={mylogsReady ? { y: 0 } : { y: '100%' }}
+        animate={!mylogsLoading ? { y: 0 } : { y: '100%' }}
         transition={{
           type: 'spring',
           damping: 28,

@@ -11,11 +11,8 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const { month } = await searchParams;
 
-  const resolvedMonth = month ?? format(new Date(), 'yyyy-MM');
-
-  if (!MONTH_REGEX.test(resolvedMonth)) {
-    throw new Error(`잘못된 날짜 형식입니다.`);
-  }
+  const today = format(new Date(), 'yyyy-MM');
+  const resolvedMonth = month && MONTH_REGEX.test(month) ? month : today;
 
   return <MylogsPage month={resolvedMonth} />;
 }
