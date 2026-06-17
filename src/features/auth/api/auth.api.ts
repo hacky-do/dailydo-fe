@@ -4,8 +4,7 @@ import {
   SocialLoginType,
   SocialTokenResponse,
 } from '@/entities/session';
-import { API_ERRORS, ApiError } from '@/shared/api/api-error.type';
-import { clientApi } from '@/shared/api/fetch-client';
+import { API_ERRORS, ApiError, clientApi } from '@/shared/api';
 
 export const verifySocialToken = async (
   type: SocialLoginType,

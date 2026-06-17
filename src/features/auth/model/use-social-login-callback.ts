@@ -6,7 +6,7 @@ import {
   SocialLoginType,
   useSessionStore,
 } from '@/entities/session';
-import { ApiError } from '@/shared/api/api-error.type';
+import { ApiError } from '@/shared/api';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/toast';
 

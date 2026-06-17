@@ -4,7 +4,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
-import { ApiError } from '@/shared/api/api-error.type';
+import { ApiError } from '@/shared/api';
 
 import {
   MISSION_TOAST_MESSAGES,

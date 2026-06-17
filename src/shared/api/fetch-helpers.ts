@@ -1,17 +1,5 @@
 import { API_ERRORS, ApiError } from './api-error.type';
 
-export type QueryOptions = Omit<RequestInit, 'method' | 'body'> & {
-  method?: 'GET';
-  body?: never;
-};
-
-export type MutationOptions = Omit<RequestInit, 'method'> & {
-  method?: 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-};
-
-export type QueryOptionsWithoutMethod = Omit<QueryOptions, 'method'>;
-export type MutationOptionsWithoutMethod = Omit<MutationOptions, 'method'>;
-
 export function buildHeaders(options?: RequestInit): Headers {
   const headers = new Headers(options?.headers);
   const method = (options?.method ?? 'GET').toUpperCase();
@@ -31,12 +19,10 @@ export function buildHeaders(options?: RequestInit): Headers {
   return headers;
 }
 
-// mutation용 (POST/PUT/DELETE): 204 응답 시 null 반환
-export async function parseResponse<T>(res: Response): Promise<T | null> {
-  if (res.status === 401) {
-    throw new ApiError(API_ERRORS.UNAUTHORIZED);
-  }
+// 401은 executeWithRetry에서 이미 처리되므로 여기까지 오지 않는다.
 
+// mutation용 (POST/PUT/PATCH/DELETE): 204 응답 시 null 반환
+export async function parseResponse<T>(res: Response): Promise<T | null> {
   if (res.status === 204 || res.status === 205) {
     return null;
   }

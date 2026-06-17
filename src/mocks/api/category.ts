@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-import { BASE_URL } from '@/shared/api/base-url.constant';
+import { BASE_URL } from '@/shared/api';
 
 export const handlers = [
   http.get(`${BASE_URL}/mission-categories`, () => {

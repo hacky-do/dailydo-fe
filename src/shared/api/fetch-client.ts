@@ -1,113 +1,61 @@
-import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
-
-import { API_ERRORS, ApiError } from './api-error.type';
+import { executeWithRetry } from './auth-retry';
 import { BASE_URL } from './base-url.constant';
 import {
   buildHeaders,
-  MutationOptions,
-  MutationOptionsWithoutMethod,
   parseResponse,
   parseResponseStrict,
-  QueryOptions,
-  QueryOptionsWithoutMethod,
 } from './fetch-helpers';
+import {
+  MutationOptionsWithoutMethod,
+  QueryOptionsWithoutMethod,
+} from './fetch-options.type';
 
-let refreshing: Promise<boolean> | null = null;
-let loggingOut: Promise<void> | null = null;
-let loggedOut = false;
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-const tryRefresh = (): Promise<boolean> => {
-  if (loggedOut) return Promise.resolve(false);
-  if (refreshing) return refreshing;
-
-  refreshing = fetch(`${BASE_URL}${AUTH_ENDPOINTS.REFRESH_TOKEN}`, {
-    method: 'POST',
-    credentials: 'include',
-  })
-    .then((res) => res.ok)
-    .catch(() => false)
-    .finally(() => {
-      refreshing = null;
-    });
-
-  return refreshing;
-};
-
-const tryLogout = (): Promise<void> => {
-  if (loggingOut) return loggingOut;
-  if (loggedOut) return Promise.resolve();
-
-  loggedOut = true;
-
-  loggingOut = fetch(`${BASE_URL}/auth`, {
-    method: 'DELETE',
-    credentials: 'include',
-  })
-    .then(() => {})
-    .catch(() => {})
-    .finally(() => {
-      loggingOut = null;
-    });
-
-  return loggingOut;
-};
-
-const executeWithRetry = async (
-  url: string,
-  init: RequestInit,
+const request = (
+  method: HttpMethod,
+  endpoint: string,
+  options?: Omit<RequestInit, 'method'>,
 ): Promise<Response> => {
-  const res = await fetch(url, init);
-
-  if (res.status !== 401) return res;
-
-  const refreshed = await tryRefresh();
-  if (refreshed) {
-    const retried = await fetch(url, init);
-    if (retried.status !== 401) return retried;
-  }
-
-  await tryLogout();
-  throw new ApiError(API_ERRORS.UNAUTHORIZED);
-};
-
-// GET 요청용 — 반환 타입 T (null 없음)
-export const fetchClientQuery = async <T>(
-  endpoint: string,
-  options?: QueryOptions,
-): Promise<T> => {
   const init: RequestInit = {
     ...options,
-    method: options?.method ?? 'GET',
+    method,
     credentials: 'include',
-    headers: buildHeaders(options),
+    headers: buildHeaders({ ...options, method }),
   };
-  const res = await executeWithRetry(BASE_URL + endpoint, init);
-  return parseResponseStrict<T>(res);
+  return executeWithRetry(BASE_URL + endpoint, init);
 };
 
-// POST/PUT/DELETE 요청용 — 204 응답 시 null 반환
-export const fetchClientMutation = async <T = unknown>(
-  endpoint: string,
-  options?: MutationOptions,
-): Promise<T | null> => {
-  const init: RequestInit = {
-    ...options,
-    method: options?.method ?? 'POST',
-    credentials: 'include',
-    headers: buildHeaders(options),
-  };
-  const res = await executeWithRetry(BASE_URL + endpoint, init);
-  return parseResponse<T>(res);
-};
 export const clientApi = {
-  get: <T>(endpoint: string, options?: QueryOptionsWithoutMethod) =>
-    fetchClientQuery<T>(endpoint, { ...options, method: 'GET' }),
-  post: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
-    fetchClientMutation<T>(endpoint, { ...options, method: 'POST' }),
-  put: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
-    fetchClientMutation<T>(endpoint, { ...options, method: 'PUT' }),
-  patch: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
-    fetchClientMutation<T>(endpoint, { ...options, method: 'PATCH' }),
-  delete: <T>(endpoint: string, options?: MutationOptionsWithoutMethod) =>
-    fetchClientMutation<T>(endpoint, { ...options, method: 'DELETE' }),
+  // GET — 응답 본문이 없으면 에러, 항상 T 반환
+  get: async <T>(
+    endpoint: string,
+    options?: QueryOptionsWithoutMethod,
+  ): Promise<T> =>
+    parseResponseStrict<T>(await request('GET', endpoint, options)),
+
+  // POST/PUT/PATCH/DELETE — 204 응답 시 null 반환
+  post: async <T = unknown>(
+    endpoint: string,
+    options?: MutationOptionsWithoutMethod,
+  ): Promise<T | null> =>
+    parseResponse<T>(await request('POST', endpoint, options)),
+
+  put: async <T = unknown>(
+    endpoint: string,
+    options?: MutationOptionsWithoutMethod,
+  ): Promise<T | null> =>
+    parseResponse<T>(await request('PUT', endpoint, options)),
+
+  patch: async <T = unknown>(
+    endpoint: string,
+    options?: MutationOptionsWithoutMethod,
+  ): Promise<T | null> =>
+    parseResponse<T>(await request('PATCH', endpoint, options)),
+
+  delete: async <T = unknown>(
+    endpoint: string,
+    options?: MutationOptionsWithoutMethod,
+  ): Promise<T | null> =>
+    parseResponse<T>(await request('DELETE', endpoint, options)),
 };

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Mission, MyMission } from '@/entities/missions/model/mission.types';
-import { BASE_URL } from '@/shared/api/base-url.constant';
+import { BASE_URL } from '@/shared/api';
 import { MyMissionCard } from '@/widgets/missions/my-mission-list';
 import { TodayMissionCard } from '@/widgets/missions/today-mission-list';
 

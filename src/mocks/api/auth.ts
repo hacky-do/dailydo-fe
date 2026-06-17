@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-import { BASE_URL } from '@/shared/api/base-url.constant';
+import { BASE_URL } from '@/shared/api';
 import { COOKIES } from '@/shared/config/cookies';
 import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 

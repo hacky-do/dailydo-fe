@@ -1,7 +1,7 @@
 import imageCompression from 'browser-image-compression';
 
 import { FileType } from '@/entities/file/model/file.types';
-import { clientApi } from '@/shared/api/fetch-client';
+import { clientApi } from '@/shared/api';
 
 const getPresignedUrl = (mimeType: string) =>
   clientApi.get<FileType>(

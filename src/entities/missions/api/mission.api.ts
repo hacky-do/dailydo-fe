@@ -4,7 +4,7 @@ import {
   MyMission,
   MyMissionItem,
 } from '@/entities/missions/model/mission.types';
-import { clientApi } from '@/shared/api/fetch-client';
+import { clientApi } from '@/shared/api';
 
 export const getMyMissions = () => clientApi.get<MyMission>('/api/missions');
 
