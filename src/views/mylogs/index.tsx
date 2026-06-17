@@ -1,2 +1,2 @@
 export { DayLog } from './ui/daylog-page';
-export { Mylogs } from './ui/mylogs-page';
+export { MylogsPage } from './ui/mylogs-page';
