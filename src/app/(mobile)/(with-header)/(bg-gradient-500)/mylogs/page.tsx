@@ -14,9 +14,7 @@ export default async function Page({ searchParams }: PageProps) {
   const resolvedMonth = month ?? format(new Date(), 'yyyy-MM');
 
   if (!MONTH_REGEX.test(resolvedMonth)) {
-    throw new Error(
-      `잘못된 날짜 형식입니다: "${resolvedMonth}". yyyy-mm 형식이어야 합니다.`,
-    );
+    throw new Error(`잘못된 날짜 형식입니다.`);
   }
 
   return <MylogsPage month={resolvedMonth} />;

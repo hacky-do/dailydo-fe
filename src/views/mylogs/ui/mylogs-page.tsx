@@ -20,10 +20,10 @@ import Graph from '@/shared/ui/icons/mylogs/graph.svg';
 import LightBulb from '@/shared/ui/icons/mylogs/light-bulb.svg';
 import { cn } from '@/shared/utils/cn';
 import {
-  MylogsCharacterCard,
-  MylogsCharacterCardSkeleton,
   MylogsStats,
   MylogsStatsSkeleton,
+  MylogsUserCard,
+  MylogsUserCardSkeleton,
 } from '@/widgets/mylogs';
 
 interface MylogsPageProps {
@@ -92,9 +92,9 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
 
           {/* 평균 확정/완료한 미션 */}
           {userLoading || mylogsLoading || !user ? (
-            <MylogsCharacterCardSkeleton />
+            <MylogsUserCardSkeleton />
           ) : (
-            <MylogsCharacterCard userName={user.name} month={monthNum} />
+            <MylogsUserCard userName={user.name} month={monthNum} />
           )}
         </section>
       </div>

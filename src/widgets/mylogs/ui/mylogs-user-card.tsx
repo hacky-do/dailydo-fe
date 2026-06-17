@@ -1,9 +1,9 @@
 import ImgHeadImage from '@/shared/ui/icons/common/img_head.svg';
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
-export const MylogsCharacterCardSkeleton = () => (
+export const MylogsUserCardSkeleton = () => (
   <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow">
-    <ImgHeadImage height={57} v />
+    <ImgHeadImage height={57} aria-hidden />
     <div className="flex flex-col gap-1">
       <TextSkeleton variant="base" className="w-45" />
       <TextSkeleton variant="xs" className="w-50" />
@@ -11,15 +11,12 @@ export const MylogsCharacterCardSkeleton = () => (
   </div>
 );
 
-interface MylogsCharacterCardProps {
+interface MylogsUserCardProps {
   userName: string;
   month: number;
 }
 
-export const MylogsCharacterCard = ({
-  userName,
-  month,
-}: MylogsCharacterCardProps) => (
+export const MylogsUserCard = ({ userName, month }: MylogsUserCardProps) => (
   <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow">
     <ImgHeadImage height={57} aria-hidden />
     <div className="flex flex-col gap-1">
