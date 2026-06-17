@@ -11,9 +11,9 @@ import {
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-import { useGetMyLogs } from '@/entities/mylogs/api/mylogs.queries';
 import { useGetMe } from '@/entities/user';
 import { Calendar } from '@/features/mylogs';
+import { useGetMyLogs } from '@/features/mylogs/api/mylogs.queries';
 import ArrowLeft from '@/shared/ui/icons/mylogs/arrow_left.svg';
 import ArrowRight from '@/shared/ui/icons/mylogs/arrow_right.svg';
 import Graph from '@/shared/ui/icons/mylogs/graph.svg';

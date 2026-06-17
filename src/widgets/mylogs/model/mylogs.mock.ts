@@ -1,4 +1,4 @@
-import type { DayLogRecord } from './mylogs.types';
+import type { DayLogRecord } from '@/features/daylog/model/daylog.types';
 
 export const MOCK_DAY_LOG_RECORDS: DayLogRecord[] = [
   {
