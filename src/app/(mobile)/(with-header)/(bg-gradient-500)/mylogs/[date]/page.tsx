@@ -1,17 +1,13 @@
-import { format, parseISO } from 'date-fns';
-import { ko } from 'date-fns/locale';
+const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
-import { DayLog } from '@/views/mylogs';
-
-export default async function Page({
-  params,
-}: {
+interface PageProps {
   params: Promise<{ date: string }>;
-}) {
+}
+
+export default async function Page({ params }: PageProps) {
   const { date } = await params;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-    throw new Error(`Invalid date format: ${date}`);
+
+  if (!DATE_REGEX.test(date)) {
+    throw new Error(`잘못된 날짜 형식입니다.`);
   }
-  const formattedDate = format(parseISO(date), 'M월 d일', { locale: ko });
-  return <DayLog formattedDate={formattedDate} />;
 }
