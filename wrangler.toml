@@ -1,6 +1,6 @@
 name = "dailydo-fe"
-compatibility_date = "2026-06-01"
+compatibility_date = "2026-06-17"
 
 [assets]
-directory = "./next"
+directory = "./.next"
 not_found_handling = "single-page-application"
