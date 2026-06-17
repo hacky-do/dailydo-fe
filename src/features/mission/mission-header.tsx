@@ -2,9 +2,9 @@
 
 import { useSyncExternalStore } from 'react';
 
+import ImgHeadImage from '@/shared/ui/icons/common/img_head.svg';
 import IcImage from '@/shared/ui/icons/mission/ic.svg';
 import IcAlarmImage from '@/shared/ui/icons/mission/ic_alarm.svg';
-import ImgHeadImage from '@/shared/ui/icons/mission/img_head.svg';
 import { getTimeUntilReset } from '@/shared/utils/reset-cycle';
 
 interface MissionHeaderProps {
