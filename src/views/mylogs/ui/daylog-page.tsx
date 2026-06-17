@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/button';
 import LogsIcon from '@/shared/ui/icons/mylogs/logs.svg';
-import { DayLogList } from '@/widgets/mylogs/ui/daylog-list';
+import { DayLogList } from '@/widgets/mylogs';
 
 export const DayLog = ({ formattedDate }: { formattedDate: string }) => {
   const router = useRouter();

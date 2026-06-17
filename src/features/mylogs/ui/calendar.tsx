@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/utils/cn';
-import type { DailyCount } from '@/widgets/mylogs/model/mylogs.types';
+import type { DailyCount } from '@/widgets/mylogs';
 
 import { WEEKDAYS } from '../lib/calendar.constants';
 

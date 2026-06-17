@@ -10,8 +10,9 @@ import { Card } from '@/features/card';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import CheckCircle from '@/shared/ui/icons/mypage/check_circle.svg';
-import { MOCK_DAY_LOG_RECORDS } from '@/widgets/mylogs/model/mylogs.mock';
-import type { DayLogRecord } from '@/widgets/mylogs/model/mylogs.types';
+
+import { MOCK_DAY_LOG_RECORDS } from '../model/mylogs.mock';
+import type { DayLogRecord } from '../model/mylogs.types';
 
 interface DayLogCardContentProps {
   record: DayLogRecord;
