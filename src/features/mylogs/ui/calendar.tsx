@@ -13,7 +13,7 @@ import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/utils/cn';
 import type { DailyCount } from '@/widgets/mylogs/model/mylogs.types';
 
-const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+import { WEEKDAYS } from '../lib/calendar.constants';
 
 const COL_START_CLASSES = [
   '',
@@ -58,25 +58,30 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
 
   return (
     <div className="w-full">
-      <h2 className="mb-5 text-4xl text-gray-600">
-        <span aria-label={`${year}년 ${month}월`}>{month}</span>
-      </h2>
       <ul className="mb-4 grid grid-cols-7 text-center">
-        {WEEKDAYS.map((day) => (
+        {WEEKDAYS.map((day, index) => (
           <li key={day}>
-            <span className="px-1 text-sm font-semibold text-gray-500">
+            <span
+              className={`px-1 text-sm font-semibold ${
+                index === 0
+                  ? 'text-red-500'
+                  : index === 6
+                    ? 'text-blue-600'
+                    : 'text-gray-500'
+              }`}
+            >
               {day}
             </span>
           </li>
         ))}
       </ul>
 
-      <div className="grid grid-cols-7">
+      <div className="grid grid-cols-7 gap-2">
         {days.map((day, index) => {
           const dateStr = format(day, 'yyyy-MM-dd');
           const count = countByDate[dateStr];
           const baseClassName = cn(
-            'flex aspect-square items-center justify-center text-xl',
+            'flex aspect-square items-center justify-center text-xl rounded-lg hover:brightness-105',
             index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
           );
 
