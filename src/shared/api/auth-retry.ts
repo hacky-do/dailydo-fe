@@ -44,6 +44,12 @@ const tryLogout = (): Promise<void> => {
   return loggingOut;
 };
 
+export const resetAuthState = () => {
+  loggedOut = false;
+  refreshing = null;
+  loggingOut = null;
+};
+
 /**
  * 요청을 보내고, 401이면 토큰 refresh 후 1회 재시도한다.
  * refresh마저 실패하면 로그아웃 처리하고 UNAUTHORIZED 에러를 던진다.

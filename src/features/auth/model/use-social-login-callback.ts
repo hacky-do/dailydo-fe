@@ -6,7 +6,7 @@ import {
   SocialLoginType,
   useSessionStore,
 } from '@/entities/session';
-import { ApiError } from '@/shared/api';
+import { ApiError, resetAuthState } from '@/shared/api';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/toast';
 
@@ -48,6 +48,7 @@ export const useSocialLoginCallback = () => {
       { type, socialToken: token },
       {
         onSuccess: () => {
+          resetAuthState();
           setLastLogin(type);
           toast({ message: '다시 돌아오신 것을 환영해요!', type: 'success' });
           router.replace(ROUTES.MISSIONS);
@@ -71,6 +72,7 @@ export const useSocialLoginCallback = () => {
               },
               {
                 onSuccess: () => {
+                  resetAuthState();
                   setLastLogin(type);
                   toast({
                     message: '데일리두에 오신 것을 환영해요!',
