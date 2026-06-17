@@ -53,29 +53,34 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
       <div className="w-full px-4">
-        <nav className="flex items-center">
+        <nav aria-label="월 탐색" className="flex items-center">
           <Link
             href={`/mylogs?month=${prevMonth}`}
-            aria-disabled={isSignupMonth}
+            aria-label="이전 달로 이동"
+            aria-disabled={isSignupMonth || userLoading}
             className={cn(isSignupMonth && 'pointer-events-none opacity-50')}
           >
-            <ArrowLeft width={24} className="text-white" />
+            <ArrowLeft width={24} className="text-white" aria-hidden />
           </Link>
           <h2 className="text-2xl font-semibold text-white">
             {year}년 {monthNum}월
           </h2>
           <Link
             href={`/mylogs?month=${nextMonth}`}
-            aria-disabled={isCurrentMonth}
+            aria-label="다음 달로 이동"
+            aria-disabled={isCurrentMonth || userLoading}
             className={cn(isCurrentMonth && 'pointer-events-none opacity-50')}
           >
-            <ArrowRight width={24} className="text-white" />
+            <ArrowRight width={24} className="text-white" aria-hidden />
           </Link>
         </nav>
-        <section className="mt-4 mb-5 flex flex-col gap-3">
+        <section
+          className="mt-4 mb-5 flex flex-col gap-3"
+          aria-label="사용자 리포트"
+        >
           {/* 리포트 뱃지 */}
           <span className="flex w-fit gap-1 rounded-md bg-green-500 px-2 py-1 text-sm font-semibold text-white">
-            <Graph width={16} /> {monthNum}월 리포트
+            <Graph width={16} aria-hidden /> {monthNum}월 리포트
           </span>
 
           {/* 통계 */}
@@ -86,10 +91,10 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
           )}
 
           {/* 평균 확정/완료한 미션 */}
-          {userLoading || mylogsLoading ? (
+          {userLoading || mylogsLoading || !user ? (
             <MylogsCharacterCardSkeleton />
           ) : (
-            <MylogsCharacterCard userName={user?.name ?? ''} />
+            <MylogsCharacterCard userName={user.name} month={monthNum} />
           )}
         </section>
       </div>
@@ -108,7 +113,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
       >
         <Calendar key={month} year={year} month={monthNum} logs={logs} />
         <div className="mt-auto flex items-center gap-1 rounded-2xl bg-gray-100 px-3 py-1.5 text-sm text-gray-700 [@media(max-height:740px)]:hidden">
-          <LightBulb width={20} />
+          <LightBulb width={20} aria-hidden />
           날짜를 눌러서 마이로그를 확인해보세요!
         </div>
       </motion.section>
