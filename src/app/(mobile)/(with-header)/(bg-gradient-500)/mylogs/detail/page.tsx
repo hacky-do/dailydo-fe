@@ -1,8 +1,7 @@
 import { format } from 'date-fns';
 
+import { DATE_REGEX } from '@/entities/mylogs';
 import { DaylogPage } from '@/views/mylogs';
-
-const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
 interface PageProps {
   searchParams: Promise<{ date?: string }>;
