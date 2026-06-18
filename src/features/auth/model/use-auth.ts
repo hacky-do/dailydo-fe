@@ -22,7 +22,7 @@ export const useLogout = () => {
     mutationFn: emailLogout,
     onSuccess: () => {
       queryClient.clear();
-      router.push(ROUTES.HOME);
+      router.push(ROUTES.LOGIN);
     },
   });
 };
