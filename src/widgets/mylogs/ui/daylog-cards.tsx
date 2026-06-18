@@ -1,6 +1,7 @@
 'use client';
 
 import { DaylogCard, useGetDaylog } from '@/features/mylogs';
+import { EmptyState } from '@/shared/ui/empty-state';
 import { FallbackUI } from '@/shared/ui/fallback-ui';
 import { Loader } from '@/shared/ui/loader';
 
@@ -22,6 +23,13 @@ export const DaylogCards = ({ date }: DaylogCardsProps) => {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <Loader />
+      </div>
+    );
+
+  if (records?.length === 0)
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <EmptyState />
       </div>
     );
 
