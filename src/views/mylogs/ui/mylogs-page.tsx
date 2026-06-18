@@ -118,7 +118,11 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
           {userLoading || mylogsLoading || !user ? (
             <MylogsUserCardSkeleton />
           ) : (
-            <MylogsUserCard userName={user.name} month={monthNum} />
+            <MylogsUserCard
+              userName={user.name}
+              month={monthNum}
+              logs={mylogs}
+            />
           )}
         </section>
       </div>
