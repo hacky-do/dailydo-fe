@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import EmptyStateImg from '@/shared/ui/icons/common/empty_state.svg';
 
 import { Button } from '../button';
 
@@ -16,15 +16,7 @@ export const FallbackUI = ({
 }: FallbackUIProps) => {
   return (
     <div className="flex flex-col items-center gap-6 py-12">
-      <div className="relative h-18 w-30">
-        <Image
-          src="/common/emptyState.png"
-          alt=""
-          aria-hidden="true"
-          fill
-          sizes="430px"
-        />
-      </div>
+      <EmptyStateImg width="120px" />
       <p className="text-center text-base tracking-tight whitespace-pre-line text-gray-800">
         {message}
       </p>
