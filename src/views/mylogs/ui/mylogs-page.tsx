@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { useGetMe } from '@/entities/user';
 import { Calendar } from '@/features/mylogs';
 import { useGetMyLogs } from '@/features/mylogs/api/mylogs.queries';
+import { FallbackUI } from '@/shared/ui/fallback-ui';
 import ArrowLeft from '@/shared/ui/icons/mylogs/arrow_left.svg';
 import ArrowRight from '@/shared/ui/icons/mylogs/arrow_right.svg';
 import Graph from '@/shared/ui/icons/mylogs/graph.svg';
@@ -31,8 +32,31 @@ interface MylogsPageProps {
 }
 
 export const MylogsPage = ({ month }: MylogsPageProps) => {
-  const { data: mylogs, isPending: mylogsLoading } = useGetMyLogs(month);
-  const { data: user, isPending: userLoading } = useGetMe();
+  const {
+    data: mylogs,
+    isPending: mylogsLoading,
+    isError: mylogsError,
+    refetch: refetchMylogs,
+  } = useGetMyLogs(month);
+  const {
+    data: user,
+    isPending: userLoading,
+    isError: userError,
+    refetch: refetchUser,
+  } = useGetMe();
+
+  if (mylogsError || userError) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-white">
+        <FallbackUI
+          onReset={() => {
+            if (mylogsError) refetchMylogs();
+            if (userError) refetchUser();
+          }}
+        />
+      </div>
+    );
+  }
 
   const [year, monthNum] = month.split('-').map(Number);
 
@@ -43,8 +67,6 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
   const isSignupMonth = user?.createdAt
     ? !isAfter(currentDate, startOfMonth(new Date(user.createdAt)))
     : false;
-
-  const logs = mylogs?.records[0]?.logs ?? [];
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
@@ -86,10 +108,10 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
           </span>
 
           {/* 통계 */}
-          {mylogsLoading ? (
+          {mylogsLoading || !mylogs ? (
             <MylogsStatsSkeleton />
           ) : (
-            <MylogsStats logs={logs} />
+            <MylogsStats logs={mylogs} />
           )}
 
           {/* 평균 확정/완료한 미션 */}
@@ -113,7 +135,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
         }}
         className="flex w-full flex-1 flex-col gap-2 rounded-t-[40px] bg-white px-5 py-6"
       >
-        <Calendar key={month} year={year} month={monthNum} logs={logs} />
+        <Calendar key={month} year={year} month={monthNum} logs={mylogs} />
         <div className="mt-auto flex items-center gap-1 rounded-2xl bg-gray-100 px-3 py-1.5 text-sm text-gray-700 [@media(max-height:740px)]:hidden">
           <LightBulb width={20} aria-hidden />
           날짜를 눌러서 마이로그를 확인해보세요!
