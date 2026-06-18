@@ -14,7 +14,7 @@ const PROTECTED_ROUTES = [
 ];
 const AUTH_ROUTES = [ROUTES.LOGIN];
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasAccessToken = request.cookies.has(ACCESS_TOKEN_COOKIE);
 
