@@ -65,7 +65,7 @@ describe('카드 컴포넌트', () => {
       expect(screen.getByText('탭해서 확인하기')).toBeInTheDocument();
     });
 
-    test('앞면 요소들이 렌더링된다 히든 미션의 경우', () => {
+    test('앞면 요소들이 렌더링된다 스페셜 미션의 경우', () => {
       render(<TodayMissionCard mission={missionData.items[2]} />);
 
       expect(screen.getByText('스페셜 미션')).toBeInTheDocument();
@@ -184,7 +184,7 @@ describe('카드 컴포넌트', () => {
 
       const button = screen.getByRole('button', { name: '완료하기' });
       expect(button).toBeInTheDocument();
-      expect(screen.getByText('히든 미션')).toBeInTheDocument();
+      expect(screen.getByText('스페셜 미션')).toBeInTheDocument();
     });
 
     test('일반 미션의 경우 카테고리 이름이 나온다', () => {
@@ -196,12 +196,12 @@ describe('카드 컴포넌트', () => {
       ).toBeInTheDocument();
     });
 
-    test('히든 미션의 경우 카테고리 이름이 나오지 않고 히든 미션으로 나온다', () => {
+    test('스페셜 미션의 경우 카테고리 이름이 나오지 않고 스페셜 미션으로 나온다', () => {
       render(<MyMissionCard mission={myMissionData.items[2]} />, {
         wrapper: createWrapper(),
       });
 
-      expect(screen.getByText('히든 미션')).toBeInTheDocument();
+      expect(screen.getByText('스페셜 미션')).toBeInTheDocument();
       expect(
         screen.queryByText(myMissionData.items[2].categoryName),
       ).not.toBeInTheDocument();
@@ -233,7 +233,7 @@ describe('카드 컴포넌트', () => {
       expect(screen.queryByText('마이로그 작성')).not.toBeInTheDocument();
     });
 
-    test('바텀 시트에서 건너뛰기 클릭 시 시트가 닫힌다', async () => {
+    test('바텀 시트에서 취소하기 클릭 시 시트가 닫힌다', async () => {
       const user = userEvent.setup();
       render(<MyMissionCard mission={myMissionData.items[2]} />, {
         wrapper: createWrapper(),
@@ -262,7 +262,7 @@ describe('카드 컴포넌트', () => {
         wrapper: createWrapper(),
       });
 
-      expect(screen.getByText('히든 미션')).toBeInTheDocument();
+      expect(screen.getByText('스페셜')).toBeInTheDocument();
       expect(
         screen.getByText(myMissionData.items[2].title),
       ).toBeInTheDocument();
