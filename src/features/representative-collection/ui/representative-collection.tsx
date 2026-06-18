@@ -1,14 +1,21 @@
 import Image from 'next/image';
 
+import { UserCollection } from '@/entities/collection/model/collection.types';
+
 interface RepresentativeCollectionProps {
-  title: string;
-  imageSrc: string;
+  userCollections?: UserCollection;
+  defaultImage: string;
+  defaultTitle: string;
 }
 
 export const RepresentativeCollection = ({
-  title,
-  imageSrc,
+  userCollections,
+  defaultImage,
+  defaultTitle,
 }: RepresentativeCollectionProps) => {
+  const image = userCollections?.image ?? defaultImage;
+  const title = userCollections?.title ?? defaultTitle;
+
   return (
     <div className="flex flex-col items-center pt-4">
       <span className="z-10 -mb-2 rounded-xl bg-white px-2 py-1 text-sm font-bold text-green-600 shadow">
@@ -19,7 +26,7 @@ export const RepresentativeCollection = ({
         <div className="absolute h-34.5 w-34.5 rounded-full border-[6px] border-green-400" />
         <div className="relative flex h-31.5 w-31.5 items-center justify-center overflow-hidden rounded-full bg-green-100">
           <Image
-            src={imageSrc}
+            src={image}
             alt=""
             width={80}
             height={80}

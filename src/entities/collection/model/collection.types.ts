@@ -1,3 +1,9 @@
+export interface Collection {
+  id: number | string;
+  src: string;
+  title: string;
+}
+
 export interface UserCollection {
   id: string;
   image: string;
@@ -10,20 +16,20 @@ export interface CollectionTab {
   title: string;
 }
 
-export interface Collections {
-  collections: {
-    collectionId: string;
-    image: string;
+export interface CollectionItem {
+  collectionId: string;
+  image: string;
+  title: string;
+  completed: boolean;
+  description: string;
+  acquisitionRate: number;
+  requirements: {
+    missionId: number;
     title: string;
-    completed: boolean;
-    description: string;
-    acquisitionRate: number;
-    requirements: [
-      {
-        missionId: number;
-        title: string;
-        count: number;
-      },
-    ];
+    count: number;
   }[];
+}
+
+export interface Collections {
+  collections: CollectionItem[];
 }

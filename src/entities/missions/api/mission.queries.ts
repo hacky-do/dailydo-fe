@@ -17,7 +17,6 @@ import {
   postCompleteMission,
   postTodayMissions,
 } from './mission.api';
-
 export const useGetTodayMissions = () =>
   useSuspenseQuery({
     queryKey: missionQueryKeys.todayMissions,
@@ -25,7 +24,6 @@ export const useGetTodayMissions = () =>
     gcTime: 0,
     staleTime: 1000 * 60 * 5,
   });
-
 export const useGetMyMissions = () =>
   useSuspenseQuery({
     queryKey: missionQueryKeys.myMissions,
