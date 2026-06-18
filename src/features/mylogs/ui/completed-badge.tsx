@@ -34,20 +34,15 @@ export const CompletedBadge = ({ count }: CompletedBadgeProps) => {
   const custom = BADGE_STYLES[count];
 
   return (
-    <div
+    <span
       className={cn(
         'flex items-center rounded-md px-1 py-0.5 text-xs font-semibold',
-        !custom && 'bg-green-400',
+        !custom && 'bg-green-400 text-green-700',
       )}
       style={custom ? { backgroundColor: custom.bg } : undefined}
     >
-      <span
-        className={cn('flex items-center', !custom && 'text-green-700')}
-        style={custom ? { color: custom.iconColor } : undefined}
-      >
-        <Sparkle width={20} />
-        {getCountLabel(count)}
-      </span>
-    </div>
+      <Sparkle width={20} />
+      {getCountLabel(count)}
+    </span>
   );
 };

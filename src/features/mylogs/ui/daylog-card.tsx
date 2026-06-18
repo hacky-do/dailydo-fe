@@ -27,14 +27,12 @@ export const DaylogCard = ({ record }: DaylogCardProps) => {
           수정
         </UnderlineButton>
       </div>
-      <ul className="flex gap-2">
-        <li>
-          <CompletedBadge count={record.completedCount} />
-        </li>
-        <li className="flex items-center rounded-md border border-gray-200 px-1 py-0.5 text-xs text-gray-600">
+      <div className="flex gap-2">
+        <CompletedBadge count={record.completedCount} />
+        <span className="flex items-center rounded-md border border-gray-200 px-1 py-0.5 text-xs text-gray-600">
           {formatDaylogTime(record.createdAt)}
-        </li>
-      </ul>
+        </span>
+      </div>
       {record.photo && (
         <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl">
           {isImageLoading && <Skeleton className="h-full w-full" />}
@@ -42,6 +40,7 @@ export const DaylogCard = ({ record }: DaylogCardProps) => {
             src={record.photo}
             alt={record.title}
             fill
+            sizes="480px"
             className={`object-cover ${isImageLoading ? 'invisible' : 'visible'}`}
             onLoad={() => setIsImageLoading(false)}
             onError={() => setIsImageLoading(false)}
