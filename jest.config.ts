@@ -16,6 +16,9 @@ const jestConfig = async () => {
     ...generated,
     moduleNameMapper: {
       '^.+\\.svg$': '<rootDir>/__mocks__/svg.tsx',
+      '^swiper$': '<rootDir>/__mocks__/swiper.tsx',
+      '^swiper/(.*)$': '<rootDir>/__mocks__/swiper.tsx',
+      '^vaul$': '<rootDir>/__mocks__/vaul.tsx',
       ...generated.moduleNameMapper,
     },
   };

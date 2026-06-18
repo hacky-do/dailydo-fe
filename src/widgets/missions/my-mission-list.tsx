@@ -86,7 +86,6 @@ interface MyLogBottomSheetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   onSubmit: (photo: string, memo: string) => void;
-  onSkip: () => void;
   isPending?: boolean;
 }
 
@@ -94,7 +93,6 @@ export const MyLogBottomSheet = ({
   open,
   setOpen,
   onSubmit,
-  onSkip,
   isPending = false,
 }: MyLogBottomSheetProps) => {
   const { file, handleChange } = useFileInput();
@@ -144,13 +142,8 @@ export const MyLogBottomSheet = ({
           <BottomSheet.Footer className="pt-0 pb-8">
             <div className="flex gap-2">
               <BottomSheet.Close>
-                <Button
-                  variant="tertiary"
-                  onClick={onSkip}
-                  isLoading={isPending}
-                  type="button"
-                >
-                  건너뛰기
+                <Button variant="tertiary" type="button">
+                  취소하기
                 </Button>
               </BottomSheet.Close>
               <Button
@@ -199,21 +192,6 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
     );
   };
 
-  const handleSkip = () => {
-    mutate(
-      { itemId: mission.itemId, mylog: { photo: '', memo: '' } },
-      {
-        onSuccess: () => {
-          toast({
-            message: `${MISSION_TOAST_MESSAGES.skipSuccess}`,
-            type: 'success',
-          });
-          setIsOpen(false);
-        },
-      },
-    );
-  };
-
   return (
     <>
       <Card
@@ -232,7 +210,6 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
         open={isOpen}
         setOpen={setIsOpen}
         onSubmit={handleSubmit}
-        onSkip={handleSkip}
         isPending={isPending}
       />
     </>

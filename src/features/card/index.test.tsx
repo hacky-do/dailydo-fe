@@ -1,23 +1,39 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Mission } from '@/entities/missions/model/mission.types';
+import { Mission, MyMission } from '@/entities/missions/model/mission.types';
 import { BASE_URL } from '@/shared/api/base-url.constant';
 import { MyMissionCard } from '@/widgets/missions/my-mission-list';
 import { TodayMissionCard } from '@/widgets/missions/today-mission-list';
 
 const fetchMissions = async (): Promise<Mission> => {
   const res = await fetch(`${BASE_URL}/api/missions/new`);
+  const json = await res.json();
+  return json.data;
+};
+
+const fetchMyMissions = async (): Promise<MyMission> => {
+  const res = await fetch(`${BASE_URL}/api/missions`);
   return res.json();
 };
 
-// MSW 핸들러 데이터 기준:
-// items[0]: 구름 사진 찍기, 자연/힐링, isSpecial: false, totalCompletedCount: 23
-// items[2]: 별 보러 옥상 가기, 우주/자연, isSpecial: true
 let missionData: Mission;
+let myMissionData: MyMission;
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+  return Wrapper;
+};
 
 beforeEach(async () => {
   missionData = await fetchMissions();
+  myMissionData = await fetchMyMissions();
 });
 
 describe('카드 컴포넌트', () => {
@@ -89,7 +105,7 @@ describe('카드 컴포넌트', () => {
 
       expect(
         screen.getByText(
-          `${missionData.items[0].totalCompletedCount}명이 미션에 도전중이에요!`,
+          `${missionData.items[0].totalCompletedCount}명이 미션에 도전했어요!`,
         ),
       ).toBeInTheDocument();
       expect(screen.getByText('취소하기')).toBeInTheDocument();
@@ -162,7 +178,9 @@ describe('카드 컴포넌트', () => {
 
   describe('나의 미션 목록', () => {
     test('카드가 뒤집힌 상태로 렌더링된다', () => {
-      render(<MyMissionCard mission={missionData.items[2]} />);
+      render(<MyMissionCard mission={myMissionData.items[2]} />, {
+        wrapper: createWrapper(),
+      });
 
       const button = screen.getByRole('button', { name: '완료하기' });
       expect(button).toBeInTheDocument();
@@ -170,76 +188,84 @@ describe('카드 컴포넌트', () => {
     });
 
     test('일반 미션의 경우 카테고리 이름이 나온다', () => {
-      render(<MyMissionCard mission={missionData.items[0]} />);
+      render(<MyMissionCard mission={myMissionData.items[0]} />, {
+        wrapper: createWrapper(),
+      });
       expect(
-        screen.getByText(missionData.items[0].categoryName),
+        screen.getByText(myMissionData.items[0].categoryName),
       ).toBeInTheDocument();
     });
 
     test('히든 미션의 경우 카테고리 이름이 나오지 않고 히든 미션으로 나온다', () => {
-      render(<MyMissionCard mission={missionData.items[2]} />);
+      render(<MyMissionCard mission={myMissionData.items[2]} />, {
+        wrapper: createWrapper(),
+      });
 
       expect(screen.getByText('히든 미션')).toBeInTheDocument();
       expect(
-        screen.queryByText(missionData.items[2].categoryName),
+        screen.queryByText(myMissionData.items[2].categoryName),
       ).not.toBeInTheDocument();
     });
 
     test('완료하기 클릭 시 바텀 시트 나온다', async () => {
       const user = userEvent.setup();
-      render(<MyMissionCard mission={missionData.items[2]} />);
+      render(<MyMissionCard mission={myMissionData.items[2]} />, {
+        wrapper: createWrapper(),
+      });
 
       await user.click(screen.getByRole('button', { name: '완료하기' }));
 
-      expect(screen.getByText('미션을 완료하시겠어요?')).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
-    });
-
-    test('완료하기 클릭 후 완료 버튼 클릭 시 바텀 시트 닫힌다', async () => {
-      const user = userEvent.setup();
-      render(<MyMissionCard mission={missionData.items[2]} />);
-
-      await user.click(screen.getByRole('button', { name: '완료하기' }));
-      await user.click(screen.getByRole('button', { name: '완료' }));
-
+      expect(screen.getByText('마이로그 작성')).toBeInTheDocument();
       expect(
-        screen.queryByText('미션을 완료하시겠어요?'),
-      ).not.toBeInTheDocument();
+        screen.getByRole('button', { name: '취소하기' }),
+      ).toBeInTheDocument();
     });
 
-    test('바텀 시트에서 취소 클릭 시 시트가 닫힌다', async () => {
+    test('완료하기 클릭 후 건너뛰기 클릭 시 바텀 시트 닫힌다', async () => {
       const user = userEvent.setup();
-      render(<MyMissionCard mission={missionData.items[2]} />);
+      render(<MyMissionCard mission={myMissionData.items[2]} />, {
+        wrapper: createWrapper(),
+      });
 
       await user.click(screen.getByRole('button', { name: '완료하기' }));
-      await user.click(screen.getByRole('button', { name: '취소' }));
+      await user.click(screen.getByRole('button', { name: '취소하기' }));
 
-      expect(
-        screen.queryByText('미션을 완료하시겠어요?'),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText('마이로그 작성')).not.toBeInTheDocument();
     });
 
-    test('완료 버튼 클릭 후 완료하기 버튼이 사라진다', async () => {
+    test('바텀 시트에서 건너뛰기 클릭 시 시트가 닫힌다', async () => {
       const user = userEvent.setup();
-      render(<MyMissionCard mission={missionData.items[2]} />);
+      render(<MyMissionCard mission={myMissionData.items[2]} />, {
+        wrapper: createWrapper(),
+      });
 
       await user.click(screen.getByRole('button', { name: '완료하기' }));
-      await user.click(screen.getByRole('button', { name: '완료' }));
+      await user.click(screen.getByRole('button', { name: '취소하기' }));
+
+      expect(screen.queryByText('마이로그 작성')).not.toBeInTheDocument();
+    });
+
+    test('완료된 미션은 완료하기 버튼이 없다', () => {
+      const completedMission = { ...myMissionData.items[2], completed: true };
+      render(<MyMissionCard mission={completedMission} />, {
+        wrapper: createWrapper(),
+      });
 
       expect(
         screen.queryByRole('button', { name: '완료하기' }),
       ).not.toBeInTheDocument();
     });
 
-    test('완료 버튼 클릭 후 카테고리와 제목이 표시된다', async () => {
-      const user = userEvent.setup();
-      render(<MyMissionCard mission={missionData.items[2]} />);
-
-      await user.click(screen.getByRole('button', { name: '완료하기' }));
-      await user.click(screen.getByRole('button', { name: '완료' }));
+    test('완료된 미션은 카테고리와 제목이 표시된다', () => {
+      const completedMission = { ...myMissionData.items[2], completed: true };
+      render(<MyMissionCard mission={completedMission} />, {
+        wrapper: createWrapper(),
+      });
 
       expect(screen.getByText('히든 미션')).toBeInTheDocument();
-      expect(screen.getByText(missionData.items[2].title)).toBeInTheDocument();
+      expect(
+        screen.getByText(myMissionData.items[2].title),
+      ).toBeInTheDocument();
     });
   });
 });
