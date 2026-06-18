@@ -74,6 +74,7 @@ export const LandingHeroSection = () => {
           sizes="(max-width: 768px) 100vw, 70vw"
           fill
           className="object-contain"
+          priority
         />
         <DecoLocation
           width={40}

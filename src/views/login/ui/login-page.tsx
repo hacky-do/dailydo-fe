@@ -115,6 +115,7 @@ export const LoginPage = () => {
             loading="eager"
             sizes="(max-width: 768px) 100vw, 70vw"
             fill
+            priority
           />
         </div>
       </section>
