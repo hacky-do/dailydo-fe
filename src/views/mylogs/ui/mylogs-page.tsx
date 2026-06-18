@@ -55,8 +55,8 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
             aria-label="이전 달로 이동"
             aria-disabled={isSignupMonth || userLoading}
             className={cn(
-              isSignupMonth ||
-                (userLoading && 'pointer-events-none opacity-50'),
+              (isSignupMonth || userLoading) &&
+                'pointer-events-none opacity-50',
             )}
           >
             <ArrowLeft width={24} className="text-white" aria-hidden />
@@ -69,8 +69,8 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
             aria-label="다음 달로 이동"
             aria-disabled={isCurrentMonth || userLoading}
             className={cn(
-              isCurrentMonth ||
-                (userLoading && 'pointer-events-none opacity-50'),
+              (isCurrentMonth || userLoading) &&
+                'pointer-events-none opacity-50',
             )}
           >
             <ArrowRight width={24} className="text-white" aria-hidden />

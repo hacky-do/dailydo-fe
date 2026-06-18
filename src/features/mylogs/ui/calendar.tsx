@@ -5,6 +5,7 @@ import {
   endOfMonth,
   format,
   getDay,
+  isToday,
   startOfMonth,
 } from 'date-fns';
 import Link from 'next/link';
@@ -85,10 +86,17 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
             index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
           );
 
+          const todayClassName = isToday(day)
+            ? 'border-2 border-green-500'
+            : '';
+
           // 데이터 없는 날짜는 Link가 아닌 div
-          if (count === undefined) {
+          if (!count) {
             return (
-              <div key={dateStr} className={cn(baseClassName, 'text-gray-600')}>
+              <div
+                key={dateStr}
+                className={cn(baseClassName, 'text-gray-600', todayClassName)}
+              >
                 {format(day, 'd')}
               </div>
             );
@@ -100,7 +108,11 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
               href={`${ROUTES.MYLOG}/${dateStr}`}
               prefetch={false}
               aria-label={`${format(day, 'yyyy년 M월 d일')}, 완료 ${count}개`}
-              className={cn(baseClassName, getCountBgColor(count))}
+              className={cn(
+                baseClassName,
+                !isToday(day) && getCountBgColor(count),
+                todayClassName,
+              )}
             >
               {format(day, 'd')}
             </Link>
