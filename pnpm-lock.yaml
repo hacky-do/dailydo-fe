@@ -168,6 +168,9 @@ importers:
       undici:
         specifier: ^5.29.0
         version: 5.29.0
+      wrangler:
+        specifier: ^4.101.0
+        version: 4.101.0
 
 packages:
 
@@ -15248,7 +15251,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.20.0
+      ws: 8.20.1
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
