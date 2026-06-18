@@ -17,11 +17,11 @@
     "build-storybook": "storybook build"
   },
   "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}": [
-      "eslint --fix --max-warnings 0"
-    ],
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
       "prettier --write"
+    ],
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}": [
+      "eslint --fix --max-warnings 0"
     ]
   },
   "dependencies": {
