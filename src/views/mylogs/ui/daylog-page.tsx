@@ -48,6 +48,8 @@ export const DaylogPage = ({ initialDate }: DaylogPageProps) => {
           <span
             aria-hidden
             className="pointer-events-none absolute top-2 bottom-2 rounded-lg bg-gray-50 transition-transform duration-300 ease-in-out"
+            // 선택된 날짜 슬라이딩 인디케이터
+            // width를 px-3 패딩 제외 후 7등분해야 translateX(100%) 단위 이동이 정확히 1칸과 일치
             style={{
               width: `calc((100% - 1.5rem) / 7)`,
               left: '0.75rem',
