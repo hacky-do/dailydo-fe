@@ -60,13 +60,13 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
   return (
     <div className="w-full">
       <ul className="mb-4 grid grid-cols-7 text-center">
-        {WEEKDAYS.map((day, index) => (
+        {WEEKDAYS.map((day) => (
           <li key={day}>
             <span
               className={`px-1 text-sm font-semibold ${
-                index === 0
+                day === '일'
                   ? 'text-red-500'
-                  : index === 6
+                  : day === '토'
                     ? 'text-blue-600'
                     : 'text-gray-500'
               }`}
@@ -86,16 +86,16 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
             index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
           );
 
-          const todayClassName = isToday(day)
-            ? 'border-2 border-green-500'
-            : '';
-
           // 데이터 없는 날짜는 Link가 아닌 div
           if (!count) {
             return (
               <div
                 key={dateStr}
-                className={cn(baseClassName, 'text-gray-600', todayClassName)}
+                className={cn(
+                  baseClassName,
+                  'text-gray-600',
+                  isToday(day) && 'border-2 border-green-500',
+                )}
               >
                 {format(day, 'd')}
               </div>
@@ -111,7 +111,7 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
               className={cn(
                 baseClassName,
                 !isToday(day) && getCountBgColor(count),
-                todayClassName,
+                isToday(day) && 'border-2 border-green-500',
               )}
             >
               {format(day, 'd')}
