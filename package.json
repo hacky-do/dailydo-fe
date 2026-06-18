@@ -79,7 +79,8 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5",
-    "undici": "^5.29.0"
+    "undici": "^5.29.0",
+    "wrangler": "^4.101.0"
   },
   "msw": {
     "workerDirectory": [
