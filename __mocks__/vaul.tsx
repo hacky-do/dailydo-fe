@@ -19,14 +19,20 @@ const Root = ({
   onOpenChange?: (open: boolean) => void;
   children?: React.ReactNode;
 }) => (
-  <DrawerContext.Provider value={{ open, onOpenChange: onOpenChange ?? (() => {}) }}>
+  <DrawerContext.Provider
+    value={{ open, onOpenChange: onOpenChange ?? (() => {}) }}
+  >
     {children}
   </DrawerContext.Provider>
 );
 
-const Portal = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+const Portal = ({ children }: { children?: React.ReactNode }) => (
+  <>{children}</>
+);
 
-const Overlay = (props: React.HTMLAttributes<HTMLDivElement>) => <div {...props} />;
+const Overlay = (props: React.HTMLAttributes<HTMLDivElement>) => (
+  <div {...props} />
+);
 
 const Content = ({
   children,
@@ -103,9 +109,7 @@ const Title = ({
 const Description = ({
   children,
   ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) => (
-  <p {...props}>{children}</p>
-);
+}: React.HTMLAttributes<HTMLParagraphElement>) => <p {...props}>{children}</p>;
 
 export const Drawer = {
   Root,

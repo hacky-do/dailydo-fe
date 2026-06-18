@@ -221,7 +221,7 @@ describe('카드 컴포넌트', () => {
       ).toBeInTheDocument();
     });
 
-    test('완료하기 클릭 후 건너뛰기 클릭 시 바텀 시트 닫힌다', async () => {
+    test('완료하기 클릭 후 취소하기 클릭 시 바텀 시트 닫힌다', async () => {
       const user = userEvent.setup();
       render(<MyMissionCard mission={myMissionData.items[2]} />, {
         wrapper: createWrapper(),

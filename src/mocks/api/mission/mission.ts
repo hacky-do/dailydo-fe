@@ -28,11 +28,12 @@ export const handlers = [
 
   // 내 미션 목록 조회
   http.get(`${BASE_URL}/api/missions`, () => {
-    const items = confirmedMissionIds.length > 0
-      ? mockMyMissionData.items.filter((item) =>
-          confirmedMissionIds.includes(item.missionId),
-        )
-      : mockMyMissionData.items;
+    const items =
+      confirmedMissionIds.length > 0
+        ? mockMyMissionData.items.filter((item) =>
+            confirmedMissionIds.includes(item.missionId),
+          )
+        : mockMyMissionData.items;
     return HttpResponse.json({
       isGuest: mockMyMissionData.isGuest,
       items,
