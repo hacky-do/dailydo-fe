@@ -1,4 +1,4 @@
-import { clientApi } from '@/shared/api/fetch-client';
+import { clientApi } from '@/shared/api';
 
 import type { LogsResponse } from '../model/mylogs.types';
 

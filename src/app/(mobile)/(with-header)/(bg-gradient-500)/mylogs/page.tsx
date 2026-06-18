@@ -1,8 +1,7 @@
 import { format } from 'date-fns';
 
+import { MONTH_REGEX } from '@/entities/mylogs';
 import { MylogsPage } from '@/views/mylogs';
-
-const MONTH_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 interface PageProps {
   searchParams: Promise<{ month?: string }>;
