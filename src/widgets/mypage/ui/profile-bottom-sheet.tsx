@@ -6,9 +6,9 @@ import { useForm, useWatch } from 'react-hook-form';
 
 import { useFileUpload } from '@/entities/file/api/file.queries';
 import { NICKNAME_HELPER_TEXT, type User } from '@/entities/user';
-import { FileInput, useFileInput } from '@/features/file-input';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
 import { Button } from '@/shared/ui/button';
+import { FileInput, useFileInput } from '@/shared/ui/file-input';
 import { Input } from '@/shared/ui/input/input';
 import { Textarea } from '@/shared/ui/input/textarea';
 import { useToast } from '@/shared/ui/toast';
