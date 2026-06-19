@@ -5,7 +5,6 @@ import { useRef, useState } from 'react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useFileUpload } from '@/entities/file/api/file.queries';
 import {
   useGetMyMissions,
   usePostCompleteMission,
@@ -13,11 +12,8 @@ import {
 import { MISSION_TOAST_MESSAGES } from '@/entities/missions/model/mission.constants';
 import { MyMissionItem } from '@/entities/missions/model/mission.types';
 import { Card } from '@/features/card';
-import { FileInput } from '@/features/file-input';
-import { useFileInput } from '@/features/file-input/model/use-file-input';
-import { BottomSheet } from '@/shared/ui/bottom-sheet';
+import { MyLogBottomSheet } from '@/features/mylogs';
 import { Button } from '@/shared/ui/button/button';
-import { Textarea } from '@/shared/ui/input';
 import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
 
@@ -82,86 +78,6 @@ const MyMissionBackContent = ({
   );
 };
 
-interface MyLogBottomSheetProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  onSubmit: (photo: string, memo: string) => void;
-  isPending?: boolean;
-}
-
-export const MyLogBottomSheet = ({
-  open,
-  setOpen,
-  onSubmit,
-  isPending = false,
-}: MyLogBottomSheetProps) => {
-  const { file, handleChange } = useFileInput();
-  const [memo, setMemo] = useState('');
-  const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
-  const { toast } = useToast();
-
-  const handleSubmit = async () => {
-    try {
-      const photo = file ? await upload(file) : '';
-      onSubmit(photo, memo);
-    } catch (error) {
-      toast({
-        message: `${MISSION_TOAST_MESSAGES.uploadError}`,
-        type: 'error',
-      });
-      console.error(error);
-    }
-  };
-
-  const isLoading = isUploading || isPending;
-
-  return (
-    <>
-      <BottomSheet.Root open={open} onOpenChange={setOpen}>
-        <BottomSheet.Content onPointerDownOutside={(e) => e.preventDefault()}>
-          <BottomSheet.Header className="pt-6">
-            <BottomSheet.Title>마이로그 작성</BottomSheet.Title>
-          </BottomSheet.Header>
-          <BottomSheet.Body className="flex flex-col pt-4 pb-8">
-            <span className="mb-1 text-sm font-medium">
-              기억하고 싶은 순간이 있나요?
-            </span>
-            <div className="flex flex-col gap-12">
-              <FileInput onChange={handleChange} />
-              <Textarea
-                id="mylog"
-                label="오늘을 한줄로 남겨 볼까요?"
-                placeholder="최대 100자까지 입력 가능해요."
-                description={`${memo.length}/100자`}
-                value={memo}
-                onChange={(e) => setMemo(e.target.value)}
-                maxLength={100}
-              />
-            </div>
-          </BottomSheet.Body>
-          <BottomSheet.Footer className="pt-0 pb-8">
-            <div className="flex gap-2">
-              <BottomSheet.Close>
-                <Button variant="tertiary" type="button">
-                  취소하기
-                </Button>
-              </BottomSheet.Close>
-              <Button
-                variant="primary"
-                onClick={handleSubmit}
-                isLoading={isLoading}
-                type="button"
-              >
-                완료하기
-              </Button>
-            </div>
-          </BottomSheet.Footer>
-        </BottomSheet.Content>
-      </BottomSheet.Root>
-    </>
-  );
-};
-
 export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
@@ -177,9 +93,9 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
     setIsOpen(true);
   };
 
-  const handleSubmit = (photo: string, memo: string) => {
+  const handleSubmit = (photo: string | null, memo: string) => {
     mutate(
-      { itemId: mission.itemId, mylog: { photo, memo } },
+      { itemId: mission.itemId, mylog: { photo: photo ?? '', memo } },
       {
         onSuccess: () => {
           toast({
