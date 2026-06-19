@@ -8,7 +8,7 @@ import {
   postUserCollection,
 } from './collection.api';
 
-export const useGetCollection = () =>
+export const useGetCollections = () =>
   useQuery({
     queryKey: collectionQueryKeys.collections,
     queryFn: getCollections,
