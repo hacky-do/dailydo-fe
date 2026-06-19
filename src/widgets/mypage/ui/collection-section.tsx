@@ -101,7 +101,9 @@ export const CollectionSection = () => {
             <CollectionImage src={collection.image} />
           </div>
         ) : (
-          <p>설정된 컬렉션이 없어요.</p>
+          <p className="flex h-16 w-full items-center justify-center text-xs text-gray-800">
+            설정된 컬렉션이 없어요.
+          </p>
         )}
       </div>
     </section>
