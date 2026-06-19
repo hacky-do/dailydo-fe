@@ -37,7 +37,7 @@ export const DaylogCards = ({ date }: DaylogCardsProps) => {
     <ul className="is-animating is-animating-vertical divide-y-8 divide-gray-50">
       {records.map((record) => (
         <li key={record.id} className="p-6">
-          <DaylogCard record={record} />
+          <DaylogCard record={record} date={date} />
         </li>
       ))}
     </ul>
