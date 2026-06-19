@@ -1,7 +1,13 @@
 export interface Collection {
-  id: number | string;
+  id: string;
   src: string;
   title: string;
+  description: string;
+  requirements: {
+    missionId: number;
+    title: string;
+    count: number;
+  }[];
 }
 
 export interface UserCollection {
