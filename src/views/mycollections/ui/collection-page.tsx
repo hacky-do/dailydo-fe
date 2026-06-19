@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import {
   useGetCollection,
-  useGetUserCollections,
+  useGetUserCollection,
 } from '@/entities/collection/api/collection.queries';
 import { RepresentativeCollection } from '@/features/representative-collection';
 import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
@@ -13,7 +13,7 @@ export default function CollectionPage() {
   const [collectionsTab, setCollectionsTab] = useState(1);
 
   const { data: collectionsData } = useGetCollection();
-  const { data: userCollections } = useGetUserCollections();
+  const { data: userCollections } = useGetUserCollection();
 
   const allItems = collectionsData?.collections ?? [];
   const filteredItems =
