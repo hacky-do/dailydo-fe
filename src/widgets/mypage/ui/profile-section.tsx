@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import type { User } from '@/entities/user';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
+import { cn } from '@/shared/utils/cn';
 
 export const ProfileSectionSkeleton = () => (
   <section className="flex flex-col gap-4">
@@ -53,7 +54,14 @@ export const ProfileSection = ({
             {email}
           </span>
         </div>
-        <p className="min-h-10 text-sm break-all">{description}</p>
+        <p
+          className={cn(
+            'min-h-10 text-sm break-all',
+            !description && 'text-gray-600',
+          )}
+        >
+          {description || '소개글을 입력해주세요.'}
+        </p>
       </div>
     </section>
   );
