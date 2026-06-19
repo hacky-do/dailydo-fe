@@ -8,12 +8,12 @@ export const getCollections = () =>
 export const getUserCollection = () =>
   clientApi.get<UserCollection>('/api/users/me/collections/featured');
 
-export const postUserCollections = (collectionId: string) =>
+export const postUserCollection = (collectionId: string) =>
   clientApi.post('/api/users/me/collections/featured', {
     body: JSON.stringify({ collectionId }),
   });
 
-export const deleteUserCollections = (collectionId: string) =>
+export const deleteUserCollection = (collectionId: string) =>
   clientApi.delete(`/api/users/me/collections/featured`, {
     body: JSON.stringify({ collectionId }),
   });

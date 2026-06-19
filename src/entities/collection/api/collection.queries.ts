@@ -2,10 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { collectionQueryKeys } from '../model/collection.constants';
 import {
-  deleteUserCollections,
+  deleteUserCollection,
   getCollections,
   getUserCollection,
-  postUserCollections,
+  postUserCollection,
 } from './collection.api';
 
 export const useGetCollection = () =>
@@ -16,7 +16,7 @@ export const useGetCollection = () =>
     staleTime: 0,
   });
 
-export const useGetUserCollections = () =>
+export const useGetUserCollection = () =>
   useQuery({
     queryKey: collectionQueryKeys.userCollection,
     queryFn: getUserCollection,
@@ -24,12 +24,10 @@ export const useGetUserCollections = () =>
     staleTime: 0,
   });
 
-export const usePostUserCollections = (options?: {
-  onSuccess?: () => void;
-}) => {
+export const usePostUserCollection = (options?: { onSuccess?: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (collectionId: string) => postUserCollections(collectionId),
+    mutationFn: (collectionId: string) => postUserCollection(collectionId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: collectionQueryKeys.userCollection,
@@ -39,10 +37,10 @@ export const usePostUserCollections = (options?: {
   });
 };
 
-export const useDeleteCompleteMission = () => {
+export const useDeleteUserCollection = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (collectionId: string) => deleteUserCollections(collectionId),
+    mutationFn: (collectionId: string) => deleteUserCollection(collectionId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: collectionQueryKeys.userCollection,
