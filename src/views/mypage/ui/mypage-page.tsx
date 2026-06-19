@@ -9,6 +9,8 @@ import { useToast } from '@/shared/ui/toast';
 import {
   CategorySection,
   CategorySectionSkeleton,
+  CollectionSection,
+  CollectionSectionSkeleton,
   MissionStatusSection,
   MissionStatusSectionSkeleton,
   MyStatusSection,
@@ -25,6 +27,7 @@ const MypageSkeleton = () => (
     <div className="flex flex-col gap-6">
       <MissionStatusSectionSkeleton />
       <MyStatusSectionSkeleton />
+      <CollectionSectionSkeleton />
       <CategorySectionSkeleton />
     </div>
   </>
@@ -111,6 +114,7 @@ export const Mypage = () => {
                       footprint={data.footprint}
                       createdAt={data.createdAt}
                     />
+                    <CollectionSection />
                     <CategorySection categories={data.categories} />
                   </div>
                 </>
