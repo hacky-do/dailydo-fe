@@ -1,15 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { collectionQueryKeys } from '../model/collection.constants';
-import { UserCollection } from '../model/collection.types';
 import {
   deleteUserCollections,
   getCollections,
-  getUserCollections,
+  getUserCollection,
   postUserCollections,
 } from './collection.api';
 
-export const useGetCollections = () =>
+export const useGetCollection = () =>
   useQuery({
     queryKey: collectionQueryKeys.collections,
     queryFn: getCollections,
@@ -20,7 +19,7 @@ export const useGetCollections = () =>
 export const useGetUserCollections = () =>
   useQuery({
     queryKey: collectionQueryKeys.userCollection,
-    queryFn: getUserCollections,
+    queryFn: getUserCollection,
     gcTime: 0,
     staleTime: 0,
   });
@@ -32,11 +31,6 @@ export const usePostUserCollections = (options?: {
   return useMutation({
     mutationFn: (collectionId: string) => postUserCollections(collectionId),
     onSuccess: async () => {
-      queryClient.setQueryData(
-        collectionQueryKeys.userCollection,
-        (prev: UserCollection | undefined) =>
-          prev ? { ...prev, status: 'CONFIRMED' as const } : prev,
-      );
       await queryClient.invalidateQueries({
         queryKey: collectionQueryKeys.userCollection,
       });
