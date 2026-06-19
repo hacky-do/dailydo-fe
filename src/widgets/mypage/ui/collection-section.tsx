@@ -1,33 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { useGetUserCollection } from '@/entities/collection/api/collection.queries';
 import { ROUTES } from '@/shared/config/routes';
 import ChevronRight from '@/shared/ui/icons/mypage/chevron_right.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
 import { sectionLabelClass } from './mypage.styles';
-
-// TODO: 컬렉션 API 완성 이후 수정
-interface CollectionItem {
-  id: string;
-  image: string;
-  description: string;
-  title: string;
-}
-
-const useGetCollections = () =>
-  useQuery({
-    queryKey: ['collections'],
-    queryFn: (): Promise<CollectionItem> =>
-      Promise.resolve({
-        id: '1',
-        image: '/mocks/images/test_collection.png',
-        description: '자연에서 사랑을 발견하고, 사랑을 만들어낸 당신에게',
-        title: '로맨티스트',
-      }),
-  });
 
 const CollectionImage = ({ src }: { src: string }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +52,7 @@ export const CollectionSectionSkeleton = () => (
 );
 
 export const CollectionSection = () => {
-  const { data: collection, isPending } = useGetCollections();
+  const { data: collection, isPending, isError } = useGetUserCollection();
 
   if (isPending) return <CollectionSectionSkeleton />;
 
@@ -88,7 +68,11 @@ export const CollectionSection = () => {
         </Link>
       </h4>
       <div className="flex rounded-2xl bg-white p-4 shadow">
-        {collection ? (
+        {isError ? (
+          <p className="flex h-16 w-full items-center justify-center text-xs text-gray-800">
+            컬렉션 정보를 불러오지 못했어요.
+          </p>
+        ) : collection ? (
           <div className="flex w-full items-center justify-between gap-2">
             <div className="flex flex-col gap-1">
               <span className="font-semibold text-green-600">

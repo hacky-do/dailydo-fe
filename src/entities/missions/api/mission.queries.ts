@@ -1,5 +1,6 @@
 import {
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
@@ -24,8 +25,16 @@ export const useGetTodayMissions = () =>
     gcTime: 0,
     staleTime: 1000 * 60 * 5,
   });
+
 export const useGetMyMissions = () =>
   useSuspenseQuery({
+    queryKey: missionQueryKeys.myMissions,
+    queryFn: getMyMissions,
+  });
+
+// TODO: 임시로 사용, 추후 삭제
+export const useGetMyMissionsQuery = () =>
+  useQuery({
     queryKey: missionQueryKeys.myMissions,
     queryFn: getMyMissions,
   });
