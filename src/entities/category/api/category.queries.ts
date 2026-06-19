@@ -11,7 +11,7 @@ export const useGetMissionCategories = () =>
   useQuery({
     queryKey: categoryQueryKeys.all,
     queryFn: () => getMissionCategories(0, 10),
-    select: (res) => res.data,
+    select: (res) => res.data.filter((c) => c.name !== '스페셜'),
     staleTime: Infinity,
   });
 
