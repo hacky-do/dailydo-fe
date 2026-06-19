@@ -1,7 +1,8 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
+import { useGetMyMissionsQuery } from '@/entities/missions/api/mission.queries';
 import { useGetMe, usePatchMe } from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import { FallbackUI } from '@/shared/ui/fallback-ui';
@@ -35,6 +36,12 @@ const MypageSkeleton = () => (
 
 export const Mypage = () => {
   const { data, isPending, isError, refetch } = useGetMe();
+  const {
+    data: myMissions,
+    isPending: isMissionsPending,
+    isError: isMissionsError,
+    refetch: refetchMissions,
+  } = useGetMyMissionsQuery();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { mutate: updateProfile, isPending: isPatchPending } = usePatchMe();
   const { toast } = useToast();
@@ -72,8 +79,13 @@ export const Mypage = () => {
   return (
     <div className="h-full w-full pt-20">
       <div className="relative h-full w-full bg-green-100">
-        {isError ? (
-          <FallbackUI onReset={refetch} />
+        {isError || isMissionsError ? (
+          <FallbackUI
+            onReset={() => {
+              refetch();
+              refetchMissions();
+            }}
+          />
         ) : (
           <>
             <div className="ml-auto flex w-fit gap-1 px-5 pt-4">
@@ -96,7 +108,7 @@ export const Mypage = () => {
             )}
 
             <div className="flex flex-col gap-5 p-5">
-              {isPending || !data ? (
+              {isPending || !data || isMissionsPending || !myMissions ? (
                 <MypageSkeleton />
               ) : (
                 <>
@@ -107,9 +119,7 @@ export const Mypage = () => {
                     description={data.description}
                   />
                   <div className="flex flex-col gap-6">
-                    <Suspense fallback={<MissionStatusSectionSkeleton />}>
-                      <MissionStatusSection />
-                    </Suspense>
+                    <MissionStatusSection myMissions={myMissions} />
                     <MyStatusSection
                       footprint={data.footprint}
                       createdAt={data.createdAt}
