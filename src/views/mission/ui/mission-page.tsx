@@ -15,7 +15,6 @@ export const MyMissionListPage = () => {
       <Suspense fallback={<Loader />}>
         <MyMissionList />
       </Suspense>
-      <div className="flex-2" />
     </div>
   );
 };
@@ -38,7 +37,6 @@ export const TodayMissionListPage = ({
         missions={missions}
         maxSelectableCount={maxSelectableCount}
       />
-      <div className="flex-2" />
     </div>
   );
 };

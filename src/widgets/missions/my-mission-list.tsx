@@ -202,6 +202,7 @@ export const MyMissionList = () => {
           ))}
         </Swiper>
       </div>
+      <div className="flex-2" />
     </>
   );
 };
