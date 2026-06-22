@@ -1,6 +1,6 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 
 import { initMocks } from '@/mocks';
@@ -10,6 +10,12 @@ const SITE_NAME = 'Daily:DO';
 const SITE_URL = 'https://www.daily-do.com';
 const SITE_DESCRIPTION = '소소한 미션을 수행하며 하루를 기록하는 데일리 챌린지';
 const OG_IMAGE = '/og-image.png';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
