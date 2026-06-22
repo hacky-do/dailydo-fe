@@ -1,11 +1,15 @@
 import { FadeIn } from '@/shared/ui/fade-in';
 import { SectionHeading } from '@/shared/ui/section-heading';
 
+import { MISSION_SECTION_ID } from '../config/constants';
 import { MissionCarousel } from './mission-carousel';
 
 export const LandingMissionSection = () => {
   return (
-    <section id="mission" className="relative bg-green-200 pt-16 pb-30">
+    <section
+      id={MISSION_SECTION_ID}
+      className="relative bg-green-200 pt-16 pb-30"
+    >
       <div className="px-5">
         <FadeIn>
           <SectionHeading

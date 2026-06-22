@@ -12,11 +12,14 @@ import DecoLight from '@/shared/ui/icons/login/deco_light.svg';
 import DecoLocation from '@/shared/ui/icons/login/deco_location.svg';
 import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
 
+import { MISSION_SECTION_ID } from '../config/constants';
 import { StartButton } from './start-button';
 
 const ScrollChevron = () => {
   const handleClick = () => {
-    document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById(MISSION_SECTION_ID)
+      ?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
