@@ -1,11 +1,13 @@
 'use client';
 
-import { COLLECTION_TABS, CollectionTab } from '@/entities/collection';
+import { COLLECTION_TABS } from '@/entities/collection';
+import { CollectionTab } from '@/entities/collection/model/collection.types';
 import { cn } from '@/shared/utils/cn';
+import { CollectionTabId } from '@/views/mycollections/ui/collection-page';
 
 interface CollectionTabsProps {
-  selectedId: number;
-  onSelect: (id: number) => void;
+  selectedId: string;
+  onSelect: (id: CollectionTabId) => void;
 }
 
 export const CollectionTabs = ({

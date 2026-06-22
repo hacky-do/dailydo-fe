@@ -7,7 +7,7 @@ import { useDeleteUserCollection } from '@/entities/collection/api/collection.qu
 import { UserCollection } from '@/entities/collection/model/collection.types';
 import { useToast } from '@/shared/ui/toast';
 
-import { CollectionBottomSheet } from './collection-bottom-sheet';
+import { RepresentativeCollectionBottomSheet } from './representative-collection-bottom-sheet';
 
 interface RepresentativeCollectionProps {
   userCollections?: UserCollection | null;
@@ -36,20 +36,27 @@ export const RepresentativeCollection = ({
           message: '대표 컬렉션 설정이 해제되었습니다.',
           type: 'success',
         });
-        setIsOpen(false);
+      },
+      onError: () => {
+        toast({
+          message: '대표 컬렉션 설정 해제에 실패하였습니다.',
+          type: 'success',
+        });
       },
     });
+    setIsOpen(false);
   };
 
   return (
     <>
-      <div
+      <button
         className="flex flex-col items-center pt-4"
         onClick={() => userCollections && setIsOpen(true)}
+        type="button"
       >
-        <span className="z-10 -mb-2 rounded-xl bg-white px-2 py-1 text-sm font-bold text-green-600 shadow">
+        <h4 className="z-10 -mb-2 rounded-xl bg-white px-2 py-1 text-sm font-bold text-green-600 shadow">
           나의 대표 컬렉션
-        </span>
+        </h4>
         <div className="relative flex items-center justify-center">
           <div className="absolute h-38 w-38 rounded-full border-[6px] border-green-500" />
           <div className="absolute h-34.5 w-34.5 rounded-full border-[6px] border-green-400" />
@@ -67,19 +74,16 @@ export const RepresentativeCollection = ({
         <p className="z-10 -m-2 rounded-sm bg-green-600 px-2 py-1 text-xs font-semibold text-white">
           {title}
         </p>
-      </div>
+      </button>
 
       {userCollections && (
-        <CollectionBottomSheet
+        <RepresentativeCollectionBottomSheet
           open={open}
           onOpenChange={setIsOpen}
           id={userCollections.id}
           title={userCollections.title}
           description={userCollections.description}
-          completed={true}
-          src={userCollections.image}
-          isRepresentative={true}
-          onPost={() => {}}
+          image={userCollections.image}
           onDelete={handleDeleteCollection}
         />
       )}

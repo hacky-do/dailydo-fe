@@ -17,7 +17,7 @@ const FALLBACK_IMAGE = '/mocks/images/test_image.png';
 export const CollectionSkeleton = () => {
   return (
     <li className="flex flex-col items-center gap-1 rounded-2xl bg-white py-2 text-sm font-semibold">
-      <Skeleton variant="sm" className="size-20" />
+      <Skeleton variant="lg" />
       <TextSkeleton variant="sm" className="w-20" />
     </li>
   );
@@ -43,6 +43,7 @@ export const CollectionBox = ({
   const { mutate: postUserCollection } = usePostUserCollection();
   const { mutate: deleteUserCollection } = useDeleteUserCollection();
   const { toast } = useToast();
+
   const handlePostCollection = () => {
     postUserCollection(String(id), {
       onSuccess: () => {
@@ -50,9 +51,15 @@ export const CollectionBox = ({
           message: '대표 컬렉션 설정이 완료되었습니다.',
           type: 'success',
         });
-        setIsOpen(false);
+      },
+      onError: () => {
+        toast({
+          message: '대표 컬렉션 설정이 실패하였습니다.',
+          type: 'error',
+        });
       },
     });
+    setIsOpen(false);
   };
 
   const handleDeleteCollection = () => {
@@ -62,30 +69,39 @@ export const CollectionBox = ({
           message: '대표 컬렉션 설정이 해제되었습니다.',
           type: 'success',
         });
-        setIsOpen(false);
+      },
+      onError: () => {
+        toast({
+          message: '대표 컬렉션 설정 해제에 실패하였습니다.',
+          type: 'error',
+        });
       },
     });
+    setIsOpen(false);
   };
 
   return (
     <>
-      <li
-        className="flex h-24 flex-col items-center justify-center"
-        id={String(id)}
-        onClick={() => setIsOpen(true)}
-      >
-        {completed ? (
-          <Image
-            src={imgSrc}
-            alt=""
-            width={80}
-            height={80}
-            onError={() => setImgSrc(FALLBACK_IMAGE)}
-          />
-        ) : (
-          <LockedIcon width={80} />
-        )}
-        <span className="pt-1 text-xs font-semibold">{title}</span>
+      <li id={String(id)}>
+        <button
+          type="button"
+          className="flex h-24 w-full flex-col items-center justify-center"
+          onClick={() => setIsOpen(true)}
+        >
+          {completed ? (
+            <Image
+              src={imgSrc}
+              alt=""
+              width={80}
+              height={80}
+              sizes={'80'}
+              onError={() => setImgSrc(FALLBACK_IMAGE)}
+            />
+          ) : (
+            <LockedIcon width={80} />
+          )}
+          <span className="pt-1 text-xs font-semibold">{title}</span>
+        </button>
       </li>
 
       <CollectionBottomSheet

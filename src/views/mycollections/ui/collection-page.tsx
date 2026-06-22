@@ -4,12 +4,19 @@ import { useState } from 'react';
 
 import { useGetUserCollection } from '@/entities/collection/api/collection.queries';
 import { RepresentativeCollection } from '@/features/representative-collection';
+import { FallbackUI } from '@/shared/ui/fallback-ui';
 import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
 
-export default function CollectionPage() {
-  const [collectionsTab, setCollectionsTab] = useState(1);
+export type CollectionTabId = 'all' | 'completed' | 'incomplete';
 
-  const { data: userCollections } = useGetUserCollection();
+export default function CollectionPage() {
+  const [collectionsTab, setCollectionsTab] = useState<CollectionTabId>('all');
+
+  const { data: userCollections, isError, refetch } = useGetUserCollection();
+
+  if (isError) {
+    return <FallbackUI onReset={refetch} />;
+  }
 
   return (
     <div className="mt-5 flex h-full flex-col items-center justify-center">
