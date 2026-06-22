@@ -1,8 +1,9 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import { Drawer } from 'vaul';
 
 import { useAuth, useLogout } from '@/features/auth';
@@ -54,6 +55,8 @@ interface SidebarProps {
 
 export const Sidebar = ({ variant }: SidebarProps) => {
   const [open, setOpen] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const logoutPendingRef = useRef(false);
   const portalContainer =
     typeof window !== 'undefined'
       ? document.getElementById('mobile-portal-root')
@@ -62,9 +65,26 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   const pathname = usePathname();
   const { toast } = useToast();
   const { mutate: logout } = useLogout();
+  const queryClient = useQueryClient();
 
   const { data: session } = useAuth();
   const isLoggedIn = !!session;
+
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        toast({ type: 'success', message: '로그아웃 되었어요. 또 만나요!' });
+        router.push(ROUTES.LOGIN);
+        logoutPendingRef.current = true;
+        closeButtonRef.current?.click();
+      },
+      onError: () =>
+        toast({
+          type: 'error',
+          message: '로그아웃에 실패했어요. 다시 시도해주세요.',
+        }),
+    });
+  };
 
   const handleClickLink = (route: string) => {
     if (isLoggedIn) {
@@ -79,7 +99,17 @@ export const Sidebar = ({ variant }: SidebarProps) => {
   };
 
   return (
-    <Drawer.Root direction="right" open={open} onOpenChange={setOpen}>
+    <Drawer.Root
+      direction="right"
+      open={open}
+      onOpenChange={setOpen}
+      onAnimationEnd={(isOpen) => {
+        if (!isOpen && logoutPendingRef.current) {
+          logoutPendingRef.current = false;
+          queryClient.clear();
+        }
+      }}
+    >
       <Drawer.Trigger aria-label="메뉴 열기" className="ml-auto">
         <Hamburger
           className={cn(
@@ -96,6 +126,12 @@ export const Sidebar = ({ variant }: SidebarProps) => {
             <Drawer.Close className="self-start">
               <Delete className="w-6 text-gray-400" />
             </Drawer.Close>
+            <Drawer.Close
+              ref={closeButtonRef}
+              className="sr-only"
+              aria-hidden
+              tabIndex={-1}
+            />
 
             {/* 네비게이션 영역 */}
             <nav className="h-full w-full">
@@ -141,7 +177,7 @@ export const Sidebar = ({ variant }: SidebarProps) => {
                     </Link>
                   ) : (
                     <button
-                      onClick={() => logout()}
+                      onClick={handleLogout}
                       type="button"
                       className="p-4"
                     >

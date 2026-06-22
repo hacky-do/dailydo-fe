@@ -93,7 +93,15 @@ export const PcHeader = ({ className }: { className?: string }) => {
                   {ROUTES_NAME.LOGIN}
                 </Link>
               ) : (
-                <button onClick={() => logout()} type="button" className="p-4">
+                <button
+                  onClick={() =>
+                    logout(undefined, {
+                      onSuccess: () => router.push(ROUTES.LOGIN),
+                    })
+                  }
+                  type="button"
+                  className="p-4"
+                >
                   로그아웃
                 </button>
               )}
