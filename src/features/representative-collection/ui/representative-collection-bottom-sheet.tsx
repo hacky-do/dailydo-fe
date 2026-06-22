@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { UserCollection } from '@/entities/collection/model/collection.types';
+import type { UserCollection } from '@/entities/collection';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 
