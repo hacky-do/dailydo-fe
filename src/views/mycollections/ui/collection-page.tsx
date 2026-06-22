@@ -27,7 +27,7 @@ const DECO_IMAGES = [
   },
 ];
 
-export default function CollectionPage() {
+export const CollectionPage = () => {
   const [collectionsTab, setCollectionsTab] = useState<CollectionTabId>('all');
 
   const {
@@ -74,4 +74,4 @@ export default function CollectionPage() {
       </ul>
     </div>
   );
-}
+};
