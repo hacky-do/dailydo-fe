@@ -60,7 +60,7 @@ const TodayMissionBackContent = ({
         {mission.title}
       </p>
       <Image
-        src={mission.image || '/mocks/images/test_image.png'}
+        src={mission.image}
         alt={mission.title}
         width={80}
         height={80}
@@ -111,7 +111,7 @@ const TodayMissionBackContent = ({
 interface TodayMissionCardProps {
   mission: MissionItem;
   isActive?: boolean;
-  onSelect?: (id: number) => void;
+  onSelect?: (id: number) => boolean;
   onCancel?: (id: number) => void;
   onSkip?: (id: number) => void;
 }
@@ -127,8 +127,8 @@ export const TodayMissionCard = ({
 
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    click();
-    onSelect?.(mission.missionId);
+    const success = onSelect?.(mission.missionId);
+    if (success) click();
   };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -188,13 +188,14 @@ export const TodayMissionList = ({
 
   const [selectedMissionIds, setSelectedMissionIds] = useState<number[]>([]);
 
-  const handleSelect = (id: number) => {
-    if (maxSelectableCount === undefined) return;
+  const handleSelect = (id: number): boolean => {
+    if (maxSelectableCount === undefined) return false;
     if (selectedMissionIds.length >= maxSelectableCount) {
       toast({ type: 'error', message: MISSION_TOAST_MESSAGES.maxSelectError });
-      return;
+      return false;
     }
     setSelectedMissionIds((prev) => [...prev, id]);
+    return true;
   };
 
   const handleCancel = (id: number) => {
