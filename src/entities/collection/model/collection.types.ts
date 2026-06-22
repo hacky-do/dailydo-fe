@@ -37,6 +37,8 @@ export interface CollectionItem {
   }[];
 }
 
+export type CollectionTabId = 'all' | 'completed' | 'incomplete';
+
 export interface Collections {
   collections: CollectionItem[];
 }

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Collection } from '@/entities/collection/model/collection.types';
+import type { Collection } from '@/entities/collection';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
@@ -55,24 +55,37 @@ export const CollectionBottomSheet = ({
               width={80}
               height={80}
               className="my-1"
-              sizes={'80'}
+              sizes="80px"
             />
           ) : (
-            <LockedIcon className="my-1 h-20 w-20" />
+            <div className="-mb-6 flex size-20 items-center justify-center">
+              <LockedIcon className="my-1" width={65} />
+            </div>
           )}
 
-          {requirements.map((requirement) => (
-            <div key={requirement.missionId} className="flex flex-col">
-              <p className="text-xs font-normal text-gray-500">
-                {requirement.title}{' '}
-                <span className="font-semibold">{requirement.count} 완료</span>
-              </p>
-            </div>
-          ))}
+          {completed &&
+            requirements.map((requirement) => (
+              <div key={requirement.missionId} className="flex flex-col">
+                <p className="text-xs font-normal text-gray-500">
+                  {requirement.title}{' '}
+                  <span className="font-semibold">
+                    {requirement.count} 완료
+                  </span>
+                </p>
+              </div>
+            ))}
         </BottomSheet.Body>
         <BottomSheet.Footer>
           <div>
-            {isRepresentative ? (
+            {!completed ? (
+              <Button
+                variant="tertiary"
+                type="button"
+                onClick={() => onOpenChange(false)}
+              >
+                닫기
+              </Button>
+            ) : isRepresentative ? (
               <Button variant="secondary" type="button" onClick={onDelete}>
                 대표 컬렉션에서 해제
               </Button>

@@ -1,12 +1,11 @@
 'use client';
 
+import type { CollectionTab, CollectionTabId } from '@/entities/collection';
 import { COLLECTION_TABS } from '@/entities/collection';
-import { CollectionTab } from '@/entities/collection/model/collection.types';
 import { cn } from '@/shared/utils/cn';
-import { CollectionTabId } from '@/views/mycollections/ui/collection-page';
 
 interface CollectionTabsProps {
-  selectedId: string;
+  selectedId: CollectionTabId;
   onSelect: (id: CollectionTabId) => void;
 }
 
@@ -15,7 +14,7 @@ export const CollectionTabs = ({
   onSelect,
 }: CollectionTabsProps) => {
   return (
-    <div className="mt-5 flex justify-around border-b border-gray-200">
+    <li className="mt-5 flex justify-around border-b border-gray-200">
       {COLLECTION_TABS.map((tab: CollectionTab) => (
         <button
           key={tab.id}
@@ -30,6 +29,6 @@ export const CollectionTabs = ({
           {tab.title}
         </button>
       ))}
-    </div>
+    </li>
   );
 };

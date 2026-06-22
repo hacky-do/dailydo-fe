@@ -16,9 +16,11 @@ const FALLBACK_IMAGE = '/mocks/images/test_image.png';
 
 export const CollectionSkeleton = () => {
   return (
-    <li className="flex flex-col items-center gap-1 rounded-2xl bg-white py-2 text-sm font-semibold">
-      <Skeleton variant="lg" />
-      <TextSkeleton variant="sm" className="w-20" />
+    <li>
+      <div className="flex h-24 w-full flex-col items-center justify-center gap-1">
+        <Skeleton variant="lg" />
+        <TextSkeleton variant="xs" className="w-14" />
+      </div>
     </li>
   );
 };

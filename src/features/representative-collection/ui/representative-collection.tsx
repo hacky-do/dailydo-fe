@@ -3,34 +3,29 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { useDeleteUserCollection } from '@/entities/collection/api/collection.queries';
-import { UserCollection } from '@/entities/collection/model/collection.types';
+import type { UserCollection } from '@/entities/collection';
+import { useDeleteUserCollection } from '@/entities/collection';
 import { useToast } from '@/shared/ui/toast';
 
 import { RepresentativeCollectionBottomSheet } from './representative-collection-bottom-sheet';
 
 interface RepresentativeCollectionProps {
-  userCollections?: UserCollection | null;
-  defaultImage: string;
-  defaultTitle: string;
+  userCollection?: UserCollection | null;
+  isPending: boolean;
 }
 
 export const RepresentativeCollection = ({
-  defaultImage,
-  defaultTitle,
-  userCollections,
+  userCollection,
+  isPending,
 }: RepresentativeCollectionProps) => {
   const [open, setIsOpen] = useState(false);
 
   const { mutate: deleteUserCollection } = useDeleteUserCollection();
   const { toast } = useToast();
 
-  const image = userCollections?.image ?? defaultImage;
-  const title = userCollections?.title ?? defaultTitle;
-
   const handleDeleteCollection = () => {
-    if (!userCollections) return;
-    deleteUserCollection(userCollections.id, {
+    if (!userCollection) return;
+    deleteUserCollection(userCollection.id, {
       onSuccess: () => {
         toast({
           message: '대표 컬렉션 설정이 해제되었습니다.',
@@ -50,8 +45,9 @@ export const RepresentativeCollection = ({
   return (
     <>
       <button
-        className="flex flex-col items-center pt-4"
-        onClick={() => userCollections && setIsOpen(true)}
+        className="relative flex flex-col items-center pt-4"
+        onClick={() => userCollection && setIsOpen(true)}
+        disabled={!userCollection}
         type="button"
       >
         <h4 className="z-10 -mb-2 rounded-xl bg-white px-2 py-1 text-sm font-bold text-green-600 shadow">
@@ -61,29 +57,33 @@ export const RepresentativeCollection = ({
           <div className="absolute h-38 w-38 rounded-full border-[6px] border-green-500" />
           <div className="absolute h-34.5 w-34.5 rounded-full border-[6px] border-green-400" />
           <div className="relative flex h-31.5 w-31.5 items-center justify-center overflow-hidden rounded-full bg-green-100">
-            <Image
-              src={image}
-              alt=""
-              width={80}
-              height={80}
-              className="object-cover"
-              sizes="80px"
-            />
+            {userCollection && (
+              <Image
+                src={userCollection.image}
+                alt=""
+                width={80}
+                height={80}
+                className="object-cover"
+                sizes="80px"
+              />
+            )}
           </div>
         </div>
-        <p className="z-10 -m-2 rounded-sm bg-green-600 px-2 py-1 text-xs font-semibold text-white">
-          {title}
-        </p>
+        {!isPending && (
+          <p className="absolute -bottom-4 z-10 rounded-sm bg-green-600 px-2 py-1 text-xs font-semibold whitespace-nowrap text-white">
+            {userCollection?.title ?? '대표 컬렉션이 설정되지 않았어요.'}
+          </p>
+        )}
       </button>
 
-      {userCollections && (
+      {userCollection && (
         <RepresentativeCollectionBottomSheet
           open={open}
           onOpenChange={setIsOpen}
-          id={userCollections.id}
-          title={userCollections.title}
-          description={userCollections.description}
-          image={userCollections.image}
+          id={userCollection.id}
+          title={userCollection.title}
+          description={userCollection.description}
+          image={userCollection.image}
           onDelete={handleDeleteCollection}
         />
       )}

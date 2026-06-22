@@ -1,7 +1,9 @@
-import { CollectionBox, CollectionSkeleton } from '@/entities/collection';
-import { useGetCollections } from '@/entities/collection/api/collection.queries';
-import { CollectionItem } from '@/entities/collection/model/collection.types';
-import { CollectionTabId } from '@/views/mycollections/ui/collection-page';
+import type { CollectionItem, CollectionTabId } from '@/entities/collection';
+import {
+  CollectionBox,
+  CollectionSkeleton,
+  useGetCollections,
+} from '@/entities/collection';
 
 const SKELETON_COUNT = 9;
 
