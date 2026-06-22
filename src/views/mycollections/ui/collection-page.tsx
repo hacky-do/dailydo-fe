@@ -1,12 +1,31 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
-import { CollectionTabId } from '@/entities/collection';
-import { useGetUserCollection } from '@/entities/collection';
+import { CollectionTabId, useGetUserCollection } from '@/entities/collection';
 import { RepresentativeCollection } from '@/features/representative-collection';
 import { FallbackUI } from '@/shared/ui/fallback-ui';
 import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
+
+const DECO_IMAGES = [
+  {
+    src: '/landing/collections/deco-0.png',
+    className: 'absolute top-4 left-[13%] rotate-[7.412deg] opacity-[0.3]',
+  },
+  {
+    src: '/landing/collections/deco-1.png',
+    className: 'absolute top-4 right-[6%] rotate-[-10.845deg] opacity-[0.3]',
+  },
+  {
+    src: '/landing/collections/deco-2.png',
+    className: 'absolute bottom-4 left-[16%] rotate-[-8.718deg] opacity-[0.3]',
+  },
+  {
+    src: '/landing/collections/deco-3.png',
+    className: 'absolute bottom-4 right-[6%]  rotate-[10.195deg] opacity-[0.3]',
+  },
+];
 
 export default function CollectionPage() {
   const [collectionsTab, setCollectionsTab] = useState<CollectionTabId>('all');
@@ -24,10 +43,24 @@ export default function CollectionPage() {
 
   return (
     <div className="mt-5 flex h-full flex-col items-center justify-center">
-      <RepresentativeCollection
-        userCollection={userCollection}
-        isPending={isPending}
-      />
+      <div className="relative flex w-full items-center justify-center">
+        {DECO_IMAGES.map(({ src, className }) => (
+          <Image
+            key={src}
+            src={src}
+            alt=""
+            width={60}
+            height={60}
+            className={className}
+            loading={'eager'}
+            sizes="60px"
+          />
+        ))}
+        <RepresentativeCollection
+          userCollection={userCollection}
+          isPending={isPending}
+        />
+      </div>
       <ul className="mt-13 flex w-full flex-1 flex-col gap-5 rounded-t-4xl bg-white px-4">
         <CollectionTabs
           selectedId={collectionsTab}

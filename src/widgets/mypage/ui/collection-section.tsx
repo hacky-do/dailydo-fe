@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { useGetUserCollection } from '@/entities/collection/api/collection.queries';
+import { useGetUserCollection } from '@/entities/collection';
 import { ROUTES } from '@/shared/config/routes';
 import ChevronRight from '@/shared/ui/icons/mypage/chevron_right.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';

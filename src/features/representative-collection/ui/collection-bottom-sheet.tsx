@@ -48,7 +48,7 @@ export const CollectionBottomSheet = ({
             </span>
           </div>
 
-          {completed ? (
+          {completed && src ? (
             <Image
               src={src}
               alt=""

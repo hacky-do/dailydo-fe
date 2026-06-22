@@ -30,7 +30,7 @@ export const CollectionGrid = ({
   const filteredItems = filterByTab[collectionsTab](allItems);
 
   return (
-    <ul className="grid max-h-[calc(100vh-345px)] flex-1 grid-cols-3 grid-rows-[min-content] gap-5 overflow-auto pb-4">
+    <ul className="grid max-h-[calc(100vh-345px)] flex-1 grid-cols-3 content-start gap-5 overflow-auto pb-4">
       {isPending
         ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
             <CollectionSkeleton key={i} />
