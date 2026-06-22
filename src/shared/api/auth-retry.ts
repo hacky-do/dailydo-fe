@@ -31,7 +31,7 @@ const tryLogout = (): Promise<void> => {
 
   loggedOut = true;
 
-  loggingOut = fetch(`${BASE_URL}/auth`, {
+  loggingOut = fetch(`${BASE_URL}${AUTH_ENDPOINTS.BASE}`, {
     method: 'DELETE',
     credentials: 'include',
   })
