@@ -47,7 +47,6 @@ export const CollectionBox = ({
   const handleDeleteCollection = () => {
     deleteUserCollection(String(id), {
       onSuccess: () => {
-        console.log(45);
         toast({
           message: '대표 컬렉션 설정이 해제되었습니다.',
           type: 'success',
