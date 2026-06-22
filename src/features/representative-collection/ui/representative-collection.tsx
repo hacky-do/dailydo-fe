@@ -3,9 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import {
-  useDeleteUserCollection,
-} from '@/entities/collection/api/collection.queries';
+import { useDeleteUserCollection } from '@/entities/collection/api/collection.queries';
 import { UserCollection } from '@/entities/collection/model/collection.types';
 import { useToast } from '@/shared/ui/toast';
 
@@ -35,7 +33,10 @@ export const RepresentativeCollection = ({
     if (!userCollections) return;
     deleteUserCollection(userCollections.id, {
       onSuccess: () => {
-        toast({ message: '대표 컬렉션 설정이 해제되었습니다.', type: 'success' });
+        toast({
+          message: '대표 컬렉션 설정이 해제되었습니다.',
+          type: 'success',
+        });
         setIsOpen(false);
       },
     });

@@ -7,7 +7,9 @@ export const getCollections = () =>
 
 export const getUserCollection = async (): Promise<UserCollection | null> => {
   try {
-    return await clientApi.get<UserCollection>('/api/users/me/collections/featured');
+    return await clientApi.get<UserCollection>(
+      '/api/users/me/collections/featured',
+    );
   } catch {
     return null;
   }
