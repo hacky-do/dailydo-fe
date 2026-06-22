@@ -48,18 +48,29 @@ export const useDeleteUserCollection = () => {
   return useMutation({
     mutationFn: (collectionId: string) => deleteUserCollection(collectionId),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: collectionQueryKeys.userCollection });
-      const previousUserCollection = queryClient.getQueryData(collectionQueryKeys.userCollection);
+      await queryClient.cancelQueries({
+        queryKey: collectionQueryKeys.userCollection,
+      });
+      const previousUserCollection = queryClient.getQueryData(
+        collectionQueryKeys.userCollection,
+      );
       queryClient.setQueryData(collectionQueryKeys.userCollection, null);
       return { previousUserCollection };
     },
     onError: (_err, _collectionId, context) => {
-      queryClient.setQueryData(collectionQueryKeys.userCollection, context?.previousUserCollection);
+      queryClient.setQueryData(
+        collectionQueryKeys.userCollection,
+        context?.previousUserCollection,
+      );
     },
     onSettled: async () => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: collectionQueryKeys.userCollection }),
-        queryClient.invalidateQueries({ queryKey: collectionQueryKeys.collections }),
+        queryClient.invalidateQueries({
+          queryKey: collectionQueryKeys.userCollection,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: collectionQueryKeys.collections,
+        }),
       ]);
     },
   });

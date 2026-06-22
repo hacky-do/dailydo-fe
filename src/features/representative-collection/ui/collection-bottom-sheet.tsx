@@ -66,7 +66,7 @@ export const CollectionBottomSheet = ({
 
           {requirements.map((requirement) => (
             <div key={requirement.missionId} className="flex flex-col">
-              <p className="text-xs text-gray-500 font-normal">
+              <p className="text-xs font-normal text-gray-500">
                 {requirement.title}{' '}
                 <span className="font-semibold">{requirement.count} 완료</span>
               </p>
