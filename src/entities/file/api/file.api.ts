@@ -16,7 +16,6 @@ export const uploadFile = async (file: File): Promise<string> => {
         maxSizeMB: 2,
         maxWidthOrHeight: 1920,
         useWebWorker: true,
-        fileType: 'image/webp',
       });
     } catch (error) {
       console.error('[image compression failed]', error);
