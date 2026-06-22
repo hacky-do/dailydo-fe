@@ -11,15 +11,15 @@ export interface Collection {
   }[];
 }
 
+export interface CollectionTab {
+  id: 'all' | 'completed' | 'incomplete';
+  title: string;
+}
+
 export interface UserCollection {
   id: string;
   image: string;
   description: string;
-  title: string;
-}
-
-export interface CollectionTab {
-  id: number;
   title: string;
 }
 

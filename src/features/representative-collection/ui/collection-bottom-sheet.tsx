@@ -49,7 +49,14 @@ export const CollectionBottomSheet = ({
           </div>
 
           {completed ? (
-            <Image src={src} alt="" width={80} height={80} className="my-1" />
+            <Image
+              src={src}
+              alt=""
+              width={80}
+              height={80}
+              className="my-1"
+              sizes={'80'}
+            />
           ) : (
             <LockedIcon className="my-1 h-20 w-20" />
           )}

@@ -1,11 +1,22 @@
 import { CollectionBox, CollectionSkeleton } from '@/entities/collection';
 import { useGetCollections } from '@/entities/collection/api/collection.queries';
+import { CollectionItem } from '@/entities/collection/model/collection.types';
+import { CollectionTabId } from '@/views/mycollections/ui/collection-page';
 
 const SKELETON_COUNT = 9;
 
+const filterByTab: Record<
+  CollectionTabId,
+  (items: CollectionItem[]) => CollectionItem[]
+> = {
+  all: (items) => items,
+  completed: (items) => items.filter((c) => c.completed),
+  incomplete: (items) => items.filter((c) => !c.completed),
+};
+
 interface CollectionGridProps {
   userCollectionId?: string;
-  collectionsTab: number;
+  collectionsTab: CollectionTabId;
 }
 
 export const CollectionGrid = ({
@@ -14,15 +25,10 @@ export const CollectionGrid = ({
 }: CollectionGridProps) => {
   const { data: collectionsData, isPending } = useGetCollections();
   const allItems = collectionsData?.collections ?? [];
-  const filteredItems =
-    collectionsTab === 2
-      ? allItems.filter((c) => c.completed)
-      : collectionsTab === 3
-        ? allItems.filter((c) => !c.completed)
-        : allItems;
+  const filteredItems = filterByTab[collectionsTab](allItems);
 
   return (
-    <ul className="grid max-h-[calc(100vh-345px)] flex-1 grid-cols-3 gap-4 overflow-auto pb-4">
+    <ul className="grid max-h-[calc(100vh-345px)] flex-1 grid-cols-3 grid-rows-[min-content] gap-5 overflow-auto pb-4">
       {isPending
         ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
             <CollectionSkeleton key={i} />
