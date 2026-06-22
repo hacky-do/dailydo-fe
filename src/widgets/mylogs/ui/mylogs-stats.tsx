@@ -1,3 +1,5 @@
+import CountUp from 'react-countup';
+
 import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
 import { StatItem, StatItemSkeleton, StatList } from '@/shared/ui/stat-item';
 
@@ -32,17 +34,29 @@ export const MylogsStats = ({ logs }: MylogsStatsProps) => {
     <StatList>
       <StatItem
         label="미션 수행일수"
-        value={`${logs.length}일`}
+        value={
+          <>
+            <CountUp end={logs.length} duration={1.5} />일
+          </>
+        }
         valueClassName="text-green-600"
       />
       <StatItem
         label="미션 완료 횟수"
-        value={`${completedMissions}개`}
+        value={
+          <>
+            <CountUp end={completedMissions} duration={1.5} />개
+          </>
+        }
         valueClassName="text-green-700"
       />
       <StatItem
         label="평균 미션 완료율"
-        value={`${avgCompletionRate}%`}
+        value={
+          <>
+            <CountUp end={avgCompletionRate} duration={1.5} />%
+          </>
+        }
         valueClassName="text-green-500"
       />
     </StatList>
