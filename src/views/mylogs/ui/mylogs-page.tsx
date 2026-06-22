@@ -13,11 +13,13 @@ import Link from 'next/link';
 
 import { useGetMe } from '@/entities/user';
 import { Calendar, useGetMyLogs } from '@/features/mylogs';
+import { ROUTES } from '@/shared/config/routes';
 import { FallbackUI } from '@/shared/ui/fallback-ui';
 import ArrowLeft from '@/shared/ui/icons/mylogs/arrow_left.svg';
 import ArrowRight from '@/shared/ui/icons/mylogs/arrow_right.svg';
 import Graph from '@/shared/ui/icons/mylogs/graph.svg';
 import LightBulb from '@/shared/ui/icons/mylogs/light-bulb.svg';
+import Today from '@/shared/ui/icons/mylogs/today.svg';
 import { cn } from '@/shared/utils/cn';
 import {
   MylogsStats,
@@ -72,7 +74,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
       <div className="w-full px-4">
         <nav aria-label="월 탐색" className="flex items-center">
           <Link
-            href={`/mylogs?month=${prevMonth}`}
+            href={`${ROUTES.MYLOG}?month=${prevMonth}`}
             aria-label="이전 달로 이동"
             aria-disabled={isSignupMonth || userLoading}
             className={cn(
@@ -86,7 +88,7 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
             {year}년 {monthNum}월
           </h2>
           <Link
-            href={`/mylogs?month=${nextMonth}`}
+            href={`${ROUTES.MYLOG}?month=${nextMonth}`}
             aria-label="다음 달로 이동"
             aria-disabled={isCurrentMonth || userLoading}
             className={cn(
@@ -96,7 +98,16 @@ export const MylogsPage = ({ month }: MylogsPageProps) => {
           >
             <ArrowRight width={24} className="text-white" aria-hidden />
           </Link>
+
+          <Link
+            href={`${ROUTES.MYLOG}?month=${format(new Date(), 'yyyy-MM')}`}
+            className="ml-auto flex gap-1 rounded-lg bg-green-600 px-2 py-1 text-sm font-bold text-white"
+          >
+            <span className="shrink-0">오늘</span>
+            <Today width={14} />
+          </Link>
         </nav>
+
         <section
           className="mt-4 mb-5 flex flex-col gap-3"
           aria-label="사용자 리포트"
