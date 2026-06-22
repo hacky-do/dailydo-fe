@@ -1,7 +1,8 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
+
+import { useHydrated } from '@/shared/lib/use-hydrated';
 
 import { Toast } from './toast';
 import { useToastStore } from './toast.store';
@@ -10,17 +11,11 @@ import { useToastStore } from './toast.store';
 // 컨테이너
 // ─────────────────────────────────────────────
 
-const noop = () => () => {};
-
 function ToastContainer() {
   const items = useToastStore((state) => state.items);
   const { close, pauseTimer, resumeTimer } = useToastStore.getState();
 
-  const mounted = useSyncExternalStore(
-    noop,
-    () => true,
-    () => false,
-  );
+  const mounted = useHydrated();
 
   if (!mounted) return null;
 
