@@ -3,6 +3,7 @@ export interface Collection {
   src: string;
   title: string;
   description: string;
+  acquisitionRate?: number;
   requirements: {
     missionId: number;
     title: string;

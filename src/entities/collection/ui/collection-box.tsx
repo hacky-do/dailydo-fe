@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { CollectionBottomSheet } from '@/features/representative-collection';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
+import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 import { useToast } from '@/shared/ui/toast';
 
 import {
@@ -12,6 +13,15 @@ import {
 import { Collection } from '../model/collection.types';
 
 const FALLBACK_IMAGE = '/mocks/images/test_image.png';
+
+export const CollectionSkeleton = () => {
+  return (
+    <li className="flex flex-col items-center gap-1 rounded-2xl bg-white py-2 text-sm font-semibold">
+      <Skeleton variant="sm" className="size-20" />
+      <TextSkeleton variant="sm" className="w-20" />
+    </li>
+  );
+};
 
 interface CollectionBoxProps extends Collection {
   isRepresentative?: boolean;
@@ -26,6 +36,7 @@ export const CollectionBox = ({
   requirements,
   isRepresentative = false,
   completed = false,
+  acquisitionRate,
 }: CollectionBoxProps) => {
   const [open, setIsOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState(src || FALLBACK_IMAGE);
@@ -89,6 +100,7 @@ export const CollectionBox = ({
         isRepresentative={isRepresentative}
         onPost={handlePostCollection}
         onDelete={handleDeleteCollection}
+        acquisitionRate={acquisitionRate}
       />
     </>
   );

@@ -9,20 +9,19 @@ import { useToast } from '@/shared/ui/toast';
 
 import { CollectionBottomSheet } from './collection-bottom-sheet';
 
-const FALLBACK_IMAGE = '/mocks/images/test_image.png';
-
 interface RepresentativeCollectionProps {
-  userCollections?: UserCollection;
+  userCollections?: UserCollection | null;
   defaultImage: string;
   defaultTitle: string;
 }
 
 export const RepresentativeCollection = ({
-  userCollections,
   defaultImage,
   defaultTitle,
+  userCollections,
 }: RepresentativeCollectionProps) => {
   const [open, setIsOpen] = useState(false);
+
   const { mutate: deleteUserCollection } = useDeleteUserCollection();
   const { toast } = useToast();
 
@@ -78,7 +77,7 @@ export const RepresentativeCollection = ({
           title={userCollections.title}
           description={userCollections.description}
           completed={true}
-          src={userCollections.image ?? FALLBACK_IMAGE}
+          src={userCollections.image}
           isRepresentative={true}
           onPost={() => {}}
           onDelete={handleDeleteCollection}

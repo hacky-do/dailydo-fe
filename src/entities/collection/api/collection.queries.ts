@@ -22,7 +22,6 @@ export const useGetUserCollection = () =>
     queryFn: getUserCollection,
     gcTime: 0,
     staleTime: 0,
-    retry: false,
   });
 
 export const usePostUserCollection = (options?: { onSuccess?: () => void }) => {
