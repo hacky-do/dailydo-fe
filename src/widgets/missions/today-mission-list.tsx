@@ -8,11 +8,13 @@ import type { Swiper as SwiperClass } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { usePostTodayMissions } from '@/entities/missions/api/mission.queries';
+import { MISSION_TOAST_MESSAGES } from '@/entities/missions/model/mission.constants';
 import { MissionItem } from '@/entities/missions/model/mission.types';
 import { useMissionCardState } from '@/entities/missions/model/use-mission-card-state';
 import { Card } from '@/features/card';
 import { useCard } from '@/features/card/card-context';
 import { Button } from '@/shared/ui/button';
+import { useToast } from '@/shared/ui/toast';
 import { cn } from '@/shared/utils/cn';
 import {
   categoryBadgeStyles,
@@ -180,6 +182,7 @@ export const TodayMissionList = ({
   maxSelectableCount,
 }: TodayMissionListProps) => {
   const { mutate: postTodayMissions, isPending } = usePostTodayMissions();
+  const { toast } = useToast();
   const swiperRef = useRef<SwiperClass | null>(null);
   const [activeRealIndex, setActiveRealIndex] = useState(0);
 
@@ -187,7 +190,10 @@ export const TodayMissionList = ({
 
   const handleSelect = (id: number) => {
     if (maxSelectableCount === undefined) return;
-    if (selectedMissionIds.length >= maxSelectableCount) return;
+    if (selectedMissionIds.length >= maxSelectableCount) {
+      toast({ type: 'error', message: MISSION_TOAST_MESSAGES.maxSelectError });
+      return;
+    }
     setSelectedMissionIds((prev) => [...prev, id]);
   };
 

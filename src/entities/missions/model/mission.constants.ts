@@ -9,4 +9,5 @@ export const MISSION_TOAST_MESSAGES = {
   uploadError: '사진 업로드에 실패했어요. 다시 시도해주세요.',
   mylogError: '마이로그 작성에 실패했어요. 다시 시도해주세요.',
   completeError: '미션 완료에 실패했어요. 다시 시도해주세요.',
+  maxSelectError: '미션은 최대 5개까지만 선택할 수 있어요.',
 } as const;
