@@ -50,7 +50,7 @@ const MyMissionBackContent = ({
         {mission.title}
       </p>
       <Image
-        src={mission?.mylog?.photo || '/mocks/images/test_image.png'}
+        src={mission.completed ? mission.mylog!.photo : mission.image}
         alt={mission.title}
         width={147}
         height={147}

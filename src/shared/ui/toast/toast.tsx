@@ -185,7 +185,7 @@ export const Toast = ({
       {...ariaProps}
       {...pauseHandlers}
       {...dragHandlers}
-      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 select-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:cursor-grabbing"
+      className="pointer-events-auto inline-flex cursor-grab touch-none items-center justify-center gap-2.5 overflow-hidden rounded-[10px] bg-black/80 px-6 py-3 whitespace-nowrap select-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:cursor-grabbing"
       style={style}
     >
       <p className="justify-start text-xs leading-4 font-semibold text-white">
