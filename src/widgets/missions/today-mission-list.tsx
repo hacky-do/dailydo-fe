@@ -262,6 +262,7 @@ export const TodayMissionList = ({
           ))}
         </Swiper>
       </div>
+      <div className="flex-2" />
       <div className="mt-auto w-full shrink-0 px-8 pb-9.5">
         <Button
           variant="primary"
