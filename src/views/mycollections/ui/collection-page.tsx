@@ -26,7 +26,7 @@ export default function CollectionPage() {
   return (
     <div className="mt-5 flex h-full flex-col items-center justify-center">
       <RepresentativeCollection
-        userCollections={userCollections}
+        userCollections={userCollections ?? undefined}
         defaultImage="/mocks/images/test_image.png"
         defaultTitle="대표 컬렉션이 설정되지 않았어요"
       />
