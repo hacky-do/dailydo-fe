@@ -37,9 +37,10 @@ export const CollectionBottomSheet = ({
     <BottomSheet.Root open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Content>
         <BottomSheet.Header></BottomSheet.Header>
+        <BottomSheet.Title></BottomSheet.Title>
         <BottomSheet.Body className="mb-8 flex flex-col items-center justify-center">
           <div
-            className="flex flex-col items-center justify-center gap-0.5"
+            className="flex flex-col items-center justify-center gap-2"
             key={id}
           >
             <h1 className="text-lg font-semibold">{title}</h1>

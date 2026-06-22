@@ -65,9 +65,9 @@ export const RepresentativeCollection = ({
             />
           </div>
         </div>
-        <div className="z-10 -m-2 rounded-sm bg-green-600 px-2 py-1 text-white">
-          <span className="text-xs font-semibold">{title}</span>
-        </div>
+        <p className="z-10 -m-2 rounded-sm bg-green-600 px-2 py-1 text-xs font-semibold text-white">
+          {title}
+        </p>
       </div>
 
       {userCollections && (
