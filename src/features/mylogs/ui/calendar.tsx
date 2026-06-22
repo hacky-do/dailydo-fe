@@ -105,7 +105,7 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
           return (
             <Link
               key={dateStr}
-              href={`${ROUTES.MYLOG}/${dateStr}`}
+              href={`${ROUTES.MYLOG_DETAIL}?date=${dateStr}`}
               prefetch={false}
               aria-label={`${format(day, 'yyyy년 M월 d일')}, 완료 ${count}개`}
               className={cn(

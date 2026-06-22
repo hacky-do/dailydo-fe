@@ -30,11 +30,11 @@ interface RegisterRequestBody {
 }
 
 export const handlers = [
-  http.post(`${BASE_URL}/auth/social/token`, () => {
+  http.post(`${BASE_URL}${AUTH_ENDPOINTS.SOCIAL_TOKEN}`, () => {
     return HttpResponse.json({ type: 'google', token: 'mock-social-token' });
   }),
 
-  http.post(`${BASE_URL}/auth/social`, async ({ request }) => {
+  http.post(`${BASE_URL}${AUTH_ENDPOINTS.SOCIAL}`, async ({ request }) => {
     const { type } = (await request.json()) as SocialLoginRequestBody;
     if (
       type === 'google' &&
@@ -51,7 +51,7 @@ export const handlers = [
     });
   }),
 
-  http.post(`${BASE_URL}/auth`, () => {
+  http.post(`${BASE_URL}${AUTH_ENDPOINTS.BASE}`, () => {
     return withAuthCookie({
       id: 1,
       accessToken: MOCK_ACCESS_TOKEN,
@@ -69,7 +69,7 @@ export const handlers = [
     });
   }),
 
-  http.post(`${BASE_URL}/auth/register`, async ({ request }) => {
+  http.post(`${BASE_URL}${AUTH_ENDPOINTS.REGISTER}`, async ({ request }) => {
     const { name } = (await request.json()) as RegisterRequestBody;
     return withAuthCookie({
       userId: 1,

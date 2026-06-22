@@ -30,8 +30,8 @@ export const useSocialLoginCallback = () => {
   const user = searchParams.get('user');
   const error = searchParams.get('error');
 
-  const { mutate: login } = useSocialLogin();
-  const { mutate: register } = useRegister();
+  const { mutateAsync: login } = useSocialLogin();
+  const { mutateAsync: register } = useRegister();
 
   useEffect(() => {
     if (error) {
@@ -44,52 +44,46 @@ export const useSocialLoginCallback = () => {
       return;
     }
 
-    login(
-      { type, socialToken: token },
-      {
-        onSuccess: () => {
-          resetAuthState();
-          setLastLogin(type);
-          toast({ message: '다시 돌아오신 것을 환영해요!', type: 'success' });
-          router.replace(ROUTES.MISSIONS);
-        },
-        onError: (err: unknown) => {
-          if (err instanceof ApiError && err.code === 404) {
-            const socialUser = parseSocialUser(user);
-            if (!socialUser) {
-              router.replace(`${ROUTES.LOGIN}?auth_error`);
-              return;
-            }
-            const { email, name, profileImage } = socialUser;
-            register(
-              {
-                email,
-                name,
-                profileImage,
-                type,
-                socialToken: token,
-                agreeMarketing: true,
-              },
-              {
-                onSuccess: () => {
-                  resetAuthState();
-                  setLastLogin(type);
-                  toast({
-                    message: '데일리두에 오신 것을 환영해요!',
-                    type: 'success',
-                  });
-                  router.replace(ROUTES.MISSIONS);
-                },
-                onError: () => {
-                  router.replace(`${ROUTES.LOGIN}?auth_error`);
-                },
-              },
-            );
-            return;
-          }
-          router.replace(`${ROUTES.LOGIN}?auth_error`);
-        },
-      },
-    );
+    const goAuthError = () => router.replace(`${ROUTES.LOGIN}?auth_error`);
+
+    const completeLogin = (message: string) => {
+      resetAuthState();
+      setLastLogin(type);
+      toast({ message, type: 'success' });
+      router.replace(ROUTES.MISSIONS);
+    };
+
+    const run = async () => {
+      try {
+        await login({ type, socialToken: token });
+        completeLogin('다시 돌아오신 것을 환영해요!');
+      } catch (err) {
+        // 미가입 사용자(404)는 소셜 프로필로 즉시 가입시킨 뒤 로그인 처리한다
+        if (!(err instanceof ApiError) || err.code !== 404) {
+          goAuthError();
+          return;
+        }
+
+        const socialUser = parseSocialUser(user);
+        if (!socialUser) {
+          goAuthError();
+          return;
+        }
+
+        try {
+          await register({
+            ...socialUser,
+            type,
+            socialToken: token,
+            agreeMarketing: true,
+          });
+          completeLogin('데일리두에 오신 것을 환영해요!');
+        } catch {
+          goAuthError();
+        }
+      }
+    };
+
+    run();
   }, [error, login, register, router, setLastLogin, token, type, user, toast]);
 };

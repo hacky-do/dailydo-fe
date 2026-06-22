@@ -1,5 +1,6 @@
 import {
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
@@ -17,7 +18,6 @@ import {
   postCompleteMission,
   postTodayMissions,
 } from './mission.api';
-
 export const useGetTodayMissions = () =>
   useSuspenseQuery({
     queryKey: missionQueryKeys.todayMissions,
@@ -28,6 +28,13 @@ export const useGetTodayMissions = () =>
 
 export const useGetMyMissions = () =>
   useSuspenseQuery({
+    queryKey: missionQueryKeys.myMissions,
+    queryFn: getMyMissions,
+  });
+
+// TODO: 임시로 사용, 추후 삭제
+export const useGetMyMissionsQuery = () =>
+  useQuery({
     queryKey: missionQueryKeys.myMissions,
     queryFn: getMyMissions,
   });

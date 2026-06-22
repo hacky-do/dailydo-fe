@@ -63,7 +63,7 @@ const Content = ({
     <Drawer.Content
       aria-describedby={undefined}
       className={cn(
-        'fixed bottom-0 left-1/2 z-200 flex max-h-[95dvh] w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-3xl bg-white px-6 outline-none',
+        'fixed bottom-0! left-1/2 z-200 flex max-h-[95dvh] min-h-fit w-full max-w-107.5 -translate-x-1/2 flex-col rounded-t-3xl bg-white px-6 outline-none',
         className,
       )}
       {...props}

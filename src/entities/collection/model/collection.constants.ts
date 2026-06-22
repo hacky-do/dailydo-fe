@@ -5,3 +5,8 @@ export const COLLECTION_TABS: CollectionTab[] = [
   { id: 2, title: '획득한 컬렉션' },
   { id: 3, title: '미획득한 컬렉션' },
 ];
+
+export const collectionQueryKeys = {
+  collections: ['collections'],
+  userCollection: ['user-collection'],
+} as const;

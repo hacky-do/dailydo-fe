@@ -6,6 +6,7 @@ const config = {
       'always',
       ['feat', 'fix', 'design', 'docs', 'refactor', 'style', 'chore', 'test'],
     ],
+    'subject-case': [0],
   },
 };
 

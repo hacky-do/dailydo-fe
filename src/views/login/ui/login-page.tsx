@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { useSessionStore } from '@/entities/session';
+import { SOCIAL_LOGIN_TYPES, useSessionStore } from '@/entities/session';
 import { LoginButton } from '@/features/auth';
 import { ROUTES } from '@/shared/config/routes';
+import { useHydrated } from '@/shared/lib/use-hydrated';
 import DailyDoLogo from '@/shared/ui/icons/common/dailydo_logo.svg';
 import Logo from '@/shared/ui/icons/common/logo.svg';
 import DecoCircle from '@/shared/ui/icons/login/deco_circle.svg';
@@ -17,35 +18,14 @@ import DecoLocation from '@/shared/ui/icons/login/deco_location.svg';
 import DecoStar from '@/shared/ui/icons/login/deco_star.svg';
 import { useToast } from '@/shared/ui/toast/use-toast';
 
-const RecentLoginBadge = () => {
-  return (
-    <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 animate-bounce flex-col items-center">
-      <div className="rounded-3xl bg-[rgba(0,0,0,0.8)] px-3 py-1.5 whitespace-nowrap">
-        <p className="text-sm leading-5 font-medium text-white">
-          최근에 로그인했어요
-        </p>
-      </div>
-      <div
-        className="h-0 w-0"
-        style={{
-          borderLeft: '6px solid transparent',
-          borderRight: '6px solid transparent',
-          borderTop: '6px solid rgba(0,0,0,0.8)',
-        }}
-      />
-    </div>
-  );
-};
+import { RecentLoginBadge } from './recent-login-badge';
 
 export const LoginPage = () => {
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const recentLogin = useSyncExternalStore(
-    useSessionStore.subscribe,
-    () => useSessionStore.getState().lastLogin,
-    () => null,
-  );
+  const hydrated = useHydrated();
+  const recentLogin = useSessionStore((s) => s.lastLogin);
 
   const authError = searchParams.get('auth_error');
   const handledRef = useRef(false);
@@ -115,6 +95,7 @@ export const LoginPage = () => {
             loading="eager"
             sizes="(max-width: 768px) 100vw, 70vw"
             fill
+            priority
           />
         </div>
       </section>
@@ -123,14 +104,12 @@ export const LoginPage = () => {
 
       {/* 로그인 버튼 */}
       <div className="relative z-10 flex flex-col gap-4 px-5">
-        <div className="relative">
-          <LoginButton type="google" />
-          {recentLogin === 'google' && <RecentLoginBadge />}
-        </div>
-        <div className="relative">
-          <LoginButton type="naver" />
-          {recentLogin === 'naver' && <RecentLoginBadge />}
-        </div>
+        {SOCIAL_LOGIN_TYPES.map((social) => (
+          <div key={social} className="relative">
+            <LoginButton type={social} />
+            {hydrated && recentLogin === social && <RecentLoginBadge />}
+          </div>
+        ))}
         <LoginButton type="guest" />
       </div>
     </div>

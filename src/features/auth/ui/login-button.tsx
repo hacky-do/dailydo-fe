@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { SocialLoginType } from '@/entities/session';
 import { BASE_URL } from '@/shared/api';
+import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 import { ROUTES } from '@/shared/config/routes';
 import Google from '@/shared/ui/icons/auth/google.svg';
 import Naver from '@/shared/ui/icons/auth/naver.svg';
@@ -54,7 +55,7 @@ export const LoginButton = ({ type, className }: LoginButtonProps) => {
       return;
     }
     const redirectUri = `${window.location.origin}${ROUTES.AUTH_CALLBACK}`;
-    window.location.href = `${BASE_URL}/auth/oauth2?type=${type}&redirectUri=${encodeURIComponent(redirectUri)}`;
+    window.location.href = `${BASE_URL}${AUTH_ENDPOINTS.OAUTH}?type=${type}&redirectUri=${encodeURIComponent(redirectUri)}`;
   };
 
   return (

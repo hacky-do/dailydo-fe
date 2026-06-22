@@ -5,13 +5,14 @@ import {
   SocialTokenResponse,
 } from '@/entities/session';
 import { API_ERRORS, ApiError, clientApi } from '@/shared/api';
+import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 
 export const verifySocialToken = async (
   type: SocialLoginType,
   socialToken: string,
 ): Promise<SocialTokenResponse> => {
   const result = await clientApi.post<SocialTokenResponse>(
-    '/auth/social/token',
+    AUTH_ENDPOINTS.SOCIAL_TOKEN,
     {
       body: JSON.stringify({ type, socialToken }),
     },
@@ -25,7 +26,7 @@ export const socialLogin = (
   token: string,
   remember: boolean,
 ) =>
-  clientApi.post<SocialLoginResponse>('/auth/social', {
+  clientApi.post<SocialLoginResponse>(AUTH_ENDPOINTS.SOCIAL, {
     body: JSON.stringify({ type, token, remember }),
   });
 
@@ -40,7 +41,7 @@ export interface RegisterParams {
 
 // 소셜 인증 후 미가입 사용자를 소셜에서 받은 이메일/닉네임으로 즉시 가입시킨다
 export const register = (params: RegisterParams) =>
-  clientApi.post('/auth/register', {
+  clientApi.post(AUTH_ENDPOINTS.REGISTER, {
     body: JSON.stringify(params),
   });
 
@@ -49,10 +50,12 @@ export const emailLogin = (
   password: string,
   remember: boolean,
 ) =>
-  clientApi.post<SocialLoginResponse>('/auth', {
+  clientApi.post<SocialLoginResponse>(AUTH_ENDPOINTS.BASE, {
     body: JSON.stringify({ email, password, remember }),
   });
 
-export const emailLogout = () => clientApi.delete<SocialLoginResponse>('/auth');
+export const emailLogout = () =>
+  clientApi.delete<SocialLoginResponse>(AUTH_ENDPOINTS.BASE);
 
-export const getSession = () => clientApi.get<AuthResponse>('/auth');
+export const getSession = () =>
+  clientApi.get<AuthResponse>(AUTH_ENDPOINTS.BASE);

@@ -87,6 +87,7 @@
 
   --color-timer-text: #337aff;
   --color-bg-timer: rgba(24, 220, 255, 0.2);
+
   /* 그림자 */
   --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
   --shadow-card: 0 16px 16px 0 rgba(0, 0, 0, 0.12);
@@ -100,6 +101,7 @@
   --animate-marquee-right: marquee-right 20s linear infinite alternate;
 }
 
+/* ------- 레이아웃 ------- */
 @utility content-container {
   width: min(max(var(--min-content-width), 100%), var(--max-content-width));
   height: 100dvh;
@@ -108,6 +110,7 @@
   mask-origin: content-box;
 }
 
+/* ------- 그라디언트 배경 ------- */
 @utility bg-gradient-100 {
   background: linear-gradient(
     var(--gradient-dir, to top),
@@ -140,102 +143,9 @@
   );
 }
 
-@keyframes slide-up-fade-in {
-  from {
-    transform: translateY(1rem);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
+/* ------- 애니메이션 ------- */
 @utility animate-slide-up {
   animation: slide-up-fade-in 0.4s ease-out forwards;
-}
-
-@keyframes slide-up-fade-in {
-  from {
-    transform: translateY(1rem);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@utility animate-slide-up {
-  animation: slide-up-fade-in 0.4s ease-out forwards;
-}
-
-@keyframes shimmer {
-  from {
-    transform: translateX(0%) skewX(-20deg);
-  }
-
-  to {
-    transform: translateX(200%) skewX(-20deg);
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-
-  25% {
-    transform: translateY(-10px) rotate(-12deg) scale(1.1);
-  }
-
-  50% {
-    transform: translateY(-18px) rotate(12deg) scale(1.2);
-  }
-
-  75% {
-    transform: translateY(-8px) rotate(8deg) scale(1.1);
-  }
-
-  100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-}
-
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-
-  to {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes orbit-circle {
-  0% {
-    transform: rotate(0deg) translateX(50px) rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: rotate(180deg) translateX(50px) rotate(-180deg) scale(1.5);
-  }
-
-  100% {
-    transform: rotate(360deg) translateX(50px) rotate(-360deg) scale(1);
-  }
 }
 
 @utility scrollbar-hide {
@@ -268,6 +178,7 @@
   }
 }
 
+/* ------- 카드 패턴 ------- */
 @utility bg-basic-mission-card-pattern {
   background: linear-gradient(
     to top,
@@ -347,4 +258,125 @@
     );
   background-clip: padding-box, border-box;
   background-origin: border-box;
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/*
+순차 등장 애니메이션
+자식 요소를 지수 감쇠(1 - e^(-0.4·i)) × 0.5s 만큼 순차 지연시켜 등장시킴
+*/
+.is-animating > * {
+  opacity: 0;
+}
+
+.is-animating > *:nth-child(1) {
+  animation-delay: 0.165s;
+}
+.is-animating > *:nth-child(2) {
+  animation-delay: 0.275s;
+}
+.is-animating > *:nth-child(3) {
+  animation-delay: 0.349s;
+}
+.is-animating > *:nth-child(4) {
+  animation-delay: 0.399s;
+}
+.is-animating > *:nth-child(5) {
+  animation-delay: 0.432s;
+}
+.is-animating > *:nth-child(6) {
+  animation-delay: 0.455s;
+}
+.is-animating > *:nth-child(7) {
+  animation-delay: 0.47s;
+}
+.is-animating > *:nth-child(8) {
+  animation-delay: 0.48s;
+}
+.is-animating > *:nth-child(9) {
+  animation-delay: 0.486s;
+}
+.is-animating > *:nth-child(10) {
+  animation-delay: 0.491s;
+}
+
+.is-animating-vertical > * {
+  animation: slide-up-fade-in 0.4s ease forwards;
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(0%) skewX(-20deg);
+  }
+
+  to {
+    transform: translateX(200%) skewX(-20deg);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: translateY(-10px) rotate(-12deg) scale(1.1);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(12deg) scale(1.2);
+  }
+
+  75% {
+    transform: translateY(-8px) rotate(8deg) scale(1.1);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes orbit-circle {
+  0% {
+    transform: rotate(0deg) translateX(50px) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) translateX(50px) rotate(-180deg) scale(1.5);
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg) scale(1);
+  }
 }

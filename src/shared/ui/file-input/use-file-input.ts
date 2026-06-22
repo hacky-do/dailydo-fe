@@ -1,11 +1,5 @@
 import { useState } from 'react';
 
-/**
- * @example
- * const { file, handleChange } = useFileInput();
- *
- * <FileInput onChange={handleChange} />
- */
 export const useFileInput = () => {
   const [file, setFile] = useState<File | null>(null);
 

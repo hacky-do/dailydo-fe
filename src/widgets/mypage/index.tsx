@@ -1,6 +1,7 @@
 export * from './lib/profile-edit-schema';
 export * from './ui/category-bottom-sheet';
 export * from './ui/category-section';
+export * from './ui/collection-section';
 export * from './ui/mission-status-section';
 export * from './ui/my-status-section';
 export * from './ui/mypage.styles';

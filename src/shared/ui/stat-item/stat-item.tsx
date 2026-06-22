@@ -8,7 +8,7 @@ export const StatList = ({ children }: { children: React.ReactNode }) => (
 
 interface StatItemProps {
   label: string;
-  value: string;
+  value: React.ReactNode;
   valueClassName?: string;
 }
 

@@ -4,6 +4,7 @@ export const ROUTES = {
   MISSIONS: '/missions',
   MYPAGE: '/mypage',
   MYLOG: '/mylogs',
+  MYLOG_DETAIL: '/mylogs/detail',
   COLLECTIONS: '/collections',
   AUTH_CALLBACK: '/auth/callback',
 } as const;
@@ -14,6 +15,7 @@ export const ROUTES_NAME: Record<keyof typeof ROUTES, string> = {
   MISSIONS: '오늘의 미션',
   MYPAGE: '마이페이지',
   MYLOG: '마이로그',
+  MYLOG_DETAIL: '마이로그 상세',
   COLLECTIONS: '마이컬렉션',
   AUTH_CALLBACK: '로그인 콜백',
 };
