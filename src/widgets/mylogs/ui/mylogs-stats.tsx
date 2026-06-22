@@ -1,6 +1,6 @@
 import CountUp from 'react-countup';
 
-import type { DailyCount } from '@/features/mylogs/model/mylogs.types';
+import type { DailyCount } from '@/features/mylogs';
 import { StatItem, StatItemSkeleton, StatList } from '@/shared/ui/stat-item';
 
 interface MylogsStatsProps {
