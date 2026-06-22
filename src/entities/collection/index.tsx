@@ -1,3 +1,3 @@
 export { COLLECTION_TABS } from './model/collection.constants';
 export type { Collection, CollectionTab } from './model/collection.types';
-export { CollectionBox } from './ui/collection-box';
+export { CollectionBox, CollectionSkeleton } from './ui/collection-box';

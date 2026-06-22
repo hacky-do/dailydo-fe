@@ -1,12 +1,9 @@
 import Image from 'next/image';
-import { useState } from 'react';
 
 import { Collection } from '@/entities/collection/model/collection.types';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
-
-const FALLBACK_IMAGE = '/mocks/images/test_image.png';
 
 interface CollectionBottomSheetProps extends Omit<Collection, 'requirements'> {
   open: boolean;
@@ -30,9 +27,8 @@ export const CollectionBottomSheet = ({
   completed,
   onPost,
   onDelete,
+  acquisitionRate,
 }: CollectionBottomSheetProps) => {
-  const [imgSrc, setImgSrc] = useState(src || FALLBACK_IMAGE);
-
   return (
     <BottomSheet.Root open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Content>
@@ -48,19 +44,12 @@ export const CollectionBottomSheet = ({
               {description}
             </span>
             <span className="rounded-3xl bg-green-100 px-3 py-1 text-xs text-green-500">
-              {description}이하의 사용자가 획득했어요!
+              {acquisitionRate}% 이하의 사용자가 획득했어요!
             </span>
           </div>
 
           {completed ? (
-            <Image
-              src={imgSrc}
-              alt=""
-              width={80}
-              height={80}
-              onError={() => setImgSrc(FALLBACK_IMAGE)}
-              className="my-1"
-            />
+            <Image src={src} alt="" width={80} height={80} className="my-1" />
           ) : (
             <LockedIcon className="my-1 h-20 w-20" />
           )}

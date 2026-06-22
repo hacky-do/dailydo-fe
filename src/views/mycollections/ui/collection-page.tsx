@@ -2,31 +2,19 @@
 
 import { useState } from 'react';
 
-import {
-  useGetCollections,
-  useGetUserCollection,
-} from '@/entities/collection/api/collection.queries';
+import { useGetUserCollection } from '@/entities/collection/api/collection.queries';
 import { RepresentativeCollection } from '@/features/representative-collection';
 import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
 
 export default function CollectionPage() {
   const [collectionsTab, setCollectionsTab] = useState(1);
 
-  const { data: collectionsData } = useGetCollections();
   const { data: userCollections } = useGetUserCollection();
-
-  const allItems = collectionsData?.collections ?? [];
-  const filteredItems =
-    collectionsTab === 2
-      ? allItems.filter((c) => c.completed)
-      : collectionsTab === 3
-        ? allItems.filter((c) => !c.completed)
-        : allItems;
 
   return (
     <div className="mt-5 flex h-full flex-col items-center justify-center">
       <RepresentativeCollection
-        userCollections={userCollections ?? undefined}
+        userCollections={userCollections}
         defaultImage="/mocks/images/test_image.png"
         defaultTitle="대표 컬렉션이 설정되지 않았어요"
       />
@@ -37,8 +25,8 @@ export default function CollectionPage() {
         />
 
         <CollectionGrid
-          items={filteredItems}
           userCollectionId={userCollections?.id}
+          collectionsTab={collectionsTab}
         />
       </ul>
     </div>
