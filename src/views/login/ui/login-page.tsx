@@ -110,7 +110,7 @@ export const LoginPage = () => {
             {hydrated && recentLogin === social && <RecentLoginBadge />}
           </div>
         ))}
-        <LoginButton type="guest" />
+        {/* <LoginButton type="guest" /> */}
       </div>
     </div>
   );
