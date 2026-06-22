@@ -3,7 +3,6 @@ import { AUTH_ENDPOINTS } from '@/shared/config/endpoints';
 import { API_ERRORS, ApiError } from './api-error.type';
 import { BASE_URL } from './base-url.constant';
 
-// 동시에 여러 요청이 401을 만나도 refresh/logout은 한 번만 수행한다.
 let refreshing: Promise<boolean> | null = null;
 let loggingOut: Promise<void> | null = null;
 let loggedOut = false;

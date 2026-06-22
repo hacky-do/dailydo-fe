@@ -58,7 +58,6 @@ export const useSocialLoginCallback = () => {
         await login({ type, socialToken: token });
         completeLogin('다시 돌아오신 것을 환영해요!');
       } catch (err) {
-        // 미가입 사용자(404)는 소셜 프로필로 즉시 가입시킨 뒤 로그인 처리한다
         if (!(err instanceof ApiError) || err.code !== 404) {
           goAuthError();
           return;

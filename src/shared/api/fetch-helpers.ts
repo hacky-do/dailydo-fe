@@ -19,7 +19,14 @@ export function buildHeaders(options?: RequestInit): Headers {
   return headers;
 }
 
-// 401은 executeWithRetry에서 이미 처리되므로 여기까지 오지 않는다.
+// query용 (GET): 응답 본문이 없으면 에러, 항상 T 반환
+export async function parseResponseStrict<T>(res: Response): Promise<T> {
+  const result = await parseResponse<T>(res);
+  if (result === null) {
+    throw new ApiError(API_ERRORS.EMPTY_RESPONSE);
+  }
+  return result;
+}
 
 // mutation용 (POST/PUT/PATCH/DELETE): 204 응답 시 null 반환
 export async function parseResponse<T>(res: Response): Promise<T | null> {
@@ -39,13 +46,4 @@ export async function parseResponse<T>(res: Response): Promise<T | null> {
   const raw = await res.text();
   if (!raw) return null;
   return JSON.parse(raw) as T;
-}
-
-// query용 (GET): 응답 본문이 없으면 에러, 항상 T 반환
-export async function parseResponseStrict<T>(res: Response): Promise<T> {
-  const result = await parseResponse<T>(res);
-  if (result === null) {
-    throw new ApiError(API_ERRORS.EMPTY_RESPONSE);
-  }
-  return result;
 }
