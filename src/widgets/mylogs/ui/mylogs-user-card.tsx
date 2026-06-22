@@ -1,4 +1,4 @@
-import { DailyCount } from '@/features/mylogs/model/mylogs.types';
+import type { DailyCount } from '@/features/mylogs';
 import ImgHeadImage from '@/shared/ui/icons/common/img_head.svg';
 import { TextSkeleton } from '@/shared/ui/skeleton';
 
