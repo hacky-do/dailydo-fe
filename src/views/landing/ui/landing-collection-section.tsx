@@ -52,13 +52,13 @@ export const LandingCollectionSection = () => {
 
       <div className="mt-12 flex flex-col gap-4">
         {rows.map(({ start, count }, index) => {
-          const isOdd = index % 2 === 0;
+          const isEven = index % 2 === 0;
           const images = Array.from({ length: count }, (_, i) => start + i);
 
           return (
             <div key={start} className="flex overflow-hidden">
               <div
-                className={`flex shrink-0 items-center gap-15 ${isOdd ? 'animate-marquee-right' : 'animate-marquee-left'}`}
+                className={`flex shrink-0 items-center gap-15 ${isEven ? 'animate-marquee-right' : 'animate-marquee-left'}`}
               >
                 {[...images, ...images].map((num, i) => (
                   <Image
