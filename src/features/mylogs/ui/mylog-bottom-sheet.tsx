@@ -78,6 +78,7 @@ const MyLogBottomSheetContent = ({
   };
 
   const isLoading = isUploading || isPending;
+  const hasPhoto = file !== null || photoUrl !== null;
 
   return (
     <>
@@ -112,6 +113,7 @@ const MyLogBottomSheetContent = ({
             variant="primary"
             onClick={handleSubmit}
             isLoading={isLoading}
+            disabled={!hasPhoto}
             type="button"
           >
             완료하기

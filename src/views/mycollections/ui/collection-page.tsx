@@ -11,19 +11,23 @@ import { CollectionGrid, CollectionTabs } from '@/widgets/collections';
 const DECO_IMAGES = [
   {
     src: '/landing/collections/deco-0.png',
-    className: 'absolute top-4 left-[13%] rotate-[7.412deg] opacity-[0.3]',
+    className:
+      'absolute top-4 left-[13%] rotate-[7.412deg] opacity-[0.3] hidden',
   },
   {
     src: '/landing/collections/deco-1.png',
-    className: 'absolute top-4 right-[6%] rotate-[-10.845deg] opacity-[0.3]',
+    className:
+      'absolute top-4 right-[6%] rotate-[-10.845deg] opacity-[0.3] hidden',
   },
   {
     src: '/landing/collections/deco-2.png',
-    className: 'absolute bottom-4 left-[16%] rotate-[-8.718deg] opacity-[0.3]',
+    className:
+      'absolute bottom-4 left-[16%] rotate-[-8.718deg] opacity-[0.3] hidden',
   },
   {
     src: '/landing/collections/deco-3.png',
-    className: 'absolute bottom-4 right-[6%]  rotate-[10.195deg] opacity-[0.3]',
+    className:
+      'absolute bottom-4 right-[6%]  rotate-[10.195deg] opacity-[0.3] hidden',
   },
 ];
 
@@ -42,7 +46,7 @@ export const CollectionPage = () => {
   }
 
   return (
-    <div className="mt-5 flex h-full flex-col items-center justify-center">
+    <div className="flex h-full flex-col items-center justify-center pt-5">
       <div className="relative flex w-full items-center justify-center">
         {DECO_IMAGES.map(({ src, className }) => (
           <Image
