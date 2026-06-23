@@ -95,7 +95,12 @@ export const CollectionBottomSheet = ({
                 닫기
               </Button>
             ) : isRepresentative ? (
-              <Button variant="secondary" type="button" onClick={onDelete} isLoading={isDeleting}>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={onDelete}
+                isLoading={isDeleting}
+              >
                 대표 컬렉션에서 해제
               </Button>
             ) : (
