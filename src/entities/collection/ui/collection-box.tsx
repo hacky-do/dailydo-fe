@@ -73,13 +73,13 @@ export const CollectionBox = ({
     try {
       await deleteUserCollection(String(id));
       toast({ message: '대표 컬렉션 설정이 해제되었습니다.', type: 'success' });
+      setIsOpen(false);
     } catch {
       toast({
         message: '대표 컬렉션 설정 해제에 실패하였습니다.',
         type: 'error',
       });
     }
-    setIsOpen(false);
   };
 
   return (
