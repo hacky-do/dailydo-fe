@@ -71,8 +71,12 @@ export const usePostCompleteMission = (options?: {
       localPreview?: string;
     }) => postCompleteMission(itemId, mylog),
     onMutate: async ({ itemId, mylog, localPreview }) => {
-      await queryClient.cancelQueries({ queryKey: missionQueryKeys.myMissions });
-      const previousData = queryClient.getQueryData(missionQueryKeys.myMissions);
+      await queryClient.cancelQueries({
+        queryKey: missionQueryKeys.myMissions,
+      });
+      const previousData = queryClient.getQueryData(
+        missionQueryKeys.myMissions,
+      );
       queryClient.setQueryData(
         missionQueryKeys.myMissions,
         (prev: MyMission | undefined) => {
@@ -84,7 +88,11 @@ export const usePostCompleteMission = (options?: {
                 ? {
                     ...item,
                     completed: true,
-                    mylog: { id: 0, photo: localPreview ?? mylog.photo, memo: mylog.memo },
+                    mylog: {
+                      id: 0,
+                      photo: localPreview ?? mylog.photo,
+                      memo: mylog.memo,
+                    },
                   }
                 : item,
             ),
@@ -111,7 +119,10 @@ export const usePostCompleteMission = (options?: {
     },
     onError: (error, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(missionQueryKeys.myMissions, context.previousData);
+        queryClient.setQueryData(
+          missionQueryKeys.myMissions,
+          context.previousData,
+        );
       }
       const hasMyLog = Boolean(variables.mylog.photo || variables.mylog.memo);
       if (error instanceof ApiError) {
