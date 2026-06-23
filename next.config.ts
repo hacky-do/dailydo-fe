@@ -3,7 +3,6 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  // 로그인 페이지를 bfcache에 저장하지 않도록 막음
   async headers() {
     return [
       {
