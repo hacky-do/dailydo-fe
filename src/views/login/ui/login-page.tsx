@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
@@ -29,6 +29,7 @@ export const LoginPage = () => {
 
   const authError = searchParams.get('auth_error');
   const handledRef = useRef(false);
+
   useEffect(() => {
     if (authError !== null && !handledRef.current) {
       handledRef.current = true;
@@ -85,9 +86,9 @@ export const LoginPage = () => {
           오늘의 나에게 건네는 선물
         </p>
         <div className="relative flex aspect-246/197 w-full max-w-[70%] items-center justify-center">
-          <div className="absolute top-1 aspect-square w-[95%] animate-pulse rounded-full bg-green-200" />
-          <div className="absolute top-6 aspect-square w-[80%] animate-pulse rounded-full bg-green-300" />
-          <Image
+          <div className="absolute top-1 -z-10 aspect-square w-[95%] animate-pulse rounded-full bg-green-200" />
+          <div className="absolute top-6 -z-10 aspect-square w-[80%] animate-pulse rounded-full bg-green-300" />
+          {/* <Image
             src="/login/mainIllust.png"
             alt=""
             className="mt-6 object-contain"
@@ -96,6 +97,12 @@ export const LoginPage = () => {
             sizes="(max-width: 768px) 100vw, 70vw"
             fill
             priority
+          /> */}
+          <iframe
+            src="https://davvcdn.lon1.cdn.digitaloceanspaces.com/b742c9a38f63ec90ba75445cb55f4bf4/ef28018ada34d48d460a.html"
+            allow="accelerometer; gyroscope; magnetometer"
+            height="100%"
+            className="mt-6"
           />
         </div>
       </section>
