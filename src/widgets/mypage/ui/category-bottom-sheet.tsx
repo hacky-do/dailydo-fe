@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 
-import type { Category } from '@/entities/category';
-import { usePutUserCategories } from '@/entities/category/api/category.queries';
+import { type Category, usePutUserCategories } from '@/entities/category';
 import { UserCategory } from '@/entities/user/model/user.types';
 import { CategorySelect } from '@/features/category-select';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
