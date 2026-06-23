@@ -50,7 +50,7 @@ const MyMissionBackContent = ({
         {mission.title}
       </p>
       <Image
-        src={mission.completed ? mission.mylog!.photo : mission.image}
+        src={mission.completed ? mission.mylog!.photo : '/landing/mylog.png'}
         alt={mission.title}
         width={147}
         height={147}
@@ -93,9 +93,9 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
     setIsOpen(true);
   };
 
-  const handleSubmit = (photo: string | null, memo: string) => {
+  const handleSubmit = (photo: string | null, memo: string, localPreview?: string) => {
     mutate(
-      { itemId: mission.itemId, mylog: { photo: photo ?? '', memo } },
+      { itemId: mission.itemId, mylog: { photo: photo ?? '', memo }, localPreview },
       {
         onSuccess: () => {
           toast({
