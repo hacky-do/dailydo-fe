@@ -41,9 +41,11 @@ export const CollectionBottomSheet = ({
             <span className="text-sm break-keep text-gray-500">
               {description}
             </span>
-            <span className="rounded-3xl bg-green-100 px-3 py-1 text-xs text-green-500">
-              {acquisitionRate}% 이하의 사용자가 획득했어요!
-            </span>
+            {acquisitionRate !== undefined && (
+              <span className="rounded-3xl bg-green-100 px-3 py-1 text-xs text-green-500">
+                {acquisitionRate}% 이하의 사용자가 획득했어요!
+              </span>
+            )}
           </div>
 
           {completed ? (
