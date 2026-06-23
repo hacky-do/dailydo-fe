@@ -3,14 +3,10 @@ export const parseSocialUser = (raw: string | null) => {
   try {
     const parsed = JSON.parse(raw) as {
       email?: string;
-      name?: string;
-      profileImage?: string;
     };
     if (!parsed.email) return null;
     return {
       email: parsed.email,
-      name: parsed.name ?? '',
-      profileImage: parsed.profileImage ?? '',
     };
   } catch {
     return null;
