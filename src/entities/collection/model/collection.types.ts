@@ -2,6 +2,7 @@ export interface Collection {
   id: string;
   src: string;
   title: string;
+  type?: 'NORMAL' | 'SPECIAL';
   description: string;
   acquisitionRate?: number;
   requirements: {
@@ -21,6 +22,7 @@ export interface UserCollection {
   image: string;
   description: string;
   title: string;
+  type?: 'NORMAL' | 'SPECIAL';
 }
 
 export interface CollectionItem {
@@ -28,6 +30,7 @@ export interface CollectionItem {
   image: string;
   title: string;
   completed: boolean;
+  type?: 'NORMAL' | 'SPECIAL';
   description: string;
   acquisitionRate: number;
   requirements: {
