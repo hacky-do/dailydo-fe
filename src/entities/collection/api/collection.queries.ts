@@ -42,7 +42,9 @@ export const usePostUserCollection = (options?: { onSuccess?: () => void }) => {
   });
 };
 
-export const useDeleteUserCollection = () => {
+export const useDeleteUserCollection = (options?: {
+  skipOptimisticClear?: boolean;
+}) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (collectionId: string) => deleteUserCollection(collectionId),
@@ -50,6 +52,7 @@ export const useDeleteUserCollection = () => {
       await queryClient.cancelQueries({
         queryKey: collectionQueryKeys.userCollection,
       });
+      if (options?.skipOptimisticClear) return;
       const previousUserCollection = queryClient.getQueryData(
         collectionQueryKeys.userCollection,
       );
@@ -57,20 +60,27 @@ export const useDeleteUserCollection = () => {
       return { previousUserCollection };
     },
     onError: (_err, _collectionId, context) => {
-      queryClient.setQueryData(
-        collectionQueryKeys.userCollection,
-        context?.previousUserCollection,
-      );
+      if (context !== undefined) {
+        queryClient.setQueryData(
+          collectionQueryKeys.userCollection,
+          context.previousUserCollection,
+        );
+      }
     },
     onSettled: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: collectionQueryKeys.userCollection,
-        }),
+      const invalidations = [
         queryClient.invalidateQueries({
           queryKey: collectionQueryKeys.collections,
         }),
-      ]);
+      ];
+      if (!options?.skipOptimisticClear) {
+        invalidations.push(
+          queryClient.invalidateQueries({
+            queryKey: collectionQueryKeys.userCollection,
+          }),
+        );
+      }
+      await Promise.all(invalidations);
     },
   });
 };

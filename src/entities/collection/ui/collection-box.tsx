@@ -29,6 +29,7 @@ export const CollectionSkeleton = () => {
 interface CollectionBoxProps extends Collection {
   isRepresentative?: boolean;
   completed?: boolean;
+  currentRepresentativeId?: string;
 }
 
 export const CollectionBox = ({
@@ -41,46 +42,41 @@ export const CollectionBox = ({
   isRepresentative = false,
   completed = false,
   acquisitionRate,
+  currentRepresentativeId,
 }: CollectionBoxProps) => {
   const isSpecial = type === 'SPECIAL';
   const [open, setIsOpen] = useState(false);
-  const { mutate: postUserCollection } = usePostUserCollection();
-  const { mutate: deleteUserCollection } = useDeleteUserCollection();
+  const { mutateAsync: postUserCollection } = usePostUserCollection();
+  const { mutateAsync: deleteUserCollection, isPending: isDeleting } =
+    useDeleteUserCollection();
+  const { mutateAsync: deleteForReplace } = useDeleteUserCollection({
+    skipOptimisticClear: true,
+  });
   const { toast } = useToast();
 
-  const handlePostCollection = () => {
-    postUserCollection(String(id), {
-      onSuccess: () => {
-        toast({
-          message: '대표 컬렉션 설정이 완료되었습니다.',
-          type: 'success',
-        });
-      },
-      onError: () => {
-        toast({
-          message: '대표 컬렉션 설정이 실패하였습니다.',
-          type: 'error',
-        });
-      },
-    });
+  const handlePostCollection = async () => {
+    try {
+      if (currentRepresentativeId && currentRepresentativeId !== String(id)) {
+        await deleteForReplace(currentRepresentativeId);
+      }
+      await postUserCollection(String(id));
+      toast({ message: '대표 컬렉션 설정이 완료되었습니다.', type: 'success' });
+    } catch {
+      toast({ message: '대표 컬렉션 설정이 실패하였습니다.', type: 'error' });
+    }
     setIsOpen(false);
   };
 
-  const handleDeleteCollection = () => {
-    deleteUserCollection(String(id), {
-      onSuccess: () => {
-        toast({
-          message: '대표 컬렉션 설정이 해제되었습니다.',
-          type: 'success',
-        });
-      },
-      onError: () => {
-        toast({
-          message: '대표 컬렉션 설정 해제에 실패하였습니다.',
-          type: 'error',
-        });
-      },
-    });
+  const handleDeleteCollection = async () => {
+    try {
+      await deleteUserCollection(String(id));
+      toast({ message: '대표 컬렉션 설정이 해제되었습니다.', type: 'success' });
+    } catch {
+      toast({
+        message: '대표 컬렉션 설정 해제에 실패하였습니다.',
+        type: 'error',
+      });
+    }
     setIsOpen(false);
   };
 
@@ -120,6 +116,7 @@ export const CollectionBox = ({
         isRepresentative={isRepresentative}
         onPost={handlePostCollection}
         onDelete={handleDeleteCollection}
+        isDeleting={isDeleting}
         acquisitionRate={acquisitionRate}
       />
     </>

@@ -24,13 +24,14 @@ const MissionHeader = ({
     getTimeUntilReset,
     () => '',
   );
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
         {type === 'today' ? (
-          <IcImage className="h-14.25 w-8" />
+          <IcImage width={32} className="mb-4" />
         ) : (
-          <ImgHeadImage className="h-14.25 w-8" />
+          <ImgHeadImage width={70} className="mb-4" />
         )}
         <div className="font-semi-bold bg-bg-timer flex w-41.75 items-center gap-1 rounded-lg px-2 text-sm">
           <IcAlarmImage className="h-6 w-6" />
