@@ -13,7 +13,9 @@ export const CollectionTabs = ({
   selectedId,
   onSelect,
 }: CollectionTabsProps) => {
-  const selectedIndex = COLLECTION_TABS.findIndex((tab) => tab.id === selectedId);
+  const selectedIndex = COLLECTION_TABS.findIndex(
+    (tab) => tab.id === selectedId,
+  );
 
   return (
     <div className="relative mt-5 border-b border-gray-200">
