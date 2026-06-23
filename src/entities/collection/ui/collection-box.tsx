@@ -7,6 +7,7 @@ import {
   usePostUserCollection,
 } from '@/entities/collection';
 import { CollectionBottomSheet } from '@/features/representative-collection';
+import { Button } from '@/shared/ui/button/button';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
 import SpecialCollectionIcon from '@/shared/ui/icons/collections/special_collection.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
@@ -46,7 +47,8 @@ export const CollectionBox = ({
 }: CollectionBoxProps) => {
   const isSpecial = type === 'SPECIAL';
   const [open, setIsOpen] = useState(false);
-  const { mutateAsync: postUserCollection } = usePostUserCollection();
+  const { mutateAsync: postUserCollection, isPending: isPosting } =
+    usePostUserCollection();
   const { mutateAsync: deleteUserCollection, isPending: isDeleting } =
     useDeleteUserCollection();
   const { mutateAsync: deleteForReplace } = useDeleteUserCollection({
@@ -71,13 +73,13 @@ export const CollectionBox = ({
     try {
       await deleteUserCollection(String(id));
       toast({ message: '대표 컬렉션 설정이 해제되었습니다.', type: 'success' });
+      setIsOpen(false);
     } catch {
       toast({
         message: '대표 컬렉션 설정 해제에 실패하였습니다.',
         type: 'error',
       });
     }
-    setIsOpen(false);
   };
 
   return (
@@ -113,11 +115,36 @@ export const CollectionBox = ({
         src={src}
         type={type}
         requirements={requirements}
-        isRepresentative={isRepresentative}
-        onPost={handlePostCollection}
-        onDelete={handleDeleteCollection}
-        isDeleting={isDeleting}
         acquisitionRate={acquisitionRate}
+        action={
+          !completed ? (
+            <Button
+              variant="tertiary"
+              type="button"
+              onClick={() => setIsOpen(false)}
+            >
+              닫기
+            </Button>
+          ) : isRepresentative ? (
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={handleDeleteCollection}
+              isLoading={isDeleting}
+            >
+              대표 컬렉션에서 해제
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              type="button"
+              onClick={handlePostCollection}
+              isLoading={isPosting}
+            >
+              대표 컬렉션으로 설정
+            </Button>
+          )
+        }
       />
     </>
   );

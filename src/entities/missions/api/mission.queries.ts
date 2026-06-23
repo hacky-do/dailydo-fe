@@ -11,7 +11,7 @@ import {
   MISSION_TOAST_MESSAGES,
   missionQueryKeys,
 } from '../model/mission.constants';
-import { Mission, MyLogRequest } from '../model/mission.types';
+import { Mission, MyLogRequest, type MyMission } from '../model/mission.types';
 import {
   getMyMissions,
   getTodayMissions,
@@ -62,12 +62,68 @@ export const usePostCompleteMission = (options?: {
 }) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ itemId, mylog }: { itemId: number; mylog: MyLogRequest }) =>
-      postCompleteMission(itemId, mylog),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: missionQueryKeys.myMissions });
+    mutationFn: ({
+      itemId,
+      mylog,
+    }: {
+      itemId: number;
+      mylog: MyLogRequest;
+      localPreview?: string;
+    }) => postCompleteMission(itemId, mylog),
+    onMutate: async ({ itemId, mylog, localPreview }) => {
+      await queryClient.cancelQueries({
+        queryKey: missionQueryKeys.myMissions,
+      });
+      const previousData = queryClient.getQueryData(
+        missionQueryKeys.myMissions,
+      );
+      queryClient.setQueryData(
+        missionQueryKeys.myMissions,
+        (prev: MyMission | undefined) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            items: prev.items.map((item) =>
+              item.itemId === itemId
+                ? {
+                    ...item,
+                    completed: true,
+                    mylog: {
+                      id: 0,
+                      photo: localPreview ?? mylog.photo,
+                      memo: mylog.memo,
+                    },
+                  }
+                : item,
+            ),
+          };
+        },
+      );
+      return { previousData };
     },
-    onError: (error, variables) => {
+    onSuccess: (data) => {
+      if (data) {
+        queryClient.setQueryData(
+          missionQueryKeys.myMissions,
+          (prev: MyMission | undefined) => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              items: prev.items.map((item) =>
+                item.itemId === data.itemId ? data : item,
+              ),
+            };
+          },
+        );
+      }
+    },
+    onError: (error, variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(
+          missionQueryKeys.myMissions,
+          context.previousData,
+        );
+      }
       const hasMyLog = Boolean(variables.mylog.photo || variables.mylog.memo);
       if (error instanceof ApiError) {
         const message = hasMyLog

@@ -2,19 +2,15 @@ import Image from 'next/image';
 
 import type { Collection } from '@/entities/collection';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
-import { Button } from '@/shared/ui/button';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
 import SpecialCollectionIcon from '@/shared/ui/icons/collections/special_collection.svg';
 
 interface CollectionBottomSheetProps extends Omit<Collection, 'requirements'> {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isRepresentative: boolean;
   completed: boolean;
   requirements?: Collection['requirements'];
-  onPost: () => void;
-  onDelete: () => void;
-  isDeleting?: boolean;
+  action?: React.ReactNode;
 }
 
 export const CollectionBottomSheet = ({
@@ -26,11 +22,8 @@ export const CollectionBottomSheet = ({
   src,
   type,
   requirements = [],
-  isRepresentative,
   completed,
-  onPost,
-  onDelete,
-  isDeleting = false,
+  action,
   acquisitionRate,
 }: CollectionBottomSheetProps) => {
   const isSpecial = type === 'SPECIAL';
@@ -48,9 +41,11 @@ export const CollectionBottomSheet = ({
             <span className="text-sm break-keep text-gray-500">
               {description}
             </span>
-            <span className="rounded-3xl bg-green-100 px-3 py-1 text-xs text-green-500">
-              {acquisitionRate}% 이하의 사용자가 획득했어요!
-            </span>
+            {acquisitionRate !== undefined && (
+              <span className="rounded-3xl bg-green-100 px-3 py-1 text-xs text-green-500">
+                {acquisitionRate}% 이하의 사용자가 획득했어요!
+              </span>
+            )}
           </div>
 
           {completed ? (
@@ -85,30 +80,7 @@ export const CollectionBottomSheet = ({
             ))}
         </BottomSheet.Body>
         <BottomSheet.Footer>
-          <div>
-            {!completed ? (
-              <Button
-                variant="tertiary"
-                type="button"
-                onClick={() => onOpenChange(false)}
-              >
-                닫기
-              </Button>
-            ) : isRepresentative ? (
-              <Button
-                variant="secondary"
-                type="button"
-                onClick={onDelete}
-                isLoading={isDeleting}
-              >
-                대표 컬렉션에서 해제
-              </Button>
-            ) : (
-              <Button variant="primary" type="button" onClick={onPost}>
-                대표 컬렉션으로 설정
-              </Button>
-            )}
-          </div>
+          <div>{action}</div>
         </BottomSheet.Footer>
       </BottomSheet.Content>
     </BottomSheet.Root>

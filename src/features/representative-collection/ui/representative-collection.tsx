@@ -5,10 +5,11 @@ import { useState } from 'react';
 
 import type { UserCollection } from '@/entities/collection';
 import { useDeleteUserCollection } from '@/entities/collection';
+import { Button } from '@/shared/ui/button/button';
 import QuestionBackIcon from '@/shared/ui/icons/mission/question_back.svg';
 import { useToast } from '@/shared/ui/toast';
 
-import { RepresentativeCollectionBottomSheet } from './representative-collection-bottom-sheet';
+import { CollectionBottomSheet } from './collection-bottom-sheet';
 
 interface RepresentativeCollectionProps {
   userCollection?: UserCollection | null;
@@ -21,26 +22,22 @@ export const RepresentativeCollection = ({
 }: RepresentativeCollectionProps) => {
   const [open, setIsOpen] = useState(false);
 
-  const { mutate: deleteUserCollection } = useDeleteUserCollection();
+  const { mutateAsync: deleteUserCollection, isPending: isDeleting } =
+    useDeleteUserCollection();
   const { toast } = useToast();
 
-  const handleDeleteCollection = () => {
+  const handleDeleteCollection = async () => {
     if (!userCollection) return;
-    deleteUserCollection(userCollection.id, {
-      onSuccess: () => {
-        toast({
-          message: '대표 컬렉션 설정이 해제되었습니다.',
-          type: 'success',
-        });
-      },
-      onError: () => {
-        toast({
-          message: '대표 컬렉션 설정 해제에 실패하였습니다.',
-          type: 'success',
-        });
-      },
-    });
-    setIsOpen(false);
+    try {
+      await deleteUserCollection(userCollection.id);
+      toast({ message: '대표 컬렉션 설정이 해제되었습니다.', type: 'success' });
+      setIsOpen(false);
+    } catch {
+      toast({
+        message: '대표 컬렉션 설정 해제에 실패하였습니다.',
+        type: 'error',
+      });
+    }
   };
 
   return (
@@ -80,14 +77,26 @@ export const RepresentativeCollection = ({
       </button>
 
       {userCollection && (
-        <RepresentativeCollectionBottomSheet
+        <CollectionBottomSheet
           open={open}
           onOpenChange={setIsOpen}
           id={userCollection.id}
+          src={userCollection.image}
           title={userCollection.title}
           description={userCollection.description}
-          image={userCollection.image}
-          onDelete={handleDeleteCollection}
+          type={userCollection.type}
+          requirements={[]}
+          completed={true}
+          action={
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={handleDeleteCollection}
+              isLoading={isDeleting}
+            >
+              대표 컬렉션에서 해제
+            </Button>
+          }
         />
       )}
     </>

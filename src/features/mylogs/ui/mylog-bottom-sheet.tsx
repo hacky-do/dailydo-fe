@@ -13,7 +13,7 @@ import { useToast } from '@/shared/ui/toast';
 interface MyLogBottomSheetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSubmit: (photo: string | null, memo: string) => void;
+  onSubmit: (photo: string | null, memo: string, localPreview?: string) => void;
   isPending?: boolean;
   initialPhoto?: string;
   initialMemo?: string;
@@ -56,19 +56,27 @@ const MyLogBottomSheetContent = ({
 >) => {
   const [file, setFile] = useState<File | null>(null);
   const [photoUrl, setPhotoUrl] = useState<string | null>(initialPhoto ?? null);
+  const [localPreview, setLocalPreview] = useState<string | null>(
+    initialPhoto ?? null,
+  );
   const [memo, setMemo] = useState(initialMemo ?? '');
   const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
 
   const handleFileChange = (selected: File | null) => {
     setFile(selected);
-    if (!selected) setPhotoUrl(null);
+    if (!selected) {
+      setPhotoUrl(null);
+      setLocalPreview(null);
+    } else {
+      setLocalPreview(URL.createObjectURL(selected));
+    }
   };
   const { toast } = useToast();
 
   const handleSubmit = async () => {
     try {
       const photo = file ? await upload(file) : photoUrl;
-      onSubmit(photo, memo);
+      onSubmit(photo, memo, localPreview ?? undefined);
     } catch {
       toast({
         message: `${MISSION_TOAST_MESSAGES.uploadError}`,

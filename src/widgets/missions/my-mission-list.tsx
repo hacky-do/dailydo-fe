@@ -93,9 +93,17 @@ export const MyMissionCard = ({ mission }: { mission: MyMissionItem }) => {
     setIsOpen(true);
   };
 
-  const handleSubmit = (photo: string | null, memo: string) => {
+  const handleSubmit = (
+    photo: string | null,
+    memo: string,
+    localPreview?: string,
+  ) => {
     mutate(
-      { itemId: mission.itemId, mylog: { photo: photo ?? '', memo } },
+      {
+        itemId: mission.itemId,
+        mylog: { photo: photo ?? '', memo },
+        localPreview,
+      },
       {
         onSuccess: () => {
           toast({
