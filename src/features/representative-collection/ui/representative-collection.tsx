@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import type { UserCollection } from '@/entities/collection';
 import { useDeleteUserCollection } from '@/entities/collection';
+import QuestionBackIcon from '@/shared/ui/icons/mission/question_back.svg';
 import { useToast } from '@/shared/ui/toast';
 
 import { RepresentativeCollectionBottomSheet } from './representative-collection-bottom-sheet';
@@ -57,7 +58,7 @@ export const RepresentativeCollection = ({
           <div className="absolute h-38 w-38 rounded-full border-[6px] border-green-500" />
           <div className="absolute h-34.5 w-34.5 rounded-full border-[6px] border-green-400" />
           <div className="relative flex h-31.5 w-31.5 items-center justify-center overflow-hidden rounded-full bg-green-100">
-            {userCollection && (
+            {userCollection ? (
               <Image
                 src={userCollection.image}
                 alt=""
@@ -66,6 +67,8 @@ export const RepresentativeCollection = ({
                 className="object-cover"
                 sizes="80px"
               />
+            ) : (
+              <QuestionBackIcon className="h-10 w-auto" />
             )}
           </div>
         </div>

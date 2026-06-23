@@ -77,7 +77,6 @@ export const LandingHeroSection = () => {
           sizes="(max-width: 768px) 100vw, 70vw"
           fill
           className="object-contain"
-          priority
         />
         <DecoLocation
           width={40}
@@ -110,6 +109,8 @@ export const LandingHeroSection = () => {
             sizes="768px"
             fill
             className="object-contain"
+            loading="eager"
+            priority
           />
         </div>
       </FadeIn>

@@ -78,6 +78,7 @@ const MyLogBottomSheetContent = ({
   };
 
   const isLoading = isUploading || isPending;
+  const hasPhoto = file !== null || photoUrl !== null;
 
   return (
     <>
@@ -86,7 +87,7 @@ const MyLogBottomSheetContent = ({
       </BottomSheet.Header>
       <BottomSheet.Body className="flex flex-col pt-4 pb-8">
         <span className="mb-1 text-sm font-medium">
-          기억하고 싶은 순간이 있나요?
+          기억하고 싶은 순간이 있나요? <span className="text-green-500">*</span>
         </span>
         <div className="flex flex-col gap-12">
           <FileInput initialSrc={initialPhoto} onChange={handleFileChange} />
@@ -98,6 +99,7 @@ const MyLogBottomSheetContent = ({
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
             maxLength={100}
+            isRequired={true}
           />
         </div>
       </BottomSheet.Body>
@@ -112,6 +114,7 @@ const MyLogBottomSheetContent = ({
             variant="primary"
             onClick={handleSubmit}
             isLoading={isLoading}
+            disabled={!hasPhoto}
             type="button"
           >
             완료하기

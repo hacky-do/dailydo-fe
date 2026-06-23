@@ -203,7 +203,11 @@ export const TodayMissionList = ({
   };
 
   const handleSkip = () => {
-    swiperRef.current?.slideNext();
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+    const nextIndex =
+      swiper.realIndex + 1 >= missions.length ? 0 : swiper.realIndex + 1;
+    swiper.slideTo(nextIndex);
   };
 
   const handleConfirm = () => {

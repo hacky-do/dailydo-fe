@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 
-import type { Category } from '@/entities/category';
-import { usePutUserCategories } from '@/entities/category/api/category.queries';
-import type { UserCategories } from '@/entities/user';
+import { type Category, usePutUserCategories } from '@/entities/category';
+import { UserCategory } from '@/entities/user/model/user.types';
 import { CategorySelect } from '@/features/category-select';
 import { BottomSheet } from '@/shared/ui/bottom-sheet/bottom-sheet';
 import { Button } from '@/shared/ui/button';
@@ -13,13 +12,13 @@ import { useToast } from '@/shared/ui/toast';
 interface CategoryBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  userCategories: UserCategories;
+  userCategories: UserCategory[];
   categories: Category[];
 }
 
 interface CategoryBottomSheetContentProps {
   onOpenChange: (open: boolean) => void;
-  userCategories: UserCategories;
+  userCategories: UserCategory[];
   categories: Category[];
 }
 
@@ -28,7 +27,7 @@ const CategoryBottomSheetContent = ({
   userCategories,
   categories,
 }: CategoryBottomSheetContentProps) => {
-  const initialIds = userCategories.data.map((c) => c.categoryId);
+  const initialIds = userCategories.map((c) => c.categoryId);
   const [selectedIds, setSelectedIds] = useState<number[]>(initialIds);
   const { mutate: putUserCategories, isPending } = usePutUserCategories();
   const { toast } = useToast();

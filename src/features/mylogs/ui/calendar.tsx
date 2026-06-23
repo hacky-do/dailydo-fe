@@ -94,7 +94,8 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
                 className={cn(
                   baseClassName,
                   'text-gray-600',
-                  isToday(day) && 'border-2 border-green-500',
+                  isToday(day) &&
+                    'border-2 border-green-500 font-bold text-green-500',
                 )}
               >
                 {format(day, 'd')}

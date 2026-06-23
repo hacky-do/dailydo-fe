@@ -10,16 +10,15 @@ const getPresignedUrl = (mimeType: string) =>
 
 export const uploadFile = async (file: File): Promise<string> => {
   let compressionFile = file;
-  if (file.size > 2 * 1024 * 1024) {
-    try {
-      compressionFile = await imageCompression(file, {
-        maxSizeMB: 2,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      });
-    } catch (error) {
-      console.error('[image compression failed]', error);
-    }
+  try {
+    compressionFile = await imageCompression(file, {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+      fileType: 'image/webp',
+    });
+  } catch (error) {
+    console.error('[image compression failed]', error);
   }
 
   const { url, path, fields } = await getPresignedUrl(compressionFile.type);

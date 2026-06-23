@@ -10,6 +10,7 @@ import { ApiError, resetAuthState } from '@/shared/api';
 import { ROUTES } from '@/shared/config/routes';
 import { useToast } from '@/shared/ui/toast';
 
+import { generateRandomNickname } from '../lib/generate-random-nickname';
 import { parseSocialUser } from '../lib/parse-social-user';
 import { useRegister } from './use-register';
 import { useSocialLogin } from './use-social-login';
@@ -72,6 +73,7 @@ export const useSocialLoginCallback = () => {
         try {
           await register({
             ...socialUser,
+            name: generateRandomNickname(),
             type,
             socialToken: token,
             agreeMarketing: true,
