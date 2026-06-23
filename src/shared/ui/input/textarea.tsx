@@ -8,6 +8,7 @@ interface TextareaProps extends ComponentProps<'textarea'> {
   description?: string;
   resizable?: boolean;
   id: string;
+  isRequired?: boolean;
 }
 
 export const Textarea = ({
@@ -17,6 +18,7 @@ export const Textarea = ({
   className,
   resizable = false,
   id,
+  isRequired = false,
   ...props
 }: TextareaProps) => {
   const descriptionId = description ? `${id}-description` : undefined;
@@ -30,6 +32,7 @@ export const Textarea = ({
         })}
       >
         {label}
+        {isRequired && <span className="ml-0.5 text-green-500">*</span>}
       </label>
       <textarea
         className={cn(
