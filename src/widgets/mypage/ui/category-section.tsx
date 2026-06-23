@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { useGetMissionCategories } from '@/entities/category';
-import type { UserCategories } from '@/entities/user';
+import { UserCategory } from '@/entities/user/model/user.types';
 import ChevronRight from '@/shared/ui/icons/mypage/chevron_right.svg';
 import { Skeleton, TextSkeleton } from '@/shared/ui/skeleton';
 
@@ -60,7 +60,7 @@ const CategoryItem = ({ src, label }: { src: string; label: string }) => {
 };
 
 interface CategorySectionProps {
-  categories: UserCategories;
+  categories: UserCategory[];
 }
 
 export const CategorySection = ({ categories }: CategorySectionProps) => {
@@ -81,7 +81,7 @@ export const CategorySection = ({ categories }: CategorySectionProps) => {
         </button>
       </h4>
       <ul className="scrollbar-hide flex gap-2 overflow-x-auto">
-        {categories.data.map((category) => (
+        {categories.map((category) => (
           <CategoryItem
             key={category.id}
             src={category.image}

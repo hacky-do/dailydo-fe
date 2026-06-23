@@ -35,7 +35,7 @@ const MypageSkeleton = () => (
 );
 
 export const Mypage = () => {
-  const { data, isPending, isError, refetch } = useGetMe();
+  const { data: user, isPending, isError, refetch } = useGetMe();
   const {
     data: myMissions,
     isPending: isMissionsPending,
@@ -93,14 +93,14 @@ export const Mypage = () => {
                 프로필 수정
               </Button>
             </div>
-            {data && (
+            {user && (
               <ProfileBottomSheet
                 open={isEditOpen}
                 onOpenChange={setIsEditOpen}
                 defaultValues={{
-                  name: data.name,
-                  description: data.description,
-                  profileImage: data.profileImage,
+                  name: user.name,
+                  description: user.description,
+                  profileImage: user.profileImage,
                 }}
                 onSubmit={handleProfileSubmit}
                 isLoading={isPatchPending}
@@ -108,24 +108,28 @@ export const Mypage = () => {
             )}
 
             <div className="flex flex-col gap-5 p-5">
-              {isPending || !data || isMissionsPending || !myMissions ? (
+              {isPending || !user || isMissionsPending || !myMissions ? (
                 <MypageSkeleton />
               ) : (
                 <>
                   <ProfileSection
-                    profileImage={data.profileImage}
-                    name={data.name}
-                    email={data.email}
-                    description={data.description}
+                    profileImage={user.profileImage}
+                    name={user.name}
+                    email={user.email}
+                    description={user.description}
                   />
                   <div className="flex flex-col gap-6">
                     <MissionStatusSection myMissions={myMissions} />
                     <MyStatusSection
-                      footprint={data.footprint}
-                      createdAt={data.createdAt}
+                      footprint={user.footprint}
+                      createdAt={user.createdAt}
                     />
                     <CollectionSection />
-                    <CategorySection categories={data.categories} />
+                    <CategorySection
+                      categories={user.categories.data.filter(
+                        (category) => category.name !== '스페셜',
+                      )}
+                    />
                   </div>
                 </>
               )}

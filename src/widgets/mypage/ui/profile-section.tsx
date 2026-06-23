@@ -50,7 +50,7 @@ export const ProfileSection = ({
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <h3 className="text-lg leading-7 font-semibold">{name}</h3>
-          <span className="flex h-5 items-center rounded-2xl bg-gray-100 px-2.5 text-xs text-gray-600">
+          <span className="underline-none flex h-5 items-center rounded-2xl bg-gray-100 px-2.5 text-xs text-gray-600">
             {email}
           </span>
         </div>
