@@ -47,7 +47,8 @@ export const CollectionBox = ({
 }: CollectionBoxProps) => {
   const isSpecial = type === 'SPECIAL';
   const [open, setIsOpen] = useState(false);
-  const { mutateAsync: postUserCollection } = usePostUserCollection();
+  const { mutateAsync: postUserCollection, isPending: isPosting } =
+    usePostUserCollection();
   const { mutateAsync: deleteUserCollection, isPending: isDeleting } =
     useDeleteUserCollection();
   const { mutateAsync: deleteForReplace } = useDeleteUserCollection({
@@ -117,7 +118,11 @@ export const CollectionBox = ({
         acquisitionRate={acquisitionRate}
         action={
           !completed ? (
-            <Button variant="tertiary" type="button" onClick={() => setIsOpen(false)}>
+            <Button
+              variant="tertiary"
+              type="button"
+              onClick={() => setIsOpen(false)}
+            >
               닫기
             </Button>
           ) : isRepresentative ? (
@@ -130,7 +135,12 @@ export const CollectionBox = ({
               대표 컬렉션에서 해제
             </Button>
           ) : (
-            <Button variant="primary" type="button" onClick={handlePostCollection}>
+            <Button
+              variant="primary"
+              type="button"
+              onClick={handlePostCollection}
+              isLoading={isPosting}
+            >
               대표 컬렉션으로 설정
             </Button>
           )
