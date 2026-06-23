@@ -56,7 +56,9 @@ const MyLogBottomSheetContent = ({
 >) => {
   const [file, setFile] = useState<File | null>(null);
   const [photoUrl, setPhotoUrl] = useState<string | null>(initialPhoto ?? null);
-  const [localPreview, setLocalPreview] = useState<string | null>(initialPhoto ?? null);
+  const [localPreview, setLocalPreview] = useState<string | null>(
+    initialPhoto ?? null,
+  );
   const [memo, setMemo] = useState(initialMemo ?? '');
   const { mutateAsync: upload, isPending: isUploading } = useFileUpload();
 
