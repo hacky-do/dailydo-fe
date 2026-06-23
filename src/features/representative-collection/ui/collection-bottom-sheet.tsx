@@ -14,6 +14,7 @@ interface CollectionBottomSheetProps extends Omit<Collection, 'requirements'> {
   requirements?: Collection['requirements'];
   onPost: () => void;
   onDelete: () => void;
+  isDeleting?: boolean;
 }
 
 export const CollectionBottomSheet = ({
@@ -29,6 +30,7 @@ export const CollectionBottomSheet = ({
   completed,
   onPost,
   onDelete,
+  isDeleting = false,
   acquisitionRate,
 }: CollectionBottomSheetProps) => {
   const isSpecial = type === 'SPECIAL';
@@ -93,7 +95,12 @@ export const CollectionBottomSheet = ({
                 닫기
               </Button>
             ) : isRepresentative ? (
-              <Button variant="secondary" type="button" onClick={onDelete}>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={onDelete}
+                isLoading={isDeleting}
+              >
                 대표 컬렉션에서 해제
               </Button>
             ) : (

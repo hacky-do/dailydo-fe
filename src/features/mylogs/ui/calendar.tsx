@@ -40,6 +40,47 @@ function getCountBgColor(count: number) {
   return COUNT_BG_COLORS[Math.min(count, COUNT_BG_COLORS.length - 1)];
 }
 
+interface CalendarCellProps {
+  day: Date;
+  dateStr: string;
+  count: number | undefined;
+  className: string;
+}
+
+const CalendarCell = ({
+  day,
+  dateStr,
+  count,
+  className,
+}: CalendarCellProps) => {
+  const dayLabel = format(day, 'd');
+  const todayClass =
+    isToday(day) && 'border-2 border-green-500 font-bold text-green-500';
+
+  if (!count) {
+    return (
+      <div className={cn(className, 'text-gray-600', todayClass)}>
+        {dayLabel}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={`${ROUTES.MYLOG_DETAIL}?date=${dateStr}`}
+      prefetch={false}
+      aria-label={`${format(day, 'yyyy년 M월 d일')}, 완료 ${count}개`}
+      className={cn(
+        className,
+        !isToday(day) && getCountBgColor(count),
+        todayClass,
+      )}
+    >
+      {dayLabel}
+    </Link>
+  );
+};
+
 interface CalendarProps {
   year: number;
   month: number;
@@ -81,42 +122,19 @@ export const Calendar = ({ year, month, logs = [] }: CalendarProps) => {
         {days.map((day, index) => {
           const dateStr = format(day, 'yyyy-MM-dd');
           const count = countByDate[dateStr];
-          const baseClassName = cn(
+          const className = cn(
             'flex aspect-square items-center justify-center text-xl rounded-lg hover:brightness-105',
             index === 0 && COL_START_CLASSES[getDay(firstDay) + 1],
           );
 
-          // 데이터 없는 날짜는 Link가 아닌 div
-          if (!count) {
-            return (
-              <div
-                key={dateStr}
-                className={cn(
-                  baseClassName,
-                  'text-gray-600',
-                  isToday(day) &&
-                    'border-2 border-green-500 font-bold text-green-500',
-                )}
-              >
-                {format(day, 'd')}
-              </div>
-            );
-          }
-
           return (
-            <Link
+            <CalendarCell
               key={dateStr}
-              href={`${ROUTES.MYLOG_DETAIL}?date=${dateStr}`}
-              prefetch={false}
-              aria-label={`${format(day, 'yyyy년 M월 d일')}, 완료 ${count}개`}
-              className={cn(
-                baseClassName,
-                !isToday(day) && getCountBgColor(count),
-                isToday(day) && 'border-2 border-green-500',
-              )}
-            >
-              {format(day, 'd')}
-            </Link>
+              day={day}
+              dateStr={dateStr}
+              count={count}
+              className={className}
+            />
           );
         })}
       </div>
