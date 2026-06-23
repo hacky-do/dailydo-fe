@@ -94,15 +94,15 @@ export const CollectionBox = ({
           )}
           onClick={() => setIsOpen(true)}
         >
-          {isSpecial ? (
-            <SpecialCollectionIcon width={80} height={80} />
-          ) : completed ? (
+          {completed ? (
             <Image src={src} alt="" width={80} height={80} sizes={'80'} />
+          ) : isSpecial ? (
+            <SpecialCollectionIcon width={80} height={80} />
           ) : (
             <LockedIcon width={80} />
           )}
           <span className={cn('pt-1 text-xs font-semibold')}>
-            {isSpecial ? '???' : title}
+            {isSpecial && !completed ? '???' : title}
           </span>
         </button>
       </li>
@@ -115,6 +115,7 @@ export const CollectionBox = ({
         description={description}
         completed={completed}
         src={src}
+        type={type}
         requirements={requirements}
         isRepresentative={isRepresentative}
         onPost={handlePostCollection}

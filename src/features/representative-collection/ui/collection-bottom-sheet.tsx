@@ -4,6 +4,7 @@ import type { Collection } from '@/entities/collection';
 import { BottomSheet } from '@/shared/ui/bottom-sheet';
 import { Button } from '@/shared/ui/button';
 import LockedIcon from '@/shared/ui/icons/collections/locked.svg';
+import SpecialCollectionIcon from '@/shared/ui/icons/collections/special_collection.svg';
 
 interface CollectionBottomSheetProps extends Omit<Collection, 'requirements'> {
   open: boolean;
@@ -22,6 +23,7 @@ export const CollectionBottomSheet = ({
   title,
   description,
   src,
+  type,
   requirements = [],
   isRepresentative,
   completed,
@@ -29,6 +31,7 @@ export const CollectionBottomSheet = ({
   onDelete,
   acquisitionRate,
 }: CollectionBottomSheetProps) => {
+  const isSpecial = type === 'SPECIAL';
   return (
     <BottomSheet.Root open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Content>
@@ -48,7 +51,7 @@ export const CollectionBottomSheet = ({
             </span>
           </div>
 
-          {completed && src ? (
+          {completed ? (
             <Image
               src={src}
               alt=""
@@ -57,6 +60,10 @@ export const CollectionBottomSheet = ({
               className="my-1"
               sizes="80px"
             />
+          ) : isSpecial ? (
+            <div className="-mb-6 flex size-20 items-center justify-center">
+              <SpecialCollectionIcon className="my-1" width={65} />
+            </div>
           ) : (
             <div className="-mb-6 flex size-20 items-center justify-center">
               <LockedIcon className="my-1" width={65} />
