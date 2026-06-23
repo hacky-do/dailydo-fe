@@ -66,6 +66,7 @@ export const CollectionGrid = ({
               completed={collection.completed}
               isRepresentative={userCollectionId === collection.collectionId}
               acquisitionRate={collection.acquisitionRate}
+              type={collection.type}
             />
           ))}
     </ul>
