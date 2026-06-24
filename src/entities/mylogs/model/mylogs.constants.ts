@@ -1,2 +1,7 @@
 export const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 export const MONTH_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+export const mylogsQueryKeys = {
+  all: ['mylogs'],
+  records: (cursor?: string) => ['mylogs', 'records', cursor],
+} as const;

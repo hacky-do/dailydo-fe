@@ -5,6 +5,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
+import { mylogsQueryKeys } from '@/entities/mylogs';
 import { ApiError } from '@/shared/api';
 
 import {
@@ -101,7 +102,7 @@ export const usePostCompleteMission = (options?: {
       );
       return { previousData };
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data) {
         queryClient.setQueryData(
           missionQueryKeys.myMissions,
@@ -116,6 +117,10 @@ export const usePostCompleteMission = (options?: {
           },
         );
       }
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: mylogsQueryKeys.all }),
+        queryClient.invalidateQueries({ queryKey: mylogsQueryKeys.records() }),
+      ]);
     },
     onError: (error, variables, context) => {
       if (context?.previousData) {

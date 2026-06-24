@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { mylogsQueryKeys } from '../model/mylogs.constants';
+import { mylogsQueryKeys } from '@/entities/mylogs';
+
 import { getMyLogs } from './mylogs.api';
 
 export const useGetMyLogs = (cursor?: string) =>
