@@ -110,7 +110,7 @@ export const usePostCompleteMission = (options?: {
             return {
               ...prev,
               items: prev.items.map((item) =>
-                item.itemId === data.itemId ? data : item,
+                item.itemId === data.itemId ? { ...item, ...data } : item,
               ),
             };
           },
