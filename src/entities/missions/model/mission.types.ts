@@ -1,3 +1,11 @@
+export interface UnlockedCollection {
+  collectionId: string;
+  title: string;
+  type: 'NORMAL' | 'SPECIAL';
+  image: string;
+  description: string;
+}
+
 export interface MyMissionItem extends MissionItem {
   itemId: number;
   myCompletedCount: number;
@@ -5,6 +13,7 @@ export interface MyMissionItem extends MissionItem {
   completed: boolean;
   completedAt: string;
   mylog: MyLog | null;
+  unlockedCollections: UnlockedCollection[];
 }
 
 export interface MyMission {
